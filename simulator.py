@@ -50,6 +50,11 @@ from m1_realism import (
     PlantConfig,
     apply_plant_config,
 )
+from m4_params import (
+    MicroUAVConfig,
+    apply_micro_variant,
+    micro_controller_parameters,
+)
 from m3_sensors import TruthKinematics
 
 
@@ -458,10 +463,25 @@ class QuadrotorSimulation:
         noise_seed: int = 0,
         initial_yaw: float = 0.0,
         localization=None,
+        micro_config: MicroUAVConfig | None = None,
     ) -> None:
         self.model_path = Path(model_path)
         self.model, self.data, self.controller = load_simulation(self.model_path)
         self.parameters = parameters or FlightParameters()
+        # M4-A：micro_config 把 plant 換成 micro-UAV 變體（質量/幾何/慣量/
+        # 推力上限），然後用相同預設增益重建 controller，讓 controller 的
+        # mass/allocation/limits 來自 micro plant 本身。必須在
+        # apply_plant_config 之前（M1 不確定性仍疊加在 micro plant 上，
+        # controller 保持 nominal），也必須在 _apply_initial_yaw 之前
+        # （apply_micro_variant 內的 mj_setConst 會重置 qpos）。
+        self.micro_config = micro_config
+        if micro_config is not None:
+            apply_micro_variant(self.model, self.data, micro_config)
+            # M4-A：attitude 力矩增益依慣量比縮放（見 m4_params
+            # .micro_controller_parameters 的證據說明）；位置迴路增益不變。
+            self.controller = QuadrotorController(
+                self.model, micro_controller_parameters(micro_config)
+            )
         # M3：localization（sensor->estimator pipeline）與 M1 的
         # truth+noise measurement 是兩條互斥的導航路徑。M3 模式下
         # controller/guidance/mission 只能看到 EstimatedState。

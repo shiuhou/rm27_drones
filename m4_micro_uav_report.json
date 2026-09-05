@@ -1,0 +1,2608 @@
+{
+  "milestone": "M4-A",
+  "warning": "1103 9500 KV + 2\"/2.5\" + 2S/3S thrust/current/RPM is NOT validated in M4-A; max thrust comes from assumed T/W ratios (ENGINEERING_ESTIMATE).",
+  "nominal_config": {
+    "mass_kg": 0.18,
+    "wheelbase_m": 0.12,
+    "thrust_to_weight_max": 2.5,
+    "motor_mass_kg": 0.008,
+    "body_length_m": 0.06,
+    "body_width_m": 0.04,
+    "body_height_m": 0.025,
+    "com_offset_xyz_m": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "yaw_torque_per_thrust": 0.018,
+    "motor_kv": 9500,
+    "prop_diameter_in": 2.5,
+    "battery_cells": 3,
+    "derived": {
+      "motor_radius_m": 0.06,
+      "motor_xy_m": 0.04242640687119285,
+      "hover_thrust_per_motor_n": 0.44145,
+      "max_thrust_per_motor_n": 1.1036249999999999,
+      "inertia_kg_m2": [
+        8.504166666666666e-05,
+        0.00010970833333333331,
+        0.0001793333333333333
+      ]
+    }
+  },
+  "provenance": [
+    {
+      "parameter": "mass",
+      "value": 0.18,
+      "unit": "kg",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "medium",
+      "reason": "RM27 target class 150-200 g; final AUW not measured"
+    },
+    {
+      "parameter": "wheelbase",
+      "value": 0.12,
+      "unit": "m",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "medium",
+      "reason": "nominal within 100-140 mm design range"
+    },
+    {
+      "parameter": "thrust_to_weight_max",
+      "value": 2.5,
+      "unit": "-",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "low",
+      "reason": "assumed authority; no 1103/prop/battery bench data"
+    },
+    {
+      "parameter": "hover_thrust_per_motor",
+      "value": 0.44145,
+      "unit": "N",
+      "provenance": "CALCULATED",
+      "confidence": "high",
+      "reason": "m*g/4 from assumed mass"
+    },
+    {
+      "parameter": "max_thrust_per_motor",
+      "value": 1.1036249999999999,
+      "unit": "N",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "low",
+      "reason": "T/W assumption * m * g / 4; NOT a motor measurement"
+    },
+    {
+      "parameter": "inertia",
+      "value": [
+        8.504166666666666e-05,
+        0.00010970833333333331,
+        0.0001793333333333333
+      ],
+      "unit": "kg m^2",
+      "provenance": "CALCULATED",
+      "confidence": "low",
+      "reason": "box + point-motor model on estimated masses/dims"
+    },
+    {
+      "parameter": "motor_mass",
+      "value": 0.008,
+      "unit": "kg",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "medium",
+      "reason": "1103-class motor typical weight, not weighed"
+    },
+    {
+      "parameter": "body_dimensions",
+      "value": [
+        0.06,
+        0.04,
+        0.025
+      ],
+      "unit": "m",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "low",
+      "reason": "lumped frame/FC/battery box; no CAD yet"
+    },
+    {
+      "parameter": "com_offset",
+      "value": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "unit": "m",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "low",
+      "reason": "centered COM assumed in M4-A; real COM is M4-B"
+    },
+    {
+      "parameter": "yaw_torque_per_thrust",
+      "value": 0.018,
+      "unit": "N m / N",
+      "provenance": "ENGINEERING_ESTIMATE",
+      "confidence": "low",
+      "reason": "inherited M0 convention; prop reaction torque unknown"
+    },
+    {
+      "parameter": "motor_kv",
+      "value": 9500,
+      "unit": "RPM/V",
+      "provenance": "USER_PROVIDED",
+      "confidence": "medium",
+      "reason": "user-selected 1103 9500 KV; no in-repo datasheet source; KV does not set thrust"
+    },
+    {
+      "parameter": "prop_diameter",
+      "value": 2.5,
+      "unit": "inch",
+      "provenance": "DESIGN_CHOICE",
+      "confidence": "medium",
+      "reason": "candidate 2.0/2.5 inch; metadata only in M4-A"
+    },
+    {
+      "parameter": "battery_cells",
+      "value": 3,
+      "unit": "S",
+      "provenance": "DESIGN_CHOICE",
+      "confidence": "medium",
+      "reason": "candidate 2S/3S; metadata only in M4-A"
+    }
+  ],
+  "fast_dynamics_comparison": {
+    "mass_ratio": 0.18,
+    "motor_arm_ratio": 0.26028470473124443,
+    "inertia_ratio": [
+      0.004724537037037037,
+      0.0060949074074074065,
+      0.005977777777777776
+    ],
+    "generic_hover_thrust_per_motor_n": 2.4525,
+    "micro_hover_thrust_per_motor_n": 0.44145,
+    "generic_max_thrust_per_motor_n": 8.0,
+    "micro_max_thrust_per_motor_n": 1.1036249999999999,
+    "generic_max_roll_alpha_rad_s2": 144.8888888888889,
+    "micro_max_roll_alpha_rad_s2": 1101.174168346188,
+    "generic_max_pitch_alpha_rad_s2": 144.8888888888889,
+    "micro_max_pitch_alpha_rad_s2": 853.5877241149146,
+    "generic_max_yaw_alpha_rad_s2": 9.6,
+    "micro_max_yaw_alpha_rad_s2": 221.54553903345726,
+    "generic": {
+      "max_roll_pitch_torque_n_m": 2.608,
+      "max_yaw_torque_n_m": 0.288,
+      "max_roll_alpha_rad_s2": 144.8888888888889,
+      "max_pitch_alpha_rad_s2": 144.8888888888889,
+      "max_yaw_alpha_rad_s2": 9.6
+    },
+    "micro": {
+      "max_roll_pitch_torque_n_m": 0.0936456865664404,
+      "max_yaw_torque_n_m": 0.039730499999999995,
+      "max_roll_alpha_rad_s2": 1101.174168346188,
+      "max_pitch_alpha_rad_s2": 853.5877241149146,
+      "max_yaw_alpha_rad_s2": 221.54553903345726
+    }
+  },
+  "cases": [
+    {
+      "name": "A0_ideal",
+      "description": "180 g / 120 mm / T/W 2.5, ideal sensors",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 0,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.0,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.0,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.0,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.0,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.023999999999779,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.578000000001545,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.997999999996448,
+      "total_time": 23.00399999999813,
+      "est_forward_at_brake": 4.98049795432618,
+      "truth_forward_at_brake": 4.983519198147793,
+      "est_forward_at_land": 5.095457053307129,
+      "truth_forward_at_land": 5.0982239094115185,
+      "est_lateral_at_land": -2.4063830445884396e-14,
+      "truth_lateral_at_land": -3.5056049336647845e-14,
+      "truth_braking_distance": 0.0534687346600391,
+      "est_final_xyz": [
+        5.095239808335547,
+        -4.183393191893386e-14,
+        -0.012016681690384085
+      ],
+      "truth_final_forward_lateral": [
+        5.097668308357073,
+        -6.401358163189904e-14
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.097668308357073,
+        -6.401358163189904e-14
+      ],
+      "horizontal_position_rms_error": 0.0029214731793404153,
+      "horizontal_position_max_error": 0.005279915199669638,
+      "horizontal_position_final_error": 0.0024285000215256147,
+      "altitude_rms_error": 0.0030742025977094152,
+      "altitude_max_error": 0.060001117870033996,
+      "velocity_rms_error": 0.009270910666710597,
+      "velocity_max_error": 0.0821245166925327,
+      "max_yaw_error_deg": 7.63333123551244e-14,
+      "final_yaw_error_deg": 7.63333123551244e-14,
+      "max_roll_deg": 1.568905469206173e-13,
+      "max_pitch_deg": 3.8370035044114714,
+      "max_motor_command": 0.4785692310247958,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011041557989914798,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010811586832946087,
+      "imu_samples": 5752,
+      "flow_samples": 1151,
+      "flow_invalid": 0,
+      "tof_samples": 1151,
+      "tof_invalid": 89,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A1_nominal_noise",
+      "description": "nominal M3 sensor noise",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 1,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.9239999999997894,
+      "settle_time": 1.00199999999989,
+      "forward_time": 8.542000000001487,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.971999999996584,
+      "total_time": 22.84199999999822,
+      "est_forward_at_brake": 4.980498000798646,
+      "truth_forward_at_brake": 4.984991573546855,
+      "est_forward_at_land": 5.088589685323271,
+      "truth_forward_at_land": 5.094830265736906,
+      "est_lateral_at_land": 0.00037208858672779457,
+      "truth_lateral_at_land": 0.010146579146024133,
+      "truth_braking_distance": 0.05250861959465958,
+      "est_final_xyz": [
+        5.080069721083162,
+        -5.575765894457416e-05,
+        0.0592836053261791
+      ],
+      "truth_final_forward_lateral": [
+        5.089647533058568,
+        0.009770353774789872
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.089647533058568,
+        0.009770353774789872
+      ],
+      "horizontal_position_rms_error": 0.013858705091487513,
+      "horizontal_position_max_error": 0.02481224619794994,
+      "horizontal_position_final_error": 0.013721769133183995,
+      "altitude_rms_error": 0.008803138298038072,
+      "altitude_max_error": 0.061157863215069413,
+      "velocity_rms_error": 0.03249084149857785,
+      "velocity_max_error": 0.06184785346524302,
+      "max_yaw_error_deg": 0.03544338163882112,
+      "final_yaw_error_deg": 0.004274725546255351,
+      "max_roll_deg": 0.30271243545115684,
+      "max_pitch_deg": 3.9236824489724613,
+      "max_motor_command": 0.48077311974501197,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011119866911829087,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.011405410424837887,
+      "imu_samples": 5711,
+      "flow_samples": 1143,
+      "flow_invalid": 0,
+      "tof_samples": 1143,
+      "tof_invalid": 88,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A2_combined",
+      "description": "M3 combined localization realism",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 27,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0008726646259971648
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.005,
+          0.005,
+          0.01
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.01,
+        "bias": [
+          0.005,
+          0.0
+        ],
+        "latency": 0.02,
+        "dropouts": [
+          [
+            7.0,
+            0.2
+          ]
+        ]
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.005,
+        "latency": 0.02,
+        "dropouts": [
+          [
+            8.0,
+            0.15
+          ]
+        ],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.4879999999998375,
+      "settle_time": 1.375999999999849,
+      "forward_time": 8.576000000001471,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.907999999996644,
+      "total_time": 22.74999999999827,
+      "est_forward_at_brake": 4.980119371606557,
+      "truth_forward_at_brake": 4.838718715437343,
+      "est_forward_at_land": 5.088900388612314,
+      "truth_forward_at_land": 4.93541084552911,
+      "est_lateral_at_land": -0.004264150635189683,
+      "truth_lateral_at_land": -0.054000040274005984,
+      "truth_braking_distance": 0.048917119928702846,
+      "est_final_xyz": [
+        5.088152957405399,
+        -0.014327324434533124,
+        0.39072822329326456
+      ],
+      "truth_final_forward_lateral": [
+        4.897657375614759,
+        -0.06135996440993372
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        4.897657375614759,
+        -0.06135996440993372
+      ],
+      "horizontal_position_rms_error": 0.12857948078088907,
+      "horizontal_position_max_error": 0.20500465699600218,
+      "horizontal_position_final_error": 0.19621578913229787,
+      "altitude_rms_error": 0.06620542105045583,
+      "altitude_max_error": 0.3783359782066087,
+      "velocity_rms_error": 0.11496374463323515,
+      "velocity_max_error": 0.19858201057441396,
+      "max_yaw_error_deg": 1.1490240460417482,
+      "final_yaw_error_deg": 1.1490240460417482,
+      "max_roll_deg": 0.4192940739052847,
+      "max_pitch_deg": 4.08981685421932,
+      "max_motor_command": 0.4840222849350046,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011164835164835164,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.011587384583743737,
+      "imu_samples": 5688,
+      "flow_samples": 1137,
+      "flow_invalid": 10,
+      "tof_samples": 1137,
+      "tof_invalid": 107,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A3_mass_150g",
+      "description": "mass sensitivity 150 g",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 3,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.999999999999781,
+      "settle_time": 1.00199999999989,
+      "forward_time": 8.56600000000153,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.989999999996485,
+      "total_time": 22.959999999998153,
+      "est_forward_at_brake": 4.9802056283146205,
+      "truth_forward_at_brake": 4.984218945557817,
+      "est_forward_at_land": 5.092992076090466,
+      "truth_forward_at_land": 5.095175872261452,
+      "est_lateral_at_land": 0.0011771151746451062,
+      "truth_lateral_at_land": -0.0022458823580110607,
+      "truth_braking_distance": 0.05486750015167008,
+      "est_final_xyz": [
+        5.0948727963862375,
+        -0.003385827187955209,
+        -0.01742538460270204
+      ],
+      "truth_final_forward_lateral": [
+        5.083005825017366,
+        -0.011733593306909951
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.083005825017366,
+        -0.011733593306909951
+      ],
+      "horizontal_position_rms_error": 0.005884061178170704,
+      "horizontal_position_max_error": 0.01629314458383003,
+      "horizontal_position_final_error": 0.014508969937468818,
+      "altitude_rms_error": 0.007067402980281938,
+      "altitude_max_error": 0.0659506910954412,
+      "velocity_rms_error": 0.02078316343158012,
+      "velocity_max_error": 0.08950017058760294,
+      "max_yaw_error_deg": 0.03242984123451011,
+      "final_yaw_error_deg": 0.010292040951329804,
+      "max_roll_deg": 0.4657067523955483,
+      "max_pitch_deg": 3.9277973334260605,
+      "max_motor_command": 0.4004350705916413,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011062717770034843,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.01043538158183918,
+      "imu_samples": 5741,
+      "flow_samples": 1149,
+      "flow_invalid": 0,
+      "tof_samples": 1149,
+      "tof_invalid": 91,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.15,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A4_mass_200g",
+      "description": "mass sensitivity 200 g",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 4,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.0359999999997775,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.542000000001536,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.011999999996462,
+      "total_time": 22.993999999998135,
+      "est_forward_at_brake": 4.98055187044952,
+      "truth_forward_at_brake": 4.980085468374457,
+      "est_forward_at_land": 5.093676971144518,
+      "truth_forward_at_land": 5.086284351415039,
+      "est_lateral_at_land": -0.0034569663962625624,
+      "truth_lateral_at_land": -0.011496307648164233,
+      "truth_braking_distance": 0.05292973750380803,
+      "est_final_xyz": [
+        5.089458671461329,
+        -0.0009979817085375442,
+        0.033412061988626444
+      ],
+      "truth_final_forward_lateral": [
+        5.082944807811054,
+        -0.03613386523661874
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.082944807811054,
+        -0.03613386523661874
+      ],
+      "horizontal_position_rms_error": 0.01892823404742506,
+      "horizontal_position_max_error": 0.0364505388976221,
+      "horizontal_position_final_error": 0.035734587320315585,
+      "altitude_rms_error": 0.006570413887597099,
+      "altitude_max_error": 0.06473255640193964,
+      "velocity_rms_error": 0.022579085234070463,
+      "velocity_max_error": 0.05180599789238354,
+      "max_yaw_error_deg": 0.03954493228955805,
+      "final_yaw_error_deg": 0.03954493228955805,
+      "max_roll_deg": 0.3312972591333132,
+      "max_pitch_deg": 3.789586069366204,
+      "max_motor_command": 0.5334424978323985,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011046359919979125,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010947038765330739,
+      "imu_samples": 5749,
+      "flow_samples": 1150,
+      "flow_invalid": 0,
+      "tof_samples": 1150,
+      "tof_invalid": 91,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.2,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A5_wheelbase_100mm",
+      "description": "wheelbase sensitivity 100 mm",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 5,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.039999999999777,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.582000000001553,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.923999999996472,
+      "total_time": 22.94999999999816,
+      "est_forward_at_brake": 4.980143313025968,
+      "truth_forward_at_brake": 4.993690197955825,
+      "est_forward_at_land": 5.095015781101487,
+      "truth_forward_at_land": 5.111571432718053,
+      "est_lateral_at_land": 0.002435887585074377,
+      "truth_lateral_at_land": 0.015779096009099533,
+      "truth_braking_distance": 0.055443666201951736,
+      "est_final_xyz": [
+        5.091704886054719,
+        0.01105624906274065,
+        0.05541440489246964
+      ],
+      "truth_final_forward_lateral": [
+        5.086364886203437,
+        0.04657583927579224
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.086364886203437,
+        0.04657583927579224
+      ],
+      "horizontal_position_rms_error": 0.02128280213873413,
+      "horizontal_position_max_error": 0.04105208504460298,
+      "horizontal_position_final_error": 0.03591875397775933,
+      "altitude_rms_error": 0.007363780065875042,
+      "altitude_max_error": 0.06738946449706151,
+      "velocity_rms_error": 0.02359978066273408,
+      "velocity_max_error": 0.06944167192385607,
+      "max_yaw_error_deg": 0.039430882153998405,
+      "final_yaw_error_deg": 0.019894979612838745,
+      "max_roll_deg": 0.2730915956214141,
+      "max_pitch_deg": 3.793040065262477,
+      "max_motor_command": 0.4810134236638103,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011067538126361656,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010662310176301952,
+      "imu_samples": 5738,
+      "flow_samples": 1148,
+      "flow_invalid": 0,
+      "tof_samples": 1148,
+      "tof_invalid": 91,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.1,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A6_wheelbase_140mm",
+      "description": "wheelbase sensitivity 140 mm",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 6,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.01599999999978,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.57400000000154,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.955999999996482,
+      "total_time": 22.94999999999816,
+      "est_forward_at_brake": 4.980298576655862,
+      "truth_forward_at_brake": 4.958011086544501,
+      "est_forward_at_land": 5.0901647288086425,
+      "truth_forward_at_land": 5.068266792036655,
+      "est_lateral_at_land": -0.0004967145768105661,
+      "truth_lateral_at_land": 0.020904550687435693,
+      "truth_braking_distance": 0.05089045103696943,
+      "est_final_xyz": [
+        5.084714688515457,
+        -0.0024421480832275025,
+        0.04864426837360801
+      ],
+      "truth_final_forward_lateral": [
+        5.052205270447275,
+        0.014939775956792188
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.052205270447275,
+        0.014939775956792188
+      ],
+      "horizontal_position_rms_error": 0.02462250118840192,
+      "horizontal_position_max_error": 0.039458974524544256,
+      "horizontal_position_final_error": 0.03686452965202256,
+      "altitude_rms_error": 0.007209633910597472,
+      "altitude_max_error": 0.06312753915035757,
+      "velocity_rms_error": 0.020907521231082887,
+      "velocity_max_error": 0.06480473916030775,
+      "max_yaw_error_deg": 0.026369698189376043,
+      "final_yaw_error_deg": 0.012799982005263536,
+      "max_roll_deg": 0.3067887668312654,
+      "max_pitch_deg": 3.793732393089308,
+      "max_motor_command": 0.4793757904767392,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011067538126361656,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010583907745806505,
+      "imu_samples": 5738,
+      "flow_samples": 1148,
+      "flow_invalid": 0,
+      "tof_samples": 1148,
+      "tof_invalid": 92,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.14,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A7_tw_2.0",
+      "description": "thrust-to-weight sensitivity 2.0",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 7,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.111999999999769,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.602000000001592,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.011999999996341,
+      "total_time": 23.12999999999806,
+      "est_forward_at_brake": 4.980272795793732,
+      "truth_forward_at_brake": 5.003375644409008,
+      "est_forward_at_land": 5.099632316021272,
+      "truth_forward_at_land": 5.12209532658768,
+      "est_lateral_at_land": -0.004502939277277767,
+      "truth_lateral_at_land": -0.01798867575889014,
+      "truth_braking_distance": 0.05625914108105068,
+      "est_final_xyz": [
+        5.085950285148076,
+        -0.0032589313389883383,
+        -0.007374126825569866
+      ],
+      "truth_final_forward_lateral": [
+        5.119033922906357,
+        -0.013657264128782244
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.119033922906357,
+        -0.013657264128782244
+      ],
+      "horizontal_position_rms_error": 0.02103807200315548,
+      "horizontal_position_max_error": 0.03467927929078715,
+      "horizontal_position_final_error": 0.03467927929078715,
+      "altitude_rms_error": 0.007268057031073823,
+      "altitude_max_error": 0.06541166462244342,
+      "velocity_rms_error": 0.021898748362537152,
+      "velocity_max_error": 0.07456704692227475,
+      "max_yaw_error_deg": 0.0498249966271282,
+      "final_yaw_error_deg": 0.04865607690222513,
+      "max_roll_deg": 0.364860526644945,
+      "max_pitch_deg": 3.945746255909035,
+      "max_motor_command": 0.48073052567461083,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.01098140942498919,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010221784298089434,
+      "imu_samples": 5783,
+      "flow_samples": 1157,
+      "flow_invalid": 0,
+      "tof_samples": 1157,
+      "tof_invalid": 89,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.0,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A8_tw_2.5",
+      "description": "thrust-to-weight reference 2.5",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 8,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.10399999999977,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.530000000001564,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.9519999999964455,
+      "total_time": 22.989999999998137,
+      "est_forward_at_brake": 4.980477883921325,
+      "truth_forward_at_brake": 5.001037447467101,
+      "est_forward_at_land": 5.090249087813882,
+      "truth_forward_at_land": 5.109367571578731,
+      "est_lateral_at_land": 0.0032925911234923423,
+      "truth_lateral_at_land": -0.008668447089592388,
+      "truth_braking_distance": 0.053770764831059914,
+      "est_final_xyz": [
+        5.103564530925577,
+        0.0044913893607760125,
+        -0.001051119527960561
+      ],
+      "truth_final_forward_lateral": [
+        5.1231586773328575,
+        -0.024485951467637313
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.1231586773328575,
+        -0.024485951467637313
+      ],
+      "horizontal_position_rms_error": 0.021735127458550864,
+      "horizontal_position_max_error": 0.04111304149403538,
+      "horizontal_position_final_error": 0.03498023520384016,
+      "altitude_rms_error": 0.006535155295189838,
+      "altitude_max_error": 0.06311277161125728,
+      "velocity_rms_error": 0.020063127335105575,
+      "velocity_max_error": 0.06759466530424094,
+      "max_yaw_error_deg": 0.035851033261099875,
+      "final_yaw_error_deg": 0.0026821588935344166,
+      "max_roll_deg": 0.3204354077694758,
+      "max_pitch_deg": 3.7304643576715626,
+      "max_motor_command": 0.4800808240516455,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.01104828186167899,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010247738294312372,
+      "imu_samples": 5748,
+      "flow_samples": 1150,
+      "flow_invalid": 0,
+      "tof_samples": 1150,
+      "tof_invalid": 88,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A9_tw_3.0",
+      "description": "thrust-to-weight sensitivity 3.0",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 9,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.4799999999998383,
+      "settle_time": 1.447999999999841,
+      "forward_time": 8.532000000001485,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.017999999996565,
+      "total_time": 22.879999999998198,
+      "est_forward_at_brake": 4.980183650785816,
+      "truth_forward_at_brake": 4.9917740258108605,
+      "est_forward_at_land": 5.091636234314214,
+      "truth_forward_at_land": 5.107610030584665,
+      "est_lateral_at_land": -0.005240699930631556,
+      "truth_lateral_at_land": -0.019557902791624334,
+      "truth_braking_distance": 0.05116515946812772,
+      "est_final_xyz": [
+        5.093378886090621,
+        -0.0035189707271596335,
+        0.04236023238605423
+      ],
+      "truth_final_forward_lateral": [
+        5.106859779911026,
+        -0.030269978428604575
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.106859779911026,
+        -0.030269978428604575
+      ],
+      "horizontal_position_rms_error": 0.021038060653034058,
+      "horizontal_position_max_error": 0.0313928740751869,
+      "horizontal_position_final_error": 0.029955815983541377,
+      "altitude_rms_error": 0.007814808450744257,
+      "altitude_max_error": 0.056170037783674825,
+      "velocity_rms_error": 0.029188872709651367,
+      "velocity_max_error": 0.05556228508145315,
+      "max_yaw_error_deg": 0.05224251248456403,
+      "final_yaw_error_deg": 0.019647925043772434,
+      "max_roll_deg": 0.4243712401438806,
+      "max_pitch_deg": 3.7632245619586033,
+      "max_motor_command": 0.48105971205016557,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011101398601398601,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.011240406335271569,
+      "imu_samples": 5721,
+      "flow_samples": 1145,
+      "flow_invalid": 0,
+      "tof_samples": 1145,
+      "tof_invalid": 89,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 3.0,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "A10_yaw90_combined",
+      "description": "combined localization, initial yaw 90 deg",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 27,
+      "initial_yaw_deg": 90.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0008726646259971648
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.005,
+          0.005,
+          0.01
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.01,
+        "bias": [
+          0.005,
+          0.0
+        ],
+        "latency": 0.02,
+        "dropouts": [
+          [
+            7.0,
+            0.2
+          ]
+        ]
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.005,
+        "latency": 0.02,
+        "dropouts": [
+          [
+            8.0,
+            0.15
+          ]
+        ],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.4879999999998375,
+      "settle_time": 1.375999999999849,
+      "forward_time": 8.576000000001471,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 7.907999999996644,
+      "total_time": 22.74999999999827,
+      "est_forward_at_brake": 4.9801193716065555,
+      "truth_forward_at_brake": 4.838718715437342,
+      "est_forward_at_land": 5.088900388612308,
+      "truth_forward_at_land": 4.93541084552911,
+      "est_lateral_at_land": -0.004264150635189276,
+      "truth_lateral_at_land": -0.05400004027401702,
+      "truth_braking_distance": 0.048917119928702846,
+      "est_final_xyz": [
+        5.088152957405412,
+        -0.01432732443453194,
+        0.3907282232932763
+      ],
+      "truth_final_forward_lateral": [
+        4.897657375614777,
+        -0.061359964409943415
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        0.0613599644099448,
+        4.897657375614777
+      ],
+      "horizontal_position_rms_error": 0.12857948078088874,
+      "horizontal_position_max_error": 0.20500465699600062,
+      "horizontal_position_final_error": 0.19621578913229445,
+      "altitude_rms_error": 0.0662054210504578,
+      "altitude_max_error": 0.3783359782066204,
+      "velocity_rms_error": 0.11496374463323775,
+      "velocity_max_error": 0.1985820105744205,
+      "max_yaw_error_deg": 1.149024046042308,
+      "final_yaw_error_deg": 1.149024046042308,
+      "max_roll_deg": 0.41929407390527323,
+      "max_pitch_deg": 4.089816854219324,
+      "max_motor_command": 0.4840222849350049,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011164835164835164,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.011587384583743922,
+      "imu_samples": 5688,
+      "flow_samples": 1137,
+      "flow_invalid": 10,
+      "tof_samples": 1137,
+      "tof_invalid": 107,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    }
+  ],
+  "rate_study": [
+    {
+      "name": "rate_imu_125hz",
+      "description": "IMU rate 125 Hz (others baseline)",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 101,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 125.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.4599999999998405,
+      "settle_time": 1.2039999999998678,
+      "forward_time": 8.592000000001388,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.015999999996748,
+      "total_time": 22.673999999998312,
+      "est_forward_at_brake": 4.980735980141663,
+      "truth_forward_at_brake": 4.986870978342511,
+      "est_forward_at_land": 5.098081775603149,
+      "truth_forward_at_land": 5.107746071833139,
+      "est_lateral_at_land": -0.0023680396979456815,
+      "truth_lateral_at_land": -0.023177578754344973,
+      "truth_braking_distance": 0.051992238501263444,
+      "est_final_xyz": [
+        5.094775689915884,
+        -0.00723142378128242,
+        0.09136212960270962
+      ],
+      "truth_final_forward_lateral": [
+        5.112922223350222,
+        -0.02184959388570124
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.112922223350222,
+        -0.02184959388570124
+      ],
+      "horizontal_position_rms_error": 0.019995512887064335,
+      "horizontal_position_max_error": 0.030763890354540968,
+      "horizontal_position_final_error": 0.02330209374466767,
+      "altitude_rms_error": 0.010784273535165772,
+      "altitude_max_error": 0.07896988443477146,
+      "velocity_rms_error": 0.04014283001346091,
+      "velocity_max_error": 0.12903731255534756,
+      "max_yaw_error_deg": 0.07056212865102378,
+      "final_yaw_error_deg": 0.0573471199711481,
+      "max_roll_deg": 0.4094882140646247,
+      "max_pitch_deg": 3.8619472548104277,
+      "max_motor_command": 0.48097305321843536,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011202258092969921,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.011062702087548209,
+      "imu_samples": 2835,
+      "flow_samples": 1134,
+      "flow_invalid": 0,
+      "tof_samples": 1134,
+      "tof_invalid": 84,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "rate_imu_500hz",
+      "description": "IMU rate 500 Hz (others baseline)",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 102,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 500.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.077999999999773,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.606000000001577,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.053999999996345,
+      "total_time": 23.141999999998053,
+      "est_forward_at_brake": 4.98026793555746,
+      "truth_forward_at_brake": 4.9540240024413755,
+      "est_forward_at_land": 5.095605702544059,
+      "truth_forward_at_land": 5.072052957228061,
+      "est_lateral_at_land": 0.002042306155673672,
+      "truth_lateral_at_land": 0.008473612766656171,
+      "truth_braking_distance": 0.055921017497947645,
+      "est_final_xyz": [
+        5.097397510489629,
+        0.0035084682601451127,
+        0.02583634959092489
+      ],
+      "truth_final_forward_lateral": [
+        5.075285201658504,
+        0.0160155253753136
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.075285201658504,
+        0.0160155253753136
+      ],
+      "horizontal_position_rms_error": 0.019368634019302448,
+      "horizontal_position_max_error": 0.03371320581204349,
+      "horizontal_position_final_error": 0.025404343713726133,
+      "altitude_rms_error": 0.006251811576154439,
+      "altitude_max_error": 0.05578603631104194,
+      "velocity_rms_error": 0.019889490981871996,
+      "velocity_max_error": 0.0523582047513503,
+      "max_yaw_error_deg": 0.055114566519803974,
+      "final_yaw_error_deg": 0.05237982714582792,
+      "max_roll_deg": 0.39206331243234765,
+      "max_pitch_deg": 4.064860449313179,
+      "max_motor_command": 0.4801846238451198,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.010975715149943825,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010828206086034835,
+      "imu_samples": 11572,
+      "flow_samples": 1158,
+      "flow_invalid": 0,
+      "tof_samples": 1158,
+      "tof_invalid": 91,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "rate_flow_25hz",
+      "description": "flow rate 25 Hz (others baseline)",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 103,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 25.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 4.007999999999781,
+      "settle_time": 1.0019999999998896,
+      "forward_time": 8.530000000001522,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.037999999996483,
+      "total_time": 22.979999999998142,
+      "est_forward_at_brake": 4.980038040129939,
+      "truth_forward_at_brake": 4.966698509596075,
+      "est_forward_at_land": 5.094721843929582,
+      "truth_forward_at_land": 5.083164196882271,
+      "est_lateral_at_land": -0.002884319913301358,
+      "truth_lateral_at_land": 0.01007080950750798,
+      "truth_braking_distance": 0.051326711193465435,
+      "est_final_xyz": [
+        5.089553644085229,
+        -0.007197677895024286,
+        -0.06989185717888359
+      ],
+      "truth_final_forward_lateral": [
+        5.091200374256494,
+        0.017203665217280402
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.091200374256494,
+        0.017203665217280402
+      ],
+      "horizontal_position_rms_error": 0.01911713395414334,
+      "horizontal_position_max_error": 0.029071123023926337,
+      "horizontal_position_final_error": 0.024456844971119503,
+      "altitude_rms_error": 0.012042486392966205,
+      "altitude_max_error": 0.08228410232943466,
+      "velocity_rms_error": 0.028055071197115512,
+      "velocity_max_error": 0.17205918234132553,
+      "max_yaw_error_deg": 0.058843172761625116,
+      "final_yaw_error_deg": 0.05758498430909144,
+      "max_roll_deg": 0.391072771261126,
+      "max_pitch_deg": 3.967691125687555,
+      "max_motor_command": 0.48066480888649604,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011053089643167972,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.00899149302245346,
+      "imu_samples": 5746,
+      "flow_samples": 575,
+      "flow_invalid": 0,
+      "tof_samples": 1150,
+      "tof_invalid": 84,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    },
+    {
+      "name": "rate_flow_100hz",
+      "description": "flow rate 100 Hz (others baseline)",
+      "model_file": "quadrotor_m4a.xml",
+      "seed": 104,
+      "initial_yaw_deg": 0.0,
+      "plant": {
+        "mass_scale": 1.0,
+        "inertia_scale": 1.0,
+        "motor_effectiveness": [
+          1.0,
+          1.0,
+          1.0,
+          1.0
+        ],
+        "motor_tau": null,
+        "drag": null
+      },
+      "imu": {
+        "rate_hz": 250.0,
+        "gyro_noise_sigma": 0.002,
+        "gyro_bias": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "accel_noise_sigma": 0.05,
+        "accel_bias": [
+          0.0,
+          0.0,
+          0.0
+        ]
+      },
+      "flow": {
+        "rate_hz": 100.0,
+        "noise_sigma": 0.03,
+        "scale": 1.0,
+        "bias": [
+          0.0,
+          0.0
+        ],
+        "latency": 0.0,
+        "dropouts": []
+      },
+      "tof": {
+        "rate_hz": 50.0,
+        "noise_sigma": 0.01,
+        "bias": 0.0,
+        "latency": 0.0,
+        "dropouts": [],
+        "min_range": 0.05,
+        "max_range": 8.0
+      },
+      "estimator": {
+        "alpha_flow": 0.35,
+        "alpha_tof": 0.5,
+        "imu_stale_s": 0.05,
+        "flow_stale_s": 0.5,
+        "tof_stale_s": 0.5
+      },
+      "mission": {
+        "takeoff_altitude": 1.5,
+        "takeoff_altitude_tolerance": 0.1,
+        "takeoff_vertical_speed_tolerance": 0.12,
+        "settle_duration": 1.0,
+        "settle_horizontal_speed_tolerance": 0.15,
+        "forward_distance": 5.0,
+        "max_forward_speed": 0.8,
+        "minimum_approach_speed": 0.05,
+        "slowdown_distance": 2.0,
+        "arrival_threshold": 0.02,
+        "brake_speed_threshold": 0.2,
+        "brake_hold_duration": 0.4,
+        "hover_duration": 1.0,
+        "velocity_command_limit": 1.0,
+        "takeoff_timeout": 8.0,
+        "settle_timeout": 4.0,
+        "forward_timeout": 15.0,
+        "brake_timeout": 4.0,
+        "hover_timeout": 3.0,
+        "land_timeout": 10.0
+      },
+      "mission_result": "DONE",
+      "failure_reason": null,
+      "takeoff_time": 3.971999999999784,
+      "settle_time": 1.00199999999989,
+      "forward_time": 8.586000000001523,
+      "brake_time": 0.40200000000013425,
+      "hover_time": 1.000000000000334,
+      "land_time": 8.001999999996485,
+      "total_time": 22.96399999999815,
+      "est_forward_at_brake": 4.980347344034726,
+      "truth_forward_at_brake": 4.9609237623080045,
+      "est_forward_at_land": 5.095092017262018,
+      "truth_forward_at_land": 5.075624998128331,
+      "est_lateral_at_land": -0.0010118572057280493,
+      "truth_lateral_at_land": 0.006689621751575724,
+      "truth_braking_distance": 0.05169770695448772,
+      "est_final_xyz": [
+        5.08849592949438,
+        0.0038367523372605833,
+        0.017541926564190194
+      ],
+      "truth_final_forward_lateral": [
+        5.075291518391966,
+        0.0015605474172626747
+      ],
+      "truth_start_position_xy": [
+        0.0,
+        0.0
+      ],
+      "truth_final_position_xy": [
+        5.075291518391966,
+        0.0015605474172626747
+      ],
+      "horizontal_position_rms_error": 0.017723992988379976,
+      "horizontal_position_max_error": 0.02508889063080929,
+      "horizontal_position_final_error": 0.013399163458939718,
+      "altitude_rms_error": 0.006382220803842669,
+      "altitude_max_error": 0.06234836321880664,
+      "velocity_rms_error": 0.021887490520387985,
+      "velocity_max_error": 0.054553506487530504,
+      "max_yaw_error_deg": 0.04865112820727493,
+      "final_yaw_error_deg": 0.029948142946235018,
+      "max_roll_deg": 0.20853342615595166,
+      "max_pitch_deg": 3.851936097908555,
+      "max_motor_command": 0.47941161993347214,
+      "min_motor_command": 0.0,
+      "saturation_fraction": 0.011060790802995994,
+      "landing_success": true,
+      "has_nan_or_inf": false,
+      "min_altitude": 0.010540631825630123,
+      "imu_samples": 5742,
+      "flow_samples": 2297,
+      "flow_invalid": 0,
+      "tof_samples": 1149,
+      "tof_invalid": 90,
+      "unhealthy_transitions": 1,
+      "estimator_unhealthy_abort": false,
+      "passed": true,
+      "reasons": [],
+      "micro": {
+        "mass_kg": 0.18,
+        "wheelbase_m": 0.12,
+        "thrust_to_weight_max": 2.5,
+        "motor_mass_kg": 0.008,
+        "body_length_m": 0.06,
+        "body_width_m": 0.04,
+        "body_height_m": 0.025,
+        "com_offset_xyz_m": [
+          0.0,
+          0.0,
+          0.0
+        ],
+        "yaw_torque_per_thrust": 0.018,
+        "motor_kv": 9500,
+        "prop_diameter_in": 2.5,
+        "battery_cells": 3
+      }
+    }
+  ]
+}

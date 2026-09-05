@@ -1,0 +1,76 @@
+<mujoco model="rm27_micro_quadrotor_m4a">
+  <!-- M4-A micro-UAV plant: RM27 direction, 180 g / 120 mm X quad.
+
+       This model changes ONLY mass, geometry, inertia and thrust authority
+       relative to models/quadrotor.xml. Motor/prop/battery realism
+       (1103 9500 KV + 2"/2.5" + 2S/3S) is NOT validated here -- max thrust
+       comes from an assumed thrust-to-weight ratio of 2.5
+       (ENGINEERING_ESTIMATE, see m4_params.py provenance table).
+
+       Conventions are identical to the M0 model:
+       * body frame +X nose, +Y left, +Z up
+       * motor order FL/FR/RR/RL, X layout
+       * yaw reaction torque gear +-0.018 N*m/N (FL/RR +, FR/RL -)
+       * ctrl = per-motor thrust in N
+       * 500 Hz RK4 physics
+  -->
+  <compiler angle="degree" autolimits="true"/>
+  <option timestep="0.002" gravity="0 0 -9.81" integrator="RK4"/>
+
+  <visual>
+    <headlight ambient="0.35 0.35 0.35" diffuse="0.75 0.75 0.75" specular="0.2 0.2 0.2"/>
+    <rgba haze="0.15 0.25 0.35 1"/>
+    <global azimuth="135" elevation="-22"/>
+  </visual>
+
+  <asset>
+    <texture name="sky" type="skybox" builtin="gradient" rgb1="0.18 0.28 0.40" rgb2="0.02 0.03 0.05" width="512" height="3072"/>
+    <texture name="grid" type="2d" builtin="checker" rgb1="0.25 0.25 0.25" rgb2="0.35 0.35 0.35" width="512" height="512"/>
+    <material name="ground_material" texture="grid" texrepeat="10 10" reflectance="0.08"/>
+    <material name="carbon" rgba="0.10 0.12 0.14 1"/>
+    <material name="front" rgba="0.90 0.18 0.12 1"/>
+    <material name="rear" rgba="0.15 0.40 0.90 1"/>
+  </asset>
+
+  <worldbody>
+    <light pos="0 0 5" dir="0 0 -1" directional="true"/>
+    <geom name="ground" type="plane" size="12 12 0.1" material="ground_material" friction="1 0.005 0.0001"/>
+
+    <!-- 機體座標：+X 朝紅色機鼻、+Y 朝左、+Z 朝上；與 M0-M3 相同。 -->
+    <body name="quadrotor" pos="0 0 0.12">
+      <freejoint name="root"/>
+      <!-- mass 0.180 kg (ENGINEERING_ESTIMATE, RM27 target class).
+           diaginertia from m4_params.compute_inertia(M4A_NOMINAL):
+           central 60x40x25 mm box (0.148 kg) + 4x 8 g motor point masses
+           at (+-0.0424264, +-0.0424264, 0). -->
+      <inertial pos="0 0 0" mass="0.180" diaginertia="8.5041666667e-5 1.0970833333e-4 1.7933333333e-4"/>
+
+      <geom name="fuselage" type="box" size="0.030 0.020 0.0125" material="carbon"/>
+      <geom name="arm_fl_rr" type="capsule" fromto="-0.0424264068712 -0.0424264068712 0 0.0424264068712 0.0424264068712 0" size="0.004" material="carbon"/>
+      <geom name="arm_fr_rl" type="capsule" fromto="-0.0424264068712 0.0424264068712 0 0.0424264068712 -0.0424264068712 0" size="0.004" material="carbon"/>
+
+      <geom name="nose" type="box" pos="0.036 0 0" size="0.010 0.014 0.007" material="front"/>
+
+      <!-- 2.5 吋槳外觀（半徑 31 mm）；力仍施加在同位置 rotor_*_site。 -->
+      <geom name="prop_fl" type="cylinder" pos="0.0424264068712 0.0424264068712 0.012" size="0.031 0.001" material="front" contype="0" conaffinity="0"/>
+      <geom name="prop_fr" type="cylinder" pos="0.0424264068712 -0.0424264068712 0.012" size="0.031 0.001" material="front" contype="0" conaffinity="0"/>
+      <geom name="prop_rr" type="cylinder" pos="-0.0424264068712 -0.0424264068712 0.012" size="0.031 0.001" material="rear" contype="0" conaffinity="0"/>
+      <geom name="prop_rl" type="cylinder" pos="-0.0424264068712 0.0424264068712 0.012" size="0.031 0.001" material="rear" contype="0" conaffinity="0"/>
+
+      <!-- 120 mm 對角 wheelbase：|x|=|y|=0.120/(2*sqrt(2))=0.0424264 m。 -->
+      <site name="rotor_fl_site" pos="0.0424264068712 0.0424264068712 0.012" size="0.006" rgba="1 0.3 0.2 1"/>
+      <site name="rotor_fr_site" pos="0.0424264068712 -0.0424264068712 0.012" size="0.006" rgba="1 0.3 0.2 1"/>
+      <site name="rotor_rr_site" pos="-0.0424264068712 -0.0424264068712 0.012" size="0.006" rgba="0.2 0.5 1 1"/>
+      <site name="rotor_rl_site" pos="-0.0424264068712 0.0424264068712 0.012" size="0.006" rgba="0.2 0.5 1 1"/>
+    </body>
+  </worldbody>
+
+  <!-- ctrlrange 上限 1.103625 N = 2.5 * 0.180 * 9.81 / 4，來自假設的
+       T/W = 2.5（ENGINEERING_ESTIMATE），不是 1103 馬達實測值。 -->
+  <actuator>
+    <motor name="rotor_fl" site="rotor_fl_site" gear="0 0 1 0 0 0.018" ctrlrange="0 1.103625"/>
+    <motor name="rotor_fr" site="rotor_fr_site" gear="0 0 1 0 0 -0.018" ctrlrange="0 1.103625"/>
+    <motor name="rotor_rr" site="rotor_rr_site" gear="0 0 1 0 0 0.018" ctrlrange="0 1.103625"/>
+    <motor name="rotor_rl" site="rotor_rl_site" gear="0 0 1 0 0 -0.018" ctrlrange="0 1.103625"/>
+  </actuator>
+</mujoco>

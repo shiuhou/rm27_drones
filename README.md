@@ -25,7 +25,7 @@ Pygame 是唯一飛行輸入視窗。MuJoCo Viewer 只負責顯示模擬與相�
 大量第三方 vendored 套件；GitHub 單檔 100 MB 上限。這些 SITL/Gazebo
 產物日後適合獨立成一個 `rm_uav_sitl` repo。
 
-## Milestone 進程（M0–M3 已驗證）
+## Milestone 進程（M0–M4-A 已驗證）
 
 | Milestone | 內容 | 驗證 |
 |---|---|---|
@@ -33,15 +33,16 @@ Pygame 是唯一飛行輸入視窗。MuJoCo Viewer 只負責顯示模擬與相�
 | M1 | 溫和 Sim-to-Real robustness：馬達一階延遲（40 ms）、流體阻力、質量/慣量 ±10%、馬達效率不一致、seeded 量測雜訊；z 軸小積分項 | `m1_benchmark.py` PASS（10 cases） |
 | M2 | 自主任務：起飛 → 前進 5 m（相對起飛航向）→ 煞車 → 懸停 → 降落；**mission 只看 measured state，ground truth 只用於評分** | `m2_benchmark.py` PASS（12 cases） |
 | M3 | GPS-denied 定位：IMU（250 Hz）+ optical-flow-like 速度（50 Hz）+ ToF 高度（50 Hz）→ complementary predict/correct estimator → EstimatedState 驅動 mission 與 controller；truth 結構性隔離 | `m3_benchmark.py` PASS（11 cases） |
+| M4-A | RM27 方向微型機 plant：180 g / 120 mm X quad，質量/幾何/慣量/推力餘裕（T/W 2.5 假設）縮放；autonomy stack 不變；attitude 增益依慣量比縮放（必要，見下文） | `m4_benchmark.py` PASS（11 A cases + 4 rate cases） |
 
-驗證狀態：`python -m pytest -q` → **134 passed**；上述四個 benchmark
+驗證狀態：`python -m pytest -q` → **167 passed**；上述五個 benchmark
 全部 PASS。Git 歷史即里程碑封存：M0 `5631a1f` → M1 `ad152a7` →
-M2 `7789a81` → M3 `2be0029`。
+M2 `7789a81` → M3 `2be0029`（M4-A 待 review 後封存）。
 
-下一步（M4-A）：把 1 kg 通用機換成 RM27 方向的 150–200 g / 120 mm
-wheelbase 微型機 plant（質量/幾何/慣量/推力餘裕縮放），autonomy stack
-維持不變。注意：1103 9500 KV + 2"/2.5" + 2S/3S 的推力/電流/轉速
-**尚未經實測驗證**，M4-A 只用明確標註的工程估計值。
+下一步（M4-B，待 review 後開始）：馬達/槳/電池/COM 細節 realism——
+馬達延遲掃描、2S vs 3S 推力包線、2" vs 2.5" 推力曲線、COM offset、
+微型機 drag fitting。這些需要真實量測數據，M4-A 全部標為
+NEEDS_MEASUREMENT。
 
 ## 專案結構
 
@@ -49,7 +50,8 @@ wheelbase 微型機 plant（質量/幾何/慣量/推力餘裕縮放），autonom
 .
 ├── models/
 │   ├── quadrotor.xml          # M0 理想模型：1 kg X 型四旋翼與四個 site actuators
-│   └── quadrotor_m1.xml       # M1 模型：filterexact 馬達延遲 + MuJoCo 流體阻力
+│   ├── quadrotor_m1.xml       # M1 模型：filterexact 馬達延遲 + MuJoCo 流體阻力
+│   └── quadrotor_m4a.xml      # M4-A 微型機模型：180 g / 120 mm X quad（T/W 2.5 假設）
 ├── fly.py                     # 核心位置/SO(3)姿態控制器與相容 hover CLI
 ├── simulator.py               # MuJoCo、flight state machine、IPC server
 ├── pygame_controller.py       # 獨立 Pygame UI、鍵盤焦點與 IPC client
@@ -64,6 +66,9 @@ wheelbase 微型機 plant（質量/幾何/慣量/推力餘裕縮放），autonom
 ├── m3_sensors.py              # M3 感測器模型：IMU / optical-flow-like 速度 / ToF 高度（非 datasheet 數值）
 ├── m3_estimator.py            # M3 定位估計器：IMU 預測 + flow/ToF 修正（complementary，非 Kalman）
 ├── m3_benchmark.py            # M3 定位任務 benchmark（輸出 m3_localization_report.json）
+├── m4_params.py               # M4-A micro-UAV 參數 + provenance + 慣量元件模型 + 慣量比增益縮放
+├── m4a_hover_benchmark.py     # M4-A 起飛/懸停/降落 benchmark（輸出 m4a_hover_report.json）
+├── m4_benchmark.py            # M4-A 任務矩陣 + 感測器速率實驗（輸出 m4_micro_uav_report.json）
 ├── requirements.txt
 ├── pytest.ini
 └── tests/
@@ -84,7 +89,10 @@ wheelbase 微型機 plant（質量/幾何/慣量/推力餘裕縮放），autonom
     ├── test_m3_sensors.py         # M3 感測器：符號慣例、body-frame 轉換、seed、rate、latency、dropout
     ├── test_m3_estimator.py       # M3 估計器：積分、scale/bias 漂移、dropout health、quaternion 合法性
     ├── test_m3_truth_isolation.py # M3 結構性 truth 隔離：stub 估計器證明 mission/controller 只吃估計值
-    └── test_m3_benchmark.py       # M3 驗收：11 個 case + 長斷訊失敗測試
+    ├── test_m3_benchmark.py       # M3 驗收：11 個 case + 長斷訊失敗測試
+    ├── test_m4_micro_physics.py   # M4-A 物理：質量/幾何/慣量/mixer 方向/馬達順序/增益縮放
+    ├── test_m4_hover.py           # M4-A 驗收：起飛 + 5 s 懸停 + 降落
+    └── test_m4_benchmark.py       # M4-A 驗收：case 矩陣結構 + A0 全程任務
 ```
 
 ## 建議閱讀順序
@@ -490,6 +498,78 @@ mission DONE、LAND 前 truth 前進位移 4.5–5.5 m、|truth 橫向|
 < 20%、無 NaN/Inf、無穿地、estimator 在主動飛行階段全程 healthy、
 成功物理降落。
 
+## M4-A 微型機 plant：質量 / 幾何 / 慣量 / 推力餘裕縮放
+
+M0 驗證理想 plant/controller；M1 加 plant realism；M2 做有限任務；
+M3 用估計導航狀態飛全程。M4-A 則把 **plant 本身**換成 RM27 方向的
+微型機：**180 g、120 mm 對角 wheelbase、X 配置**
+（`models/quadrotor_m4a.xml` + `m4_params.py`），而 M2 mission、
+M3 estimator、感測器速率（IMU 250 / Flow 50 / ToF 50 Hz）、truth
+隔離、高層速度介面全部不變——這是 controlled experiment：性能差異
+只能來自 plant。
+
+> **警告：1103 9500 KV + 2"/2.5" 槳 + 2S/3S 的推力 / 電流 / 轉速
+> 在 M4-A 尚未經實測驗證。** 最大推力來自假設的 thrust-to-weight
+> ratio（nominal 2.5，sensitivity 2.0 / 3.0），屬
+> ENGINEERING_ESTIMATE。KV × 電壓 **不是** 實際帶槳轉速。
+
+### 參數 provenance
+
+`m4_params.provenance_table()` 為每個重要參數標註 MEASURED /
+DATASHEET / CAD_DERIVED / CALCULATED / ENGINEERING_ESTIMATE /
+USER_PROVIDED / DESIGN_CHOICE 與信心等級（DATASHEET 僅用於 repo 內
+真的有 datasheet/規格來源的參數）；完整表隨 benchmark 寫入
+`m4_micro_uav_report.json`。核心數字：
+
+| 參數 | 值 | provenance | 說明 |
+|---|---|---|---|
+| mass | 0.180 kg | ENGINEERING_ESTIMATE | RM27 目標 150–200 g，AUW 未秤 |
+| wheelbase | 0.120 m | ENGINEERING_ESTIMATE | 100–140 mm 設計範圍中值 |
+| hover thrust/motor | 0.44145 N | CALCULATED | m·g/4 |
+| max thrust/motor | 1.103625 N | ENGINEERING_ESTIMATE | T/W=2.5 假設 × m·g/4，**非馬達實測** |
+| inertia | (8.50, 10.97, 17.93)e-5 kg·m² | CALCULATED | 元件法（見下），輸入皆估計 |
+| motor KV | 9500 RPM/V | USER_PROVIDED | 使用者選定 1103，repo 內無 datasheet 佐證；KV 不決定推力 |
+| prop / battery | 2.0–2.5 in / 2S–3S | DESIGN_CHOICE | 候選方向，M4-A 僅為 metadata |
+
+### 慣量模型（非線性縮放舊值）
+
+中央 60×40×25 mm 方塊（0.148 kg = 總重 − 4×8 g 馬達）+ 四個馬達
+point mass 於 (±a, ±a, 0)，a = wheelbase/(2√2) = 0.04243 m。方塊用
+I = m(d₁²+d₂²)/12，馬達用 parallel-axis point mass。縮放律
+I ∝ m·L² 由測試鎖定（geometrically_scaled）。
+
+### 控制器：唯一必要的更動（有失敗證據）
+
+第一次 M4-A hover benchmark 用原增益**直接炸掉**：80 ms 內姿態發散、
+衝過 10 m 安全上限。根因不是物理或座標（M4 物理測試全過），而是
+離散穩定性：M0 attitude_kd=0.18 作用在 Ixx=8.5e-5 kg·m²、500 Hz 下，
+顯式阻尼 pole 1 − kd·dt/I = **−3.24**（|pole|>1，每步放大 3.24 倍）。
+
+修正是 **analytical inertia-based gain scaling**（model-derived gain
+rescaling）：`micro_controller_parameters()` 把 attitude_kp /
+attitude_kd / max_torque 依慣量比 I_micro/I_M0 縮放，閉迴路頻寬與阻尼
+與 M0 **數學上完全相同**；位置迴路增益不變（thrust=m·a 對質量不變）。
+舊預設增益不動，M0–M3 regression 全部維持 PASS。
+
+### 感測器速率壓力實驗（one-factor-at-a-time）
+
+微型機動態更快，原本可能暴露取樣率不足。實驗：IMU 125/250/500 Hz、
+Flow 25/50/100 Hz（ToF 固定 50 Hz）。結果四個變體全部 DONE/PASS，
+posRMS 皆 ~0.02 m —— **250/50/50 Hz 對 180 g plant 仍然足夠**，
+M3 預設值不變。
+
+### 結果與報告
+
+11 個 A case（nominal / noise / combined / 質量 150–200 g /
+wheelbase 100–140 mm / T/W 2.0–3.0 / yaw 90°）全部 DONE + PASS。
+因為閉迴路動態被慣量比縮放保留，任務指標與 M3 通用機幾乎一致
+（A1: fwd 5.09/5.09 m, posRMS 0.014 m, tilt 3.9°）；差異主要出現在
+**馬達指令**（M3 case1 峰值 2.68 N → M4-A A1 0.48 N ≈ 質量比）。
+Combined case 的 flow scale 1.01 造成預期的 est長/truth短 分歧
+（A2: est 5.09 m vs truth 4.94 m）。機讀報告：
+`m4_micro_uav_report.json`；hover benchmark：`m4a_hover_benchmark.py`
+（起飛 4.47 s、overshoot 0.143 m、hover RMS 0.013 m、落地成功）。
+
 ## M1 非理想 robustness
 
 M0 是理想剛體/控制 baseline；M1 問的是：「當 plant 與量測不再完美時，
@@ -655,6 +735,9 @@ policy 或 companion computer 只需要輸出 (vx, vy, vz, yaw_rate)，經過
 
 ## 目前限制
 
+- M4-A 微型機的馬達/槳/電池性能是**假設值**（T/W ratio），不是
+  1103 9500 KV + 2"/2.5" + 2S/3S 的實測數據；真實推力包線、電流、
+  馬達響應、COM offset 屬 M4-B（NEEDS_MEASUREMENT）。
 - M3 已有最小定位估計器（IMU 積分 + flow/ToF 修正），但不是 EKF：
   沒有 bias 估計、沒有磁力計/航向觀測、感測器模型不含真實 optical
   flow 的紋理/光照依賴或 ToF 的表面材質依賴。

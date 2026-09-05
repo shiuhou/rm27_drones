@@ -46,6 +46,7 @@ from m2_mission import (
 )
 from m3_estimator import EstimatorConfig, LocalizationPipeline
 from m3_sensors import FlowConfig, IMUConfig, ToFConfig
+from m4_params import MicroUAVConfig
 from simulator import FlightParameters, QuadrotorSimulation
 
 
@@ -77,6 +78,23 @@ HEALTH_GATED_PHASES = frozenset(
 # period). A sensor that NEVER delivers still fails via TAKEOFF_TIMEOUT
 # because the estimated altitude never climbs.
 HEALTH_STARTUP_GRACE_S = 0.25
+
+
+@dataclass(frozen=True)
+class M3Gates:
+    """Pass gates for one benchmark case. Defaults are the M3 gates;
+    M4-A overrides lateral/tilt per its own milestone criteria."""
+
+    forward_min: float = GATE_FORWARD_MIN
+    forward_max: float = GATE_FORWARD_MAX
+    lateral: float = GATE_LATERAL
+    altitude_rms: float = GATE_ALTITUDE_RMS
+    tilt_deg: float = GATE_TILT_DEG
+    saturation_fraction: float = GATE_SATURATION_FRACTION
+    # Ground-penetration floor. Calibrated to vehicle size: the 1 kg M0
+    # fuselage rests at ~0.035 m, the M4-A micro fuselage (12.5 mm half
+    # height) rests at ~0.011 m, so M4-A must lower this floor.
+    min_altitude_floor: float = MIN_ALTITUDE_FLOOR
 
 IDEAL_IMU = IMUConfig(gyro_noise_sigma=0.0, accel_noise_sigma=0.0)
 IDEAL_FLOW = FlowConfig(noise_sigma=0.0)
@@ -125,6 +143,10 @@ class M3Case:
     estimator: EstimatorConfig = field(default_factory=EstimatorConfig)
     seed: int = 0
     initial_yaw_deg: float = 0.0
+    # M4-A: micro-UAV plant variant (None = use the XML as-is).
+    micro: MicroUAVConfig | None = None
+    # M4-A: per-case gate override (None = M3 default gates).
+    gates: M3Gates | None = None
 
 
 M3_CASES: tuple[M3Case, ...] = (
@@ -221,6 +243,8 @@ class M3CaseReport:
     estimator_unhealthy_abort: bool
     passed: bool
     reasons: tuple[str, ...] = field(default_factory=tuple)
+    # M4-A: echoed micro-UAV config (None for the generic 1 kg plant).
+    micro: dict | None = None
 
 
 def _rms(values: list[float]) -> float:
@@ -235,6 +259,7 @@ def run_m3_case(
     max_total_time: float = MAX_TOTAL_TIME,
 ) -> M3CaseReport:
     config = mission_config or MissionConfig()
+    gates = case.gates or M3Gates()
     parameters = FlightParameters(takeoff_height=config.takeoff_altitude)
     if not math.isclose(
         config.velocity_command_limit, parameters.max_horizontal_speed
@@ -256,6 +281,7 @@ def run_m3_case(
             physics_dt,
             case.seed,
         ),
+        micro_config=case.micro,
     )
     pipeline: LocalizationPipeline = simulation.localization
     mission = MissionStateMachine(config)
@@ -437,28 +463,28 @@ def run_m3_case(
     saturation_fraction = (
         saturated_steps / total_steps if total_steps else math.inf
     )
-    ground_penetration = min_altitude < MIN_ALTITUDE_FLOOR
+    ground_penetration = min_altitude < gates.min_altitude_floor
     landing_success = mission_done and truth_final_z < 0.15
     max_tilt = max(max_roll_deg, max_pitch_deg)
 
     reasons: list[str] = []
     if not mission_done:
         reasons.append(f"mission {mission_result}: {failure_reason}")
-    if not (GATE_FORWARD_MIN <= truth_forward_at_land <= GATE_FORWARD_MAX):
+    if not (gates.forward_min <= truth_forward_at_land <= gates.forward_max):
         reasons.append(
             f"truth forward {truth_forward_at_land:.3f} m outside "
-            f"[{GATE_FORWARD_MIN}, {GATE_FORWARD_MAX}]"
+            f"[{gates.forward_min}, {gates.forward_max}]"
         )
-    if not math.isnan(truth_lateral_at_land) and abs(truth_lateral_at_land) > GATE_LATERAL:
+    if not math.isnan(truth_lateral_at_land) and abs(truth_lateral_at_land) > gates.lateral:
         reasons.append(f"truth lateral {truth_lateral_at_land:.3f} m")
     altitude_rms = _rms(altitude_errors)
-    if altitude_rms > GATE_ALTITUDE_RMS:
+    if altitude_rms > gates.altitude_rms:
         reasons.append(f"altitude est-vs-truth RMS {altitude_rms:.3f} m")
     if not landing_success:
         reasons.append("landing did not complete with disarm near ground")
-    if max_tilt > GATE_TILT_DEG:
+    if max_tilt > gates.tilt_deg:
         reasons.append(f"max tilt {max_tilt:.2f} deg")
-    if saturation_fraction > GATE_SATURATION_FRACTION:
+    if saturation_fraction > gates.saturation_fraction:
         reasons.append(f"saturation fraction {saturation_fraction:.2f}")
     if has_nan_or_inf:
         reasons.append("NaN/Inf or simulation safety abort")
@@ -527,6 +553,7 @@ def run_m3_case(
         estimator_unhealthy_abort=estimator_unhealthy_abort,
         passed=not reasons,
         reasons=tuple(reasons),
+        micro=asdict(case.micro) if case.micro is not None else None,
     )
 
 

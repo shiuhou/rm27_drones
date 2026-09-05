@@ -149,7 +149,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case1_nominal_noise",
@@ -291,7 +292,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case2_flow_scale",
@@ -433,7 +435,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case3_flow_bias",
@@ -575,7 +578,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case4_flow_dropout",
@@ -722,7 +726,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case5_tof_dropout",
@@ -869,7 +874,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case6_gyro_z_bias",
@@ -1011,7 +1017,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case7_sensor_latency",
@@ -1153,7 +1160,8 @@
       "unhealthy_transitions": 2,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case8_combined",
@@ -1305,7 +1313,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case9_yaw90_ideal",
@@ -1447,7 +1456,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     },
     {
       "name": "case10_yaw90_combined",
@@ -1599,7 +1609,8 @@
       "unhealthy_transitions": 1,
       "estimator_unhealthy_abort": false,
       "passed": true,
-      "reasons": []
+      "reasons": [],
+      "micro": null
     }
   ]
 }
