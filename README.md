@@ -69,6 +69,8 @@ NEEDS_MEASUREMENT。
 ├── m4_params.py               # M4-A micro-UAV 參數 + provenance + 慣量元件模型 + 慣量比增益縮放
 ├── m4a_hover_benchmark.py     # M4-A 起飛/懸停/降落 benchmark（輸出 m4a_hover_report.json）
 ├── m4_benchmark.py            # M4-A 任務矩陣 + 感測器速率實驗（輸出 m4_micro_uav_report.json）
+├── analyze_hardware_measurements.py  # M4-B 前置：thrust-stand/airframe CSV 驗證與分析（不餵給 plant）
+├── hardware_measurements/     # 原始量測 CSV 放置處（analyzer 只讀不寫；analysis/ 存輸出）
 ├── requirements.txt
 ├── pytest.ini
 └── tests/

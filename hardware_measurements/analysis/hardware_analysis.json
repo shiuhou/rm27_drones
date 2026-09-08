@@ -1,0 +1,33 @@
+{
+  "milestone": "M4-B data ingestion (not yet used by the plant)",
+  "measurements_dir": "hardware_measurements",
+  "gram_force_to_newton": 0.00980665,
+  "airframe": {
+    "status": "NEEDS_MEASUREMENT",
+    "auw_kg": null
+  },
+  "combinations": {
+    "2s_2in": {
+      "status": "NEEDS_MEASUREMENT",
+      "expected_file": "thrust_2s_2in.csv"
+    },
+    "2s_2p5in": {
+      "status": "NEEDS_MEASUREMENT",
+      "expected_file": "thrust_2s_2p5in.csv"
+    },
+    "3s_2in": {
+      "status": "NEEDS_MEASUREMENT",
+      "expected_file": "thrust_3s_2in.csv"
+    },
+    "3s_2p5in": {
+      "status": "NEEDS_MEASUREMENT",
+      "expected_file": "thrust_3s_2p5in.csv"
+    }
+  },
+  "missing": [
+    "2s_2in",
+    "2s_2p5in",
+    "3s_2in",
+    "3s_2p5in"
+  ]
+}
