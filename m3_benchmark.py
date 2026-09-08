@@ -253,13 +253,46 @@ def _rms(values: list[float]) -> float:
     return math.sqrt(sum(v * v for v in values) / len(values))
 
 
-def run_m3_case(
-    case: M3Case,
-    mission_config: MissionConfig | None = None,
-    max_total_time: float = MAX_TOTAL_TIME,
-) -> M3CaseReport:
+@dataclass
+class MissionStack:
+    """Fully wired mission stack: MuJoCo sim + M3 sensors/estimator + M2
+    mission state machine + truth scoring frame.
+
+    Shared by run_m3_case (headless benchmark) and m4_viewer (interactive
+    viewer) so both run the EXACT same construction and command path.
+    `truth_frame`/`truth_yaw0` are scoring-only; the mission and controller
+    never see them.
+    """
+
+    simulation: QuadrotorSimulation
+    pipeline: LocalizationPipeline
+    mission: MissionStateMachine
+    mission_config: MissionConfig
+    truth_frame: MissionFrame
+    truth_yaw0: float
+    sequence: int = 0
+
+    def send(self, command) -> None:
+        """Deliver a MissionStateMachine command through the real IPC path."""
+
+        simulation = self.simulation
+        simulation.accept_command(
+            CommandPacket(
+                PROTOCOL_VERSION, self.sequence, simulation.data.time,
+                command.action, command.forward, command.right,
+                command.up, command.yaw,
+            ),
+            simulation.data.time,
+        )
+        self.sequence += 1
+
+
+def build_mission_stack(
+    case: M3Case, mission_config: MissionConfig | None = None
+) -> MissionStack:
+    """Construct the production mission stack for a benchmark case."""
+
     config = mission_config or MissionConfig()
-    gates = case.gates or M3Gates()
     parameters = FlightParameters(takeoff_height=config.takeoff_altitude)
     if not math.isclose(
         config.velocity_command_limit, parameters.max_horizontal_speed
@@ -290,28 +323,39 @@ def run_m3_case(
     truth0 = simulation.controller.read_state(simulation.data)
     truth_yaw0 = float(rotation_to_euler(truth0.rotation_body_to_world)[2])
     truth_frame = MissionFrame(truth0.position[:2].copy(), truth_yaw0)
+
+    return MissionStack(
+        simulation=simulation,
+        pipeline=pipeline,
+        mission=mission,
+        mission_config=config,
+        truth_frame=truth_frame,
+        truth_yaw0=truth_yaw0,
+    )
+
+
+def run_m3_case(
+    case: M3Case,
+    mission_config: MissionConfig | None = None,
+    max_total_time: float = MAX_TOTAL_TIME,
+) -> M3CaseReport:
+    gates = case.gates or M3Gates()
+    stack = build_mission_stack(case, mission_config)
+    config = stack.mission_config
+    simulation = stack.simulation
+    pipeline = stack.pipeline
+    mission = stack.mission
+    truth_frame = stack.truth_frame
+    truth_yaw0 = stack.truth_yaw0
+    truth0 = simulation.controller.read_state(simulation.data)
     cos0, sin0 = math.cos(truth_yaw0), math.sin(truth_yaw0)
-
-    sequence = 0
-
-    def send(command) -> None:
-        nonlocal sequence
-        simulation.accept_command(
-            CommandPacket(
-                PROTOCOL_VERSION, sequence, simulation.data.time,
-                command.action, command.forward, command.right,
-                command.up, command.yaw,
-            ),
-            simulation.data.time,
-        )
-        sequence += 1
 
     # Mission input is the ESTIMATED state. last_measured_state in
     # localization mode is exactly the estimator output.
     command = mission.start(
         simulation.last_measured_state, simulation.data.time
     )
-    send(command)
+    stack.send(command)
 
     min_altitude = math.inf
     max_roll_deg = 0.0
@@ -422,7 +466,7 @@ def run_m3_case(
                 "lateral": truth_lateral,
             }
             previous_phase = mission.phase
-        send(command)
+        stack.send(command)
 
         if mission.phase in (MissionPhase.DONE, MissionPhase.FAILED):
             break
