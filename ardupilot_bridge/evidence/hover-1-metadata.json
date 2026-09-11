@@ -1,0 +1,21 @@
+{
+  "command": [
+    "/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/ardupilot/build/sitl/bin/arducopter",
+    "--model",
+    "JSON:127.0.0.1",
+    "--rate",
+    "500",
+    "--speedup",
+    "5",
+    "--instance",
+    "20",
+    "--defaults",
+    "/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/ardupilot/Tools/autotest/default_params/copter.parm,/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/ardupilot/Tools/autotest/default_params/copter-X.parm,/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/mujoco_uav_ardupilot/ardupilot_bridge/hover.parm",
+    "--home",
+    "-35.363261,149.165230,584,0",
+    "--wipe"
+  ],
+  "baseline": "2be0029",
+  "ardupilot_commit": "96f98857f7fc4bd564fbbdc43c5f26114246369f",
+  "binary_sha256": "da030d364cf22c34403f7707d1a3d755263fd81dd59a9007b31e75538c0a9473"
+}

@@ -1,0 +1,40 @@
+{
+  "runs": [
+    {
+      "run": "field-flight-2",
+      "frames": 43058,
+      "state_sha256": "38cda2ebc622f0332b6e45c2b1ac0facbd03030be03238510608531aeb7e8636"
+    },
+    {
+      "run": "field-flight-final",
+      "frames": 43059,
+      "state_sha256": "1cdee972d73c681bace91e237e9509abd343be0434aa36f1ec5eaced0f931491"
+    }
+  ],
+  "identical": false,
+  "first_differences": {
+    "pwm": {
+      "frame": 33119,
+      "time": 66.24000000002702,
+      "a": [
+        1306,
+        1306,
+        1307,
+        1306
+      ],
+      "b": [
+        1307,
+        1306,
+        1307,
+        1307
+      ]
+    },
+    "state_sent": {
+      "frame": 33119,
+      "time": 66.24000000002702,
+      "a": null,
+      "b": null
+    }
+  },
+  "maximum_position_difference_m": 0.01779375268567558
+}

@@ -1,0 +1,357 @@
+[
+  {
+    "name": "floor_drop",
+    "passed": true,
+    "expected_prefix": "field__collision__ground",
+    "hit_geoms": [
+      "field__collision__ground"
+    ],
+    "first_contact": {
+      "time": 0.22600000000000017,
+      "pre_contact_velocity": [
+        0.0,
+        0.0,
+        -2.192256376240367
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__ground"
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "final_position": [
+      -12.0,
+      0.0,
+      0.0999056481981427
+    ],
+    "final_velocity": [
+      0.0,
+      0.0,
+      2.6974907264979256e-12
+    ],
+    "max_force_n": 302.72567880436605,
+    "min_distance_m": -0.01168874122029015,
+    "max_speed": 2.192256376240367,
+    "load_seconds": 0.4394547440169845,
+    "mean_mj_step_us": 63.92123733333333,
+    "p95_mj_step_us": 70.80855,
+    "mean_contacts": 0.9253333333333333,
+    "max_contacts": 1,
+    "physics_rtf": 31.288505721040696
+  },
+  {
+    "name": "central_drop",
+    "passed": true,
+    "expected_prefix": "field__collision__planar_",
+    "hit_geoms": [
+      "field__collision__planar_0022"
+    ],
+    "first_contact": {
+      "time": 0.22600000000000017,
+      "pre_contact_velocity": [
+        0.0,
+        0.0,
+        -2.192256376240367
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__planar_0022"
+      ],
+      "normal": [
+        1.4778637417363787e-16,
+        1.4778637417363787e-16,
+        -1.0
+      ]
+    },
+    "final_position": [
+      -1.4084307042384912e-14,
+      -4.542546810265373e-15,
+      0.399905649289151
+    ],
+    "final_velocity": [
+      -1.1502672848462966e-14,
+      -3.978017291112247e-15,
+      1.1210356641602136e-12
+    ],
+    "max_force_n": 302.72569132582424,
+    "min_distance_m": -0.01168874201208929,
+    "max_speed": 2.192256376240367,
+    "load_seconds": 0.4361247229971923,
+    "mean_mj_step_us": 70.61827199999999,
+    "p95_mj_step_us": 77.86549999999998,
+    "mean_contacts": 0.9253333333333333,
+    "max_contacts": 1,
+    "physics_rtf": 28.321282061390573
+  },
+  {
+    "name": "ramp_drop",
+    "passed": true,
+    "expected_prefix": "field__collision__planar_",
+    "hit_geoms": [
+      "field__collision__planar_0003",
+      "field__collision__planar_0054"
+    ],
+    "first_contact": {
+      "time": 0.35400000000000026,
+      "pre_contact_velocity": [
+        0.0,
+        0.0,
+        -3.4330974192048913
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__planar_0054"
+      ],
+      "normal": [
+        0.29211680854633776,
+        0.0,
+        -0.9563826484021457
+      ]
+    },
+    "final_position": [
+      -4.9325612506136185,
+      -6.9,
+      0.29990565915724293
+    ],
+    "final_velocity": [
+      -1.6225781399597368,
+      2.0040805305140065e-14,
+      3.0816694890961987e-07
+    ],
+    "max_force_n": 469.44075878404647,
+    "min_distance_m": -0.019161818026260213,
+    "max_speed": 3.4330974192048913,
+    "load_seconds": 0.3406316259934101,
+    "mean_mj_step_us": 67.22447600000001,
+    "p95_mj_step_us": 75.13325,
+    "mean_contacts": 0.8793333333333333,
+    "max_contacts": 1,
+    "physics_rtf": 29.751068643510138
+  },
+  {
+    "name": "deck_drop",
+    "passed": true,
+    "expected_prefix": "field__collision__commanding_northwest_platform",
+    "hit_geoms": [
+      "field__collision__commanding_northwest_platform"
+    ],
+    "first_contact": {
+      "time": 0.22600000000000017,
+      "pre_contact_velocity": [
+        0.0,
+        0.0,
+        -2.192256376240367
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__commanding_northwest_platform"
+      ],
+      "normal": [
+        0.0,
+        0.0,
+        -1.0
+      ]
+    },
+    "final_position": [
+      -9.55,
+      3.75,
+      0.5999056481981366
+    ],
+    "final_velocity": [
+      0.0,
+      0.0,
+      4.278866442225933e-12
+    ],
+    "max_force_n": 302.72567880436503,
+    "min_distance_m": -0.011688741220290094,
+    "max_speed": 2.192256376240367,
+    "load_seconds": 0.3147040879994165,
+    "mean_mj_step_us": 67.35956866666666,
+    "p95_mj_step_us": 70.0126,
+    "mean_contacts": 0.9253333333333333,
+    "max_contacts": 1,
+    "physics_rtf": 29.69140152748207
+  },
+  {
+    "name": "ramp_wall_lower",
+    "passed": true,
+    "expected_prefix": "field__collision__ramp_side_barrier_",
+    "hit_geoms": [
+      "field__collision__ramp_side_barrier_0002"
+    ],
+    "first_contact": {
+      "time": 0.9260000000000007,
+      "pre_contact_velocity": [
+        -0.1994643511186537,
+        0.1994643511186537,
+        0.0
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__ramp_side_barrier_0002"
+      ],
+      "normal": [
+        -0.7071068029706239,
+        0.7071067594024706,
+        0.0
+      ]
+    },
+    "final_position": [
+      -0.281973489364043,
+      0.2819735105501351,
+      0.5
+    ],
+    "final_velocity": [
+      0.02612823058677443,
+      -0.026128220350236972,
+      1.6937605263344696e-16
+    ],
+    "max_force_n": 30.134947594703412,
+    "min_distance_m": -0.0015035856793544217,
+    "max_speed": 0.28284106844307716,
+    "load_seconds": 0.3154921829991508,
+    "mean_mj_step_us": 68.00832466666667,
+    "p95_mj_step_us": 73.3008,
+    "mean_contacts": 0.02,
+    "max_contacts": 1,
+    "physics_rtf": 29.40816451225231,
+    "signed_final_side": 0.17922925280002522
+  },
+  {
+    "name": "ramp_wall_upper",
+    "passed": true,
+    "expected_prefix": "field__collision__ramp_side_barrier_",
+    "hit_geoms": [
+      "field__collision__ramp_side_barrier_0000"
+    ],
+    "first_contact": {
+      "time": 0.8660000000000007,
+      "pre_contact_velocity": [
+        -0.19949904678570085,
+        0.19949904678570085,
+        0.0
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__ramp_side_barrier_0000"
+      ],
+      "normal": [
+        -0.7010129316802381,
+        0.7010129559109057,
+        0.13100269181254398
+      ]
+    },
+    "final_position": [
+      -0.27008504023207636,
+      0.2700850278386074,
+      0.6530162903578365
+    ],
+    "final_velocity": [
+      0.025479173466943443,
+      -0.025479179288557394,
+      -0.031475046345772806
+    ],
+    "max_force_n": 37.89488746316584,
+    "min_distance_m": -0.0016232258365806024,
+    "max_speed": 0.28284106844307716,
+    "load_seconds": 0.3097440940036904,
+    "mean_mj_step_us": 65.91410666666667,
+    "p95_mj_step_us": 74.84034999999999,
+    "mean_contacts": 0.02,
+    "max_contacts": 1,
+    "physics_rtf": 30.34251848567368,
+    "signed_final_side": 0.18779564824557415
+  },
+  {
+    "name": "launch_wall",
+    "passed": true,
+    "expected_prefix": "field__collision__flight_ramp_barrier_",
+    "hit_geoms": [
+      "field__collision__flight_ramp_barrier_0006"
+    ],
+    "first_contact": {
+      "time": 1.6800000000000013,
+      "pre_contact_velocity": [
+        0.0,
+        -0.1990293640835466,
+        0.0
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__flight_ramp_barrier_0006"
+      ],
+      "normal": [
+        0.0,
+        -1.0,
+        0.0
+      ]
+    },
+    "final_position": [
+      -0.8,
+      -7.198438502472095,
+      0.5
+    ],
+    "final_velocity": [
+      1.8000128025834692e-16,
+      0.0289821456999116,
+      -2.2660002328788964e-50
+    ],
+    "max_force_n": 27.056479385289123,
+    "min_distance_m": -0.0011808296087879727,
+    "max_speed": 0.19999883749414826,
+    "load_seconds": 0.32862374000251293,
+    "mean_mj_step_us": 64.43202999999998,
+    "p95_mj_step_us": 70.3023,
+    "mean_contacts": 0.02,
+    "max_contacts": 1,
+    "physics_rtf": 31.040462329062123
+  },
+  {
+    "name": "highland_wall",
+    "passed": true,
+    "expected_prefix": "field__collision__side_highland_upper_",
+    "hit_geoms": [
+      "field__collision__side_highland_upper_0000"
+    ],
+    "first_contact": {
+      "time": 1.7060000000000013,
+      "pre_contact_velocity": [
+        -0.19901439821329966,
+        0.0,
+        0.0
+      ],
+      "geoms": [
+        "probe_geom",
+        "field__collision__side_highland_upper_0000"
+      ],
+      "normal": [
+        -1.0,
+        0.0,
+        0.0
+      ]
+    },
+    "final_position": [
+      -11.105906799052104,
+      5.6,
+      0.75
+    ],
+    "final_velocity": [
+      0.02779656463388362,
+      0.0,
+      0.0
+    ],
+    "max_force_n": 26.750335688115246,
+    "min_distance_m": -0.0011329674864416772,
+    "max_speed": 0.19999883749414826,
+    "load_seconds": 0.30059493600856513,
+    "mean_mj_step_us": 62.01663800000001,
+    "p95_mj_step_us": 72.88434999999998,
+    "mean_contacts": 0.02,
+    "max_contacts": 1,
+    "physics_rtf": 32.24941023084805
+  }
+]

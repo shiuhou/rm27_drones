@@ -1,0 +1,24 @@
+grid=555x302 spacing=0.05 valid_area=419.025m2
+largest false-solid owners:
+  field__collision__undulating_red_05: 0.500m2
+  field__collision__undulating_red_00: 0.500m2
+  field__collision__undulating_blue_09: 0.500m2
+  field__collision__undulating_blue_04: 0.500m2
+  field__collision__undulating_red_09: 0.400m2
+  field__collision__undulating_red_08: 0.400m2
+  field__collision__undulating_red_07: 0.400m2
+  field__collision__undulating_red_06: 0.400m2
+  field__collision__undulating_red_04: 0.400m2
+  field__collision__undulating_red_03: 0.400m2
+  field__collision__undulating_red_02: 0.400m2
+  field__collision__undulating_red_01: 0.400m2
+  field__collision__undulating_blue_08: 0.400m2
+  field__collision__undulating_blue_07: 0.400m2
+  field__collision__undulating_blue_06: 0.400m2
+  field__collision__undulating_blue_05: 0.400m2
+  field__collision__undulating_blue_03: 0.400m2
+  field__collision__undulating_blue_02: 0.400m2
+  field__collision__undulating_blue_01: 0.400m2
+  field__collision__undulating_blue_00: 0.400m2
+within_2cm=96.960% false_solid=8.493m2 missing_support=4.245m2 mae=0.399cm p95=0.000cm
+wrote /home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/mujoco_uav_ardupilot/rm_world/artifacts/upstream/collision_diff.png

@@ -1,0 +1,51 @@
+{
+  "field_only_idle": {
+    "compile_seconds": 0.47086192900314927,
+    "bodies": 4,
+    "geoms": 555,
+    "collision_geoms": 428,
+    "active_contacts": 0,
+    "samples": 5000,
+    "mean_us": 14.1948228,
+    "median_us": 13.512,
+    "p95_us": 19.158600000000007,
+    "physics_rtf": 140.896440073912
+  },
+  "field_with_resting_uav": {
+    "compile_seconds": 0.48051970699452795,
+    "bodies": 5,
+    "geoms": 563,
+    "mean_contacts": 4.0,
+    "samples": 5000,
+    "mean_us": 78.4262618,
+    "median_us": 77.183,
+    "p95_us": 83.02215000000001,
+    "physics_rtf": 25.50166174055742
+  },
+  "phases": {
+    "hover": {
+      "samples": 5001,
+      "mean_us": 80.30706298740253,
+      "median_us": 67.737,
+      "p95_us": 119.423,
+      "physics_rtf": 24.904409719400803,
+      "mean_contacts": 0.0,
+      "max_contacts": 0
+    },
+    "near_contact": {
+      "samples": 801,
+      "mean_us": 80.99582646691636,
+      "median_us": 72.401,
+      "p95_us": 115.535,
+      "physics_rtf": 24.69263031493261,
+      "mean_contacts": 0.7927590511860175,
+      "max_contacts": 4
+    }
+  },
+  "comparison": {
+    "frames_compared": 30088,
+    "max_position_difference_m": 0.02519436287592932,
+    "max_altitude_difference_m": 0.003210826260054575,
+    "standalone_sha256": "1218a5b380253f427ae1baf43a87706f198ddd63aa8e2f6ca7a871aadf9da56c"
+  }
+}

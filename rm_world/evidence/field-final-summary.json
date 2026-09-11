@@ -1,0 +1,393 @@
+{
+  "passed": true,
+  "failure": null,
+  "events": [
+    {
+      "physics_time": 0.21600000000000016,
+      "event": "STATUSTEXT",
+      "text": "RCInput: decoding UDP (Pulses)"
+    },
+    {
+      "physics_time": 0.32600000000000023,
+      "event": "STATUSTEXT",
+      "text": "Calibrating barometer"
+    },
+    {
+      "physics_time": 1.0420000000000007,
+      "event": "STATUSTEXT",
+      "text": "ArduCopter V4.8.0-dev (96f98857)"
+    },
+    {
+      "physics_time": 1.0420000000000007,
+      "event": "STATUSTEXT",
+      "text": "{95744dcbd0a4b44a57a7ec17933961e"
+    },
+    {
+      "physics_time": 1.0420000000000007,
+      "event": "STATUSTEXT",
+      "text": "Frame: QUAD/X"
+    },
+    {
+      "physics_time": 1.460000000000001,
+      "event": "parameters_verified",
+      "values": {
+        "FRAME_CLASS": 1.0,
+        "FRAME_TYPE": 1.0,
+        "SIM_RATE_HZ": 500.0,
+        "SCHED_LOOP_RATE": 250.0,
+        "MOT_PWM_MIN": 1000.0,
+        "MOT_PWM_MAX": 2000.0,
+        "MOT_THST_EXPO": 0.0,
+        "MOT_BAT_VOLT_MIN": 0.0,
+        "MOT_BAT_VOLT_MAX": 0.0,
+        "MOT_SPIN_MIN": 0.15000000596046448,
+        "MOT_SPIN_MAX": 0.949999988079071,
+        "AHRS_EKF_TYPE": 3.0,
+        "EK3_ENABLE": 1.0,
+        "ARMING_SKIPCHK": 0.0,
+        "SERVO1_FUNCTION": 33.0,
+        "SERVO2_FUNCTION": 34.0,
+        "SERVO3_FUNCTION": 35.0,
+        "SERVO4_FUNCTION": 36.0
+      }
+    },
+    {
+      "physics_time": 1.9260000000000015,
+      "event": "STATUSTEXT",
+      "text": "Barometer 1 calibration complete"
+    },
+    {
+      "physics_time": 1.9260000000000015,
+      "event": "STATUSTEXT",
+      "text": "Barometer 2 calibration complete"
+    },
+    {
+      "physics_time": 1.9300000000000015,
+      "event": "STATUSTEXT",
+      "text": "ArduPilot Ready"
+    },
+    {
+      "physics_time": 1.9300000000000015,
+      "event": "STATUSTEXT",
+      "text": "AHRS: DCM active"
+    },
+    {
+      "physics_time": 2.227999999999976,
+      "event": "STATUSTEXT",
+      "text": "RC7: SaveWaypoint LOW"
+    },
+    {
+      "physics_time": 3.9319999999997886,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 initialised"
+    },
+    {
+      "physics_time": 3.9319999999997886,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 initialised"
+    },
+    {
+      "physics_time": 3.935999999999788,
+      "event": "STATUSTEXT",
+      "text": "AHRS: EKF3 active"
+    },
+    {
+      "physics_time": 5.275999999999641,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 tilt alignment complete"
+    },
+    {
+      "physics_time": 5.275999999999641,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 tilt alignment complete"
+    },
+    {
+      "physics_time": 5.367999999999631,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 MAG0 initial yaw alignment complete"
+    },
+    {
+      "physics_time": 5.367999999999631,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 MAG0 initial yaw alignment complete"
+    },
+    {
+      "physics_time": 9.267999999999764,
+      "event": "STATUSTEXT",
+      "text": "GPS 1: probing for u-blox at 230400 baud"
+    },
+    {
+      "physics_time": 9.287999999999771,
+      "event": "STATUSTEXT",
+      "text": "GPS 1: detected u-blox"
+    },
+    {
+      "physics_time": 15.000000000001679,
+      "event": "request_GUIDED"
+    },
+    {
+      "physics_time": 15.008000000001681,
+      "event": "COMMAND_ACK",
+      "command": 176,
+      "result": 0
+    },
+    {
+      "physics_time": 16.932000000001494,
+      "event": "STATUSTEXT",
+      "text": "PreArm: AHRS: waiting for home"
+    },
+    {
+      "physics_time": 19.480000000000082,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 origin set"
+    },
+    {
+      "physics_time": 19.480000000000082,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 origin set"
+    },
+    {
+      "physics_time": 19.528000000000056,
+      "event": "STATUSTEXT",
+      "text": "Field Elevation Set: 584m"
+    },
+    {
+      "physics_time": 41.084000000004245,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 is using GPS"
+    },
+    {
+      "physics_time": 41.084000000004245,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 is using GPS"
+    },
+    {
+      "physics_time": 43.016000000006606,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 43.03000000000662,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 0
+    },
+    {
+      "physics_time": 43.03000000000662,
+      "event": "STATUSTEXT",
+      "text": "Arming motors"
+    },
+    {
+      "physics_time": 43.048000000006645,
+      "event": "ARMED"
+    },
+    {
+      "physics_time": 45.01600000000905,
+      "event": "request_TAKEOFF",
+      "altitude_m": 1.5
+    },
+    {
+      "physics_time": 45.02400000000906,
+      "event": "COMMAND_ACK",
+      "command": 22,
+      "result": 0
+    },
+    {
+      "physics_time": 50.17600000001536,
+      "event": "hover_window_start"
+    },
+    {
+      "physics_time": 60.17600000002758,
+      "event": "hover_complete"
+    },
+    {
+      "physics_time": 60.17800000002758,
+      "event": "translation_start",
+      "speed_m_s": 0.1,
+      "distance_m": 0.3
+    },
+    {
+      "physics_time": 66.18000000002716,
+      "event": "translation_complete",
+      "duration": 6.001999999999583,
+      "target_local_nwu": [
+        0.3,
+        0.0,
+        1.5
+      ],
+      "actual_local_nwu": [
+        0.32818238448166603,
+        0.03758616293266792,
+        1.5407255730175287
+      ],
+      "velocity": [
+        0.00944410699911167,
+        -0.0007752512070463259,
+        -0.00045053296692658504
+      ]
+    },
+    {
+      "physics_time": 66.18000000002716,
+      "event": "controlled_descent",
+      "speed_m_s": 0.08
+    },
+    {
+      "physics_time": 85.5159999999821,
+      "event": "first_controlled_contact",
+      "pre_contact_velocity_nwu": [
+        -0.001967226248632495,
+        0.0031457945402086507,
+        -0.07677114310150109
+      ],
+      "contacts": [
+        {
+          "geoms": [
+            "fuselage",
+            "field__collision__commanding_northwest_platform"
+          ],
+          "distance_m": -0.00011634482491290426,
+          "position": [
+            -9.3212176801748,
+            3.853206111684976,
+            0.49994182758754424
+          ],
+          "normal_geom0_to_geom1": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "force_contact_frame": [
+            2.1167763485433087,
+            0.0700677075629435,
+            -0.05439166990150268,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "geoms": [
+            "fuselage",
+            "field__collision__commanding_northwest_platform"
+          ],
+          "distance_m": -0.00010602708938652759,
+          "position": [
+            -9.111242995598301,
+            3.849945445579091,
+            0.49994698645530744
+          ],
+          "normal_geom0_to_geom1": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "force_contact_frame": [
+            2.055790521640603,
+            0.0681609481549108,
+            -0.05424782159434277,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "geoms": [
+            "fuselage",
+            "field__collision__commanding_northwest_platform"
+          ],
+          "distance_m": -1.865394682626031e-05,
+          "position": [
+            -9.113572038916784,
+            3.699963502695,
+            0.4999906730265875
+          ],
+          "normal_geom0_to_geom1": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "force_contact_frame": [
+            2.285225161814147,
+            0.06649068045442863,
+            -0.05457335813198971,
+            0.0,
+            0.0,
+            0.0
+          ]
+        },
+        {
+          "geoms": [
+            "fuselage",
+            "field__collision__commanding_northwest_platform"
+          ],
+          "distance_m": -2.89716823526368e-05,
+          "position": [
+            -9.323546723493285,
+            3.703224168800885,
+            0.4999855141588243
+          ],
+          "normal_geom0_to_geom1": [
+            0.0,
+            0.0,
+            -1.0
+          ],
+          "force_contact_frame": [
+            2.338637621871105,
+            0.06820585751237118,
+            -0.054588406052709204,
+            0.0,
+            0.0,
+            0.0
+          ]
+        }
+      ],
+      "position_nwu": [
+        -9.217396259706025,
+        3.7766051791316446,
+        0.5349324946458138
+      ],
+      "quaternion": [
+        0.9999698191788321,
+        -0.0002914257174256256,
+        -2.230415906829874e-05,
+        -0.007763717217237987
+      ]
+    },
+    {
+      "physics_time": 86.1179999999807,
+      "event": "experiment_complete"
+    }
+  ],
+  "physics_time": 86.1179999999807,
+  "communication": {
+    "frames": 43059,
+    "duplicates": 0,
+    "missing": 0,
+    "resets": 0,
+    "invalid": 0
+  },
+  "frame_rates": [
+    500,
+    1200
+  ],
+  "armed": true,
+  "takeoff_sent": true,
+  "parameters_verified": true,
+  "max_altitude_m": 1.6096472772944441,
+  "max_tilt_deg": 0.7325793250364764,
+  "final_telemetry": {
+    "mode": "GUIDED",
+    "armed": true,
+    "altitude_m": -0.001,
+    "ekf_flags": 831,
+    "ready": true,
+    "heartbeat_time": 86.04999999998086
+  },
+  "hover_duration_s": 10.000000000012221,
+  "hover": {
+    "altitude_min_m": 1.4939229090083128,
+    "altitude_max_m": 1.5320571029669705,
+    "speed_max_m_s": 0.021122855858547396,
+    "tilt_max_deg": 0.05610198268220412,
+    "horizontal_distance_max_m": 0.06338731712644069
+  }
+}

@@ -1,0 +1,16 @@
+
+==================================== ERRORS ====================================
+___________ ERROR collecting ardupilot_bridge/tests/test_contract.py ___________
+ImportError while importing test module '/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/mujoco_uav_ardupilot/ardupilot_bridge/tests/test_contract.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+/usr/lib/python3.12/importlib/__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ardupilot_bridge/tests/test_contract.py:6: in <module>
+    from ardupilot_bridge.protocol import decode_servos, encode_state, ProtocolError
+E   ModuleNotFoundError: No module named 'ardupilot_bridge.protocol'
+=========================== short test summary info ============================
+ERROR ardupilot_bridge/tests/test_contract.py
+!!!!!!!!!!!!!!!!!!!! Interrupted: 1 error during collection !!!!!!!!!!!!!!!!!!!!
+1 error in 0.20s

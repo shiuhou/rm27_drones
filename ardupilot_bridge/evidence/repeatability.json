@@ -1,0 +1,23 @@
+{
+  "runs": [
+    {
+      "run": "hover-1",
+      "frames": 30088,
+      "rates": {
+        "1200": 1,
+        "500": 30087
+      },
+      "physics_sha256": "1218a5b380253f427ae1baf43a87706f198ddd63aa8e2f6ca7a871aadf9da56c"
+    },
+    {
+      "run": "hover-2",
+      "frames": 30088,
+      "rates": {
+        "1200": 1,
+        "500": 30087
+      },
+      "physics_sha256": "1218a5b380253f427ae1baf43a87706f198ddd63aa8e2f6ca7a871aadf9da56c"
+    }
+  ],
+  "identical_physics": true
+}

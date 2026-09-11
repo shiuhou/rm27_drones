@@ -1,0 +1,14 @@
+Setting SIM_RATE_HZ=500.000000
+Setting SIM_SPEEDUP=5.000000
+Starting SITL: JSON
+Home: -35.363261 149.165230 alt=584.000000m hdg=0.000000
+JSON control interface set to 127.0.0.1:9202
+Starting sketch 'ArduCopter'
+Starting SITL input
+Using Irlock at port : 9205
+Using \clock topic for DDS timing: disabled
+bind port 5960 for SERIAL0
+SERIAL0 on TCP port 5960
+Waiting for connection ....
+Connection on serial port 5960
+Loaded defaults from /home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/ardupilot/Tools/autotest/default_params/copter.parm,/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/ardupilot/Tools/autotest/default_params/copter-X.parm,/home/shiuhou/Projects/rm27_drones/rm_uav_lab_m600/mujoco_uav_ardupilot/ardupilot_bridge/hover.parm

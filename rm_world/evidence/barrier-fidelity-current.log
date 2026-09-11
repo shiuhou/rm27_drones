@@ -1,0 +1,2 @@
+samples=564 hits=428 misses=136 within_1cm=47.518% within_2cm=47.518%
+hit_error_mean=288.888cm p95=2185.963cm max=2434.650cm

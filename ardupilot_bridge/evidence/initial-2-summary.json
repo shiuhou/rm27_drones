@@ -1,0 +1,960 @@
+{
+  "passed": false,
+  "failure": "RuntimeError: physics deadline before hover completed",
+  "events": [
+    {
+      "physics_time": 0.21600000000000016,
+      "event": "STATUSTEXT",
+      "text": "RCInput: decoding UDP (Pulses)"
+    },
+    {
+      "physics_time": 0.32600000000000023,
+      "event": "STATUSTEXT",
+      "text": "Calibrating barometer"
+    },
+    {
+      "physics_time": 1.0420000000000007,
+      "event": "STATUSTEXT",
+      "text": "ArduCopter V4.8.0-dev (96f98857)"
+    },
+    {
+      "physics_time": 1.0420000000000007,
+      "event": "STATUSTEXT",
+      "text": "z95744dcbd0a4b44a57a7ec17933961e"
+    },
+    {
+      "physics_time": 1.0420000000000007,
+      "event": "STATUSTEXT",
+      "text": "Frame: QUAD/X"
+    },
+    {
+      "physics_time": 1.9260000000000015,
+      "event": "STATUSTEXT",
+      "text": "Barometer 1 calibration complete"
+    },
+    {
+      "physics_time": 1.9260000000000015,
+      "event": "STATUSTEXT",
+      "text": "Barometer 2 calibration complete"
+    },
+    {
+      "physics_time": 1.9280000000000015,
+      "event": "STATUSTEXT",
+      "text": "ArduPilot Ready"
+    },
+    {
+      "physics_time": 1.9280000000000015,
+      "event": "STATUSTEXT",
+      "text": "AHRS: DCM active"
+    },
+    {
+      "physics_time": 2.28599999999997,
+      "event": "STATUSTEXT",
+      "text": "RC7: SaveWaypoint LOW"
+    },
+    {
+      "physics_time": 3.9339999999997883,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 initialised"
+    },
+    {
+      "physics_time": 3.9339999999997883,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 initialised"
+    },
+    {
+      "physics_time": 3.9339999999997883,
+      "event": "STATUSTEXT",
+      "text": "AHRS: EKF3 active"
+    },
+    {
+      "physics_time": 5.339999999999634,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 tilt alignment complete"
+    },
+    {
+      "physics_time": 5.339999999999634,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 tilt alignment complete"
+    },
+    {
+      "physics_time": 5.445999999999622,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 MAG0 initial yaw alignment complete"
+    },
+    {
+      "physics_time": 5.445999999999622,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 MAG0 initial yaw alignment complete"
+    },
+    {
+      "physics_time": 9.317999999999781,
+      "event": "STATUSTEXT",
+      "text": "GPS 1: probing for u-blox at 230400 baud"
+    },
+    {
+      "physics_time": 9.34199999999979,
+      "event": "STATUSTEXT",
+      "text": "GPS 1: detected u-blox"
+    },
+    {
+      "physics_time": 15.000000000001679,
+      "event": "request_GUIDED"
+    },
+    {
+      "physics_time": 15.00600000000168,
+      "event": "COMMAND_ACK",
+      "command": 176,
+      "result": 0
+    },
+    {
+      "physics_time": 19.52200000000006,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 origin set"
+    },
+    {
+      "physics_time": 19.52200000000006,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 origin set"
+    },
+    {
+      "physics_time": 19.566000000000034,
+      "event": "STATUSTEXT",
+      "text": "Field Elevation Set: 584m"
+    },
+    {
+      "physics_time": 30.729999999993847,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 30.729999999993847,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Need Position Estimate"
+    },
+    {
+      "physics_time": 30.729999999993847,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 43.30800000000696,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU0 is using GPS"
+    },
+    {
+      "physics_time": 43.30800000000696,
+      "event": "STATUSTEXT",
+      "text": "EKF3 IMU1 is using GPS"
+    },
+    {
+      "physics_time": 45.01600000000905,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 45.02200000000906,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 45.02200000000906,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 45.02200000000906,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 47.016000000011495,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 47.0220000000115,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 47.0220000000115,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 47.0220000000115,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 49.01600000001394,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 49.02400000001395,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 49.02400000001395,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 49.02400000001395,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 51.01600000001638,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 51.02200000001639,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 51.02200000001639,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 51.02200000001639,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 53.01600000001883,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 53.022000000018835,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 53.022000000018835,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 53.022000000018835,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 55.01600000002127,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 55.02400000002128,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 55.02400000002128,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 55.02400000002128,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 57.016000000023716,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 57.02200000002372,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 57.02200000002372,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 57.02200000002372,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 59.01600000002616,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 59.02200000002617,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 59.02200000002617,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 59.02200000002617,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 61.016000000028605,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 61.024000000028614,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 61.024000000028614,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 61.024000000028614,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 61.93000000002972,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 61.93000000002972,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 63.01600000003105,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 63.022000000031056,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 63.022000000031056,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 63.022000000031056,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 65.01800000002987,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 65.02600000002985,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 65.02600000002985,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 65.02600000002985,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (334Hz < 400Hz)"
+    },
+    {
+      "physics_time": 67.0200000000252,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 67.02600000002519,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 67.02600000002519,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 67.02600000002519,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 69.02200000002054,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 69.02800000002053,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 69.02800000002053,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 69.02800000002053,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 71.02400000001587,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 71.03200000001586,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 71.03200000001586,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 71.03200000001586,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 73.02600000001121,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 73.0320000000112,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 73.0320000000112,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 73.0320000000112,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 75.02800000000654,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 75.03400000000653,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 75.03400000000653,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 75.03400000000653,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 77.03000000000188,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 77.03800000000186,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 77.03800000000186,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 77.03800000000186,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 79.03199999999721,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 79.0379999999972,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 79.0379999999972,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 79.0379999999972,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 81.03399999999255,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 81.03999999999253,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 81.03999999999253,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 81.03999999999253,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 83.03599999998788,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 83.04399999998786,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 83.04399999998786,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 83.04399999998786,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 85.03799999998321,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 85.0419999999832,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 85.0419999999832,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 85.0419999999832,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 87.03999999997855,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 87.04599999997853,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 87.04599999997853,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 87.04599999997853,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 89.04199999997388,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 89.04999999997386,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 89.04999999997386,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 89.04999999997386,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 91.04399999996922,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 91.0479999999692,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 91.0479999999692,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 91.0479999999692,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 93.04599999996455,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 93.05199999996454,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 93.05199999996454,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 93.05199999996454,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 93.12999999996435,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 93.12999999996435,
+      "event": "STATUSTEXT",
+      "text": "PreArm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 95.04799999995988,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 95.04999999995988,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 95.04999999995988,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 95.04999999995988,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 97.04999999995522,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 97.0559999999552,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 97.0559999999552,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 97.0559999999552,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 99.05199999995055,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 99.05799999995054,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 99.05799999995054,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 99.05799999995054,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 101.05399999994589,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 101.06199999994587,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 101.06199999994587,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 101.06199999994587,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 103.05599999994122,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 103.06199999994121,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 103.06199999994121,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 103.06199999994121,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 105.05799999993656,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 105.06399999993654,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 105.06399999993654,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 105.06399999993654,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 107.05999999993189,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 107.06799999993187,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 107.06799999993187,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 107.06799999993187,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 109.06199999992722,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 109.06799999992721,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 109.06799999992721,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 109.06799999992721,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 111.06399999992256,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 111.06999999992254,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 111.06999999992254,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 111.06999999992254,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 113.06599999991789,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 113.07399999991787,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 113.07399999991787,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 113.07399999991787,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 115.06799999991323,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 115.07399999991321,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 115.07399999991321,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 115.07399999991321,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (332Hz < 400Hz)"
+    },
+    {
+      "physics_time": 117.06999999990856,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 117.07599999990855,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 117.07599999990855,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 117.07599999990855,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 119.0719999999039,
+      "event": "request_ARM"
+    },
+    {
+      "physics_time": 119.07999999990388,
+      "event": "COMMAND_ACK",
+      "command": 400,
+      "result": 4
+    },
+    {
+      "physics_time": 119.07999999990388,
+      "event": "STATUSTEXT",
+      "text": "Arm: Gyro 0 rate 500Hz < loop rate*1.8 720Hz"
+    },
+    {
+      "physics_time": 119.07999999990388,
+      "event": "STATUSTEXT",
+      "text": "Arm: Main loop slow (333Hz < 400Hz)"
+    },
+    {
+      "physics_time": 120.00199999990173,
+      "event": "failure",
+      "reason": "RuntimeError: physics deadline before hover completed"
+    }
+  ],
+  "physics_time": 120.00199999990173,
+  "communication": {
+    "frames": 60001,
+    "duplicates": 0,
+    "missing": 0,
+    "resets": 0,
+    "invalid": 0
+  },
+  "frame_rates": [
+    500,
+    1200
+  ],
+  "armed": false,
+  "takeoff_sent": false,
+  "max_altitude_m": 0.11998038001462594,
+  "max_tilt_deg": 0.0,
+  "final_telemetry": {
+    "mode": "GUIDED",
+    "armed": false,
+    "altitude_m": -0.008,
+    "ekf_flags": 831,
+    "heartbeat_time": 119.04999999990395
+  },
+  "hover_duration_s": 0
+}

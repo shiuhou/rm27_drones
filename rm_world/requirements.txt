@@ -1,0 +1,8 @@
+-r ../ardupilot_bridge/requirements.txt
+# Tested integration environment; upstream C++ checks require g++.
+mujoco==3.12.0
+# Optional dependencies for upstream Python fidelity audits:
+opencv-python-headless
+scipy
+lxml
+Pillow
