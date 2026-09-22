@@ -35,7 +35,7 @@ historical conversation context only and is not a current specification.
   inventory, with unresolved installation/log fields left explicit.
 - `rm27/`: CAD audit, dock conversion, scene composition, preview and single-vehicle flight gate.
 - `tests/`: dock geometry, four-vehicle settling, isolated flight-interface and
-  live-view state-isolation, calibration, contact and route checks (31 passing).
+  live-view state-isolation, calibration, contact and route checks (see the current run report for suite-specific results).
 - `artifacts/`: generated models, renders and local evidence (ignored).
 
 The dock is placed on the red H platform by default. Four separate physical

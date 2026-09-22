@@ -7,7 +7,7 @@ semantics of the canonical type into Python so that synthetic, truth
 (Gazebo), and future real-camera producers all emit identical input to
 UAVGuidance. It intentionally does NOT redefine or extend the semantics.
 
-Frame conventions: see docs/frames.md.
+Frame conventions: see rm27/perception/guidance/FRAMES.md.
 """
 
 import json

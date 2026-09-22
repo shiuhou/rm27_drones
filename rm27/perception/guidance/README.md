@@ -13,5 +13,6 @@ camera frames or motor outputs.
 
 The implementation originated in the M600 `visual_guidance` component. That
 checkout is recorded for provenance only; root code imports this package
-directly. Camera recognition and SLAM live in the sibling `../vision/` unit,
-which publishes the estimate consumed here.
+directly. Camera target recognition lives in the sibling `../vision/` unit.
+Guidance consumes `TargetEstimate`; the separate `LocalizationEstimate` ego-pose
+contract does not feed this guidance path. See [frame conventions](FRAMES.md).

@@ -30,11 +30,11 @@ for code already owned by the root integration package.
 
 | Destination | Source | Source commit | Current state |
 |---|---|---|---|
-| `rm27/experiments/route_experiment.py` | root `rm27/route_experiment.py` | root working tree | migrated; 35 root tests pass |
-| `rm27/experiments/analyze_route.py` | root `rm27/analyze_route.py` | root working tree | migrated; 35 root tests pass |
-| `rm27/integration/{dock,drone,base_target}.py` | root `rm27/` modules | root working tree | migrated; 35 root tests pass |
-| `rm27/integration/{cad_drone,isolated_scene,check_scene,audit_base,preview_base}.py` | root `rm27/` modules | root working tree | migrated; 35 root tests pass |
-| `rm27/simulation/*`, `rm27/experiments/*`, `rm27/autopilot/micro_flight.py` | root `rm27/` modules | root working tree | migrated; 35 root tests pass |
+| `rm27/experiments/route_experiment.py` | root `rm27/route_experiment.py` | root working tree | migrated; 35 tests passed at migration (historical count) |
+| `rm27/experiments/analyze_route.py` | root `rm27/analyze_route.py` | root working tree | migrated; 35 tests passed at migration (historical count) |
+| `rm27/integration/{dock,drone,base_target}.py` | root `rm27/` modules | root working tree | migrated; 35 tests passed at migration (historical count) |
+| `rm27/integration/{cad_drone,isolated_scene,check_scene,audit_base,preview_base}.py` | root `rm27/` modules | root working tree | migrated; 35 tests passed at migration (historical count) |
+| `rm27/simulation/*`, `rm27/experiments/*`, `rm27/autopilot/micro_flight.py` | root `rm27/` modules | root working tree | migrated; 35 tests passed at migration (historical count) |
 | `rm27/autopilot/bridge/` and `rm27/autopilot/models/quadrotor_m1.xml` | `rm27/autopilot/baselines/mujoco_uav_ardupilot/ardupilot_bridge/` and `models/quadrotor_m1.xml` | `2369d7d207818160e2d140b16118a53f99491b66` | selected bridge and plant copied; root tests pass; SITL equivalence still pending |
 | `rm27/perception/{guidance,sitl,gazebo}/` | `rm_uav_lab_m600/visual_guidance/{uav_guidance,v1_sitl,v2_gazebo}/` | `994727e480ec578efff24fbc422088d6c68a7701` | visual guidance interface copied; root tests pass; live Gazebo/SITL run pending |
 | `rm27/perception/vision/` | canonical `maixcam2_dart_vision` submodule (formerly `research/vision` plus `rm_uav_lab_m600/maixcam2_dart/`) | `c7d47b20a5a948db1e55f99fb128ee7616d02e1c` (original source `f4c153f`) | SLAM plan and device-side C++ now live under perception; old duplicate checkout removed; board build remains external |
