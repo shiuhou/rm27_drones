@@ -58,6 +58,10 @@ class BackendAdapter:
             require(info.get(key), 'BACKEND_INSTALL_INVALID', key)
         checked_file(binary, info['binary_sha256'])
         checked_file(info['vocabulary'], info['vocabulary_sha256'])
+        for path, digest in info.get('runtime_files_sha256', {}).items():
+            checked_file(path, digest)
+        if info.get('source_patch'):
+            checked_file(info['source_patch'], info['source_patch_sha256'])
         require(info['commit'] == PINS[self.backend], 'BACKEND_VERSION_UNSUPPORTED', 'adapter is verified against one pinned source revision')
         if self.backend == 'stella_vslam':
             require(info.get('examples_commit') == PINS['stella_vslam_examples'], 'BACKEND_VERSION_UNSUPPORTED', 'examples revision')
@@ -73,7 +77,7 @@ class BackendAdapter:
         # rgb.txt uses local generated names; no spaces or arbitrary shell quoting.
         image_dir = sequence/'rgb'
         image_dir.mkdir()
-        lines = ['# RM27 offline monocular input\n', '# original encoded PTS in seconds\n', '# timestamp image\n']
+        lines = ['# RM27 offline monocular input\n', '# original source timestamps in seconds\n', '# timestamp image\n']
         for i,(frame,image) in enumerate(zip(frames,images)):
             link = image_dir/f'{i:08d}{image.suffix}'
             link.symlink_to(image.resolve())
@@ -107,4 +111,5 @@ class BackendAdapter:
                     trajectory_scope='frames' if self.backend == 'stella_vslam' else 'keyframes_only',
                     pose_direction='T_wc', quaternion_order='xyzw',
                     tracking_states=None, map_events=None,
+                    timestamp_significant_digits=15 if self.backend == 'stella_vslam' else None,
                     processing_times=times if self.backend == 'stella_vslam' and times.is_file() else None)

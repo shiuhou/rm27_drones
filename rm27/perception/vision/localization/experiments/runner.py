@@ -34,6 +34,8 @@ def run(config, *, _fixture_token=None):
         dataset=CanonicalDataset(config['dataset'])
         # Calibration always precedes backend preparation/execution.
         calibration,calibration_provenance=validated_calibration(dataset,_fixture_token=_fixture_token)
+        if dataset.manifest.get('dataset_kind') == 'TUM_RGBD_PUBLIC':
+            result['purpose'] = 'VSL-3P_PUBLIC_DATASET'
         frames=dataset.select(config.get('subset','all_decoded_sampled'),config.get('input_hz'))
         selection=[f.record() for f in frames]
         identity=dict(dataset_id=dataset.manifest['dataset_id'],dataset_manifest_sha256=dataset.manifest_hash,
@@ -59,7 +61,7 @@ def run(config, *, _fixture_token=None):
         command,raw=adapter.prepare(root,frames,images,text,install,config.get('native_mask'))
         result.update(dataset_id=dataset.manifest['dataset_id'],calibration_id=calibration['calibration_id'],
                       backend_version=install, dataset_provenance=dataset.provenance,calibration_provenance=calibration_provenance,
-                      frame_selection=selection,nominal_backend_fps=nominal_fps, timing_policy='original encoded PTS; no exposure claim',
+                      frame_selection=selection,nominal_backend_fps=nominal_fps, timing_policy='original source timestamps; no exposure claim',
                       comparison_identity=identity,comparison_sha256=object_hash(identity),
                       backend_config_sha256=file_hash(root/'backend.yaml'),command=command,status='EXECUTING',execution_started=True)
         write_json(root/'run.json',result)
@@ -72,7 +74,8 @@ def run(config, *, _fixture_token=None):
         require(benchmark['failure_reason'] is None,'BACKEND_EXECUTION_FAILED',str(benchmark['failure_reason']))
         outputs=adapter.collect_outputs(raw)
         normalized=parse_tum(outputs['final_trajectory'],frames,direction=outputs['pose_direction'],
-                             variant='final_optimized',scope=outputs['trajectory_scope'])
+                             variant='final_optimized',scope=outputs['trajectory_scope'],
+                             timestamp_significant_digits=outputs['timestamp_significant_digits'])
         (root/'normalized').mkdir()
         if outputs['processing_times'] is not None:
             values=[float(line) for line in outputs['processing_times'].read_text().splitlines() if line.strip()]

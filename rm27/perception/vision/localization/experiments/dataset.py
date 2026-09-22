@@ -37,7 +37,8 @@ class CanonicalDataset:
         base = self.path.parent
         source = m['source']
         artifact = resolve(base, source['artifact_directory'])
-        video, video_hash = checked_file(resolve(base, source['source_video']), source.get('source_sha256'))
+        source_name = 'source_archive' if m.get('dataset_kind') == 'TUM_RGBD_PUBLIC' else 'source_video'
+        video, video_hash = checked_file(resolve(base, source[source_name]), source.get('source_sha256'))
         provenance = {'manifest_sha256': self.manifest_hash, 'source_video': str(video),
                       'source_sha256': video_hash, 'artifact_directory': str(artifact),
                       'upstream_identity': source, 'dependencies': {}}
@@ -82,8 +83,9 @@ class CanonicalDataset:
                     'FRAME_ORDER_INVALID', 'one strictly increasing encoded timeline is required')
             timing = dict(unit=row['timestamp_unit'], clock_domain=row['timestamp_clock_domain'],
                           semantic=row['timestamp_semantic'], evidence_status=row.get('timestamp_evidence_status') or 'UNVERIFIED',
-                          raw_value=row['encoded_pts_s'], representation='decimal seconds from encoded timeline')
-            require(timing['unit'] in ('s', 'seconds') and timing['semantic'] == 'ENCODED_STREAM_PTS',
+                          raw_value=row['encoded_pts_s'], representation='original decimal seconds; semantic stated separately')
+            expected_semantic = 'DATASET_TIMESTAMP' if m.get('dataset_kind') == 'TUM_RGBD_PUBLIC' else 'ENCODED_STREAM_PTS'
+            require(timing['unit'] in ('s', 'seconds') and timing['semantic'] == expected_semantic,
                     'TIMESTAMP_UNSUPPORTED', 'reader only supports encoded seconds, never exposure')
             if self.frames:
                 previous_evidence = self.frames[-1].timestamp_evidence

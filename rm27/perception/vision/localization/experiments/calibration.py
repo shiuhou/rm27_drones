@@ -5,6 +5,9 @@ from .common import checked_file, read_json, resolve, require, number, fixture_m
 def validated_calibration(dataset, *, _fixture_token=None):
     m = dataset.manifest
     require(m.get('status') != 'CALIBRATION_REQUIRED', 'CALIBRATION_REQUIRED', 'dataset still needs calibration')
+    if m.get('dataset_kind') == 'TUM_RGBD_PUBLIC':
+        from .public_tum import published_calibration
+        return published_calibration(dataset)
     reference = m.get('calibration', {})
     require(reference.get('status') == 'VALIDATED', 'CALIBRATION_NOT_VALIDATED', 'dataset calibration reference')
     require(reference.get('file') and reference.get('sha256'), 'CALIBRATION_REFERENCE_INVALID', 'file and SHA-256 required')

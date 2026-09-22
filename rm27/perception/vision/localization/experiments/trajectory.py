@@ -36,7 +36,7 @@ def canonical_pose(translation, orientation_wxyz, direction):
     return dict(parent_frame='backend_world',child_frame='camera',translation=t.tolist(),orientation_wxyz=q)
 
 
-def parse_tum(path, frames, *, direction, variant, scope, tolerance_s=1e-6):
+def parse_tum(path, frames, *, direction, variant, scope, tolerance_s=1e-6, timestamp_significant_digits=None):
     require(variant in ('online','final_optimized'), 'TRAJECTORY_VARIANT_INVALID', variant)
     require(direction in ('T_wc','T_cw'), 'POSE_CONVENTION_UNKNOWN', direction)
     known = [(Decimal(f.encoded_pts), f) for f in frames]
@@ -52,13 +52,21 @@ def parse_tum(path, frames, *, direction, variant, scope, tolerance_s=1e-6):
             number(x,'trajectory component')
         timestamp=Decimal(items[0])
         require(previous is None or timestamp > previous,'TRAJECTORY_ORDER_INVALID',str(line_number))
-        candidates=[frame for time,frame in known if abs(time-timestamp)<=Decimal(str(tolerance_s))]
+        # Stella writes 15 significant digits, so Unix-scale seconds lose microseconds.
+        # Account only for documented formatting plus IEEE double rounding; still
+        # require a unique source association, and retain the actual residual.
+        tolerance = Decimal(str(tolerance_s))
+        if timestamp_significant_digits is not None:
+            require(timestamp_significant_digits == 15, 'TRAJECTORY_FORMAT_UNSUPPORTED', 'pinned Stella precision')
+            quantum = Decimal(10) ** (timestamp.adjusted() - timestamp_significant_digits + 1)
+            tolerance = max(tolerance, quantum / 2 + Decimal(str(math.ulp(float(timestamp)))))
+        candidates=[frame for time,frame in known if abs(time-timestamp)<=tolerance]
         require(len(candidates)==1,'TRAJECTORY_TIME_UNMATCHED',f'line {line_number}: ambiguous or absent source time')
         frame=candidates[0]
         require(frame.source_frame_id not in used,'TRAJECTORY_FRAME_DUPLICATE',str(frame.source_frame_id))
         pose=canonical_pose(values[1:4],[values[7],*values[4:7]],direction)
         # A final pose exists numerically. This says nothing about online tracking.
-        projection={**pose,'valid':True}
+        projection={**pose,'valid':True,'scale_state':'ARBITRARY','translation_unit':'arbitrary'}
         require(set(projection) <= {f.name for f in fields(LocalizationEstimate)}, 'CONTRACT_FIELD_INVALID','projection')
         records.append(dict(source_frame_id=frame.source_frame_id, source_time_reference=frame.timestamp_evidence,
                             encoded_pts=frame.encoded_pts, trajectory_variant=variant, trajectory_scope=scope,
@@ -66,6 +74,8 @@ def parse_tum(path, frames, *, direction, variant, scope, tolerance_s=1e-6):
                             scale_state='ARBITRARY',translation_unit='arbitrary',
                             backend_tracking_state=None,raw_backend_state=None,backend_map_event=None,
                             processing_time_s=None, normalized_validity='POSE_PRESENT_NOT_TRACKING_OR_FLIGHT_QUALIFICATION',
+                            timestamp_association_delta_s=float(timestamp-Decimal(frame.encoded_pts)),
+                            timestamp_association_tolerance_s=float(tolerance),
                             raw_output=dict(file=Path(path).name,line=line_number,text=line)))
         used.add(frame.source_frame_id)
         previous=timestamp
