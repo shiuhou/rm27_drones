@@ -4,6 +4,10 @@ This directory owns the camera-based part of RM27 perception. It is the home
 for both localization and recognition; `vision` is not an independent layer
 beside `perception`.
 
+- `localization/` contains the versioned ego-pose contract and offline video,
+  dataset-view and calibration-observation tools; it contains no SLAM backend.
+- `docs/` retains VSL evidence and the current
+  [preparation update](docs/VSL-0B1_CALIBRATION_PREP.md).
 - `M3C_OS04A10_SLAM_实验起步包_v1/` defines the M3C + OS04A10 monocular
   camera calibration, localization and SLAM experiment route.
 - `maixcam2_dart_vision/` contains the device-side MaixCDK target/green-light
