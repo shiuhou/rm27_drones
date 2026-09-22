@@ -62,6 +62,12 @@ class BackendAdapter:
         checked_file(info['vocabulary'], info['vocabulary_sha256'])
         for path, digest in info.get('runtime_files_sha256', {}).items():
             checked_file(path, digest)
+        if info.get('online_observation'):
+            observer = info['online_observation']
+            require(observer.get('format') == 'rm27_online_csv_v1', 'ONLINE_FORMAT_INVALID', 'installation format')
+            require(observer.get('source_files_sha256'), 'BACKEND_INSTALL_INVALID', 'observer source hashes required')
+            for path, digest in observer['source_files_sha256'].items():
+                checked_file(path, digest)
         if info.get('source_patch'):
             checked_file(info['source_patch'], info['source_patch_sha256'])
         require(info['commit'] == PINS[self.backend], 'BACKEND_VERSION_UNSUPPORTED', 'adapter is verified against one pinned source revision')

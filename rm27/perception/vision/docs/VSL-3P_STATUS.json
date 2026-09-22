@@ -10,5 +10,12 @@
   "vsl_3": "NOT_STARTED",
   "vsl_4": "NOT_STARTED",
   "vsl_6": "NOT_STARTED",
-  "report": "VSL-3P_PUBLIC_BACKEND_QUALIFICATION.md"
+  "report": "VSL-3P_PUBLIC_BACKEND_QUALIFICATION.md",
+  "online_instrumentation": "PASS_PUBLIC_DATASET_RUNTIME_OBSERVATIONS",
+  "online_report": "VSL-3P1_ONLINE_STATE_REPORT.md",
+  "remaining_limits": [
+    "stock ORB lifecycle failure remains",
+    "map/reset epochs and explicit relocalization events unavailable",
+    "real loss/recovery not exercised by this public sequence"
+  ]
 }

@@ -1,5 +1,9 @@
 # VSL-3P public dataset backend qualification
 
+Follow-up: [VSL-3P.1 online state instrumentation](VSL-3P1_ONLINE_STATE_REPORT.md)
+adds runtime observations in new runs. The results and unavailable online fields
+below describe the original VSL-3P runs and remain unchanged.
+
 2026-09-23. **VSL-3P: PARTIAL.** RM27 drove unmodified pinned Stella end-to-end
 on calibrated public data. ORB-SLAM3 also completed native execution, RM27
 execution, normalization and evaluation **with a recorded upstream shutdown

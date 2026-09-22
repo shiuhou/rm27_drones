@@ -122,7 +122,9 @@ def evaluate_reference(run_path, reference_path, continuity_path, variant, align
     normalized_path,normalized_hash=checked_file(root/run[key])
     _,reference_hash=checked_file(reference_path)
     trajectory=read_json(normalized_path)
-    require(trajectory['trajectory_variant']==variant,'TRAJECTORY_VARIANT_MIXED','artifact header')
+    require(trajectory['trajectory_variant']==variant and
+            all(r.get('trajectory_variant')==variant for r in trajectory['records']),
+            'TRAJECTORY_VARIANT_MIXED','artifact header and individual records')
     require(reference.get('reference_status')=='VERIFIED' and reference.get('timestamp_association')=='VERIFIED',
             'REFERENCE_UNVERIFIED','reference and frame/time association must be established')
     require(reference.get('dataset_id')==run['dataset_id'] and
@@ -132,11 +134,15 @@ def evaluate_reference(run_path, reference_path, continuity_path, variant, align
             continuity.get('run_config_sha256')==run['config_sha256'] and
             continuity.get('normalized_sha256')==normalized_hash and continuity.get('reference_sha256')==reference_hash,
             'CONTINUITY_UNVERIFIED','hashed evidence for one frame across entire evaluated trajectory required')
-    metrics=trajectory_metrics(trajectory['records'],reference['records'],alignment,
+    records=trajectory['records']
+    if variant=='online':
+        records=[r for r in records if r.get('validity') is True and r.get('localization_fields') is not None]
+    metrics=trajectory_metrics(records,reference['records'],alignment,
                                continuity_verified=True,reference_unit=reference.get('translation_unit'))
     return dict(schema_version=1,purpose=run['purpose'],run_id=run['run_id'],run_config_sha256=run['config_sha256'],
                 normalized_sha256=normalized_hash,reference_sha256=reference_hash,
-                trajectory_variant=variant,ground_truth_status='WITH_VERIFIED_REFERENCE',trajectory_metrics=metrics)
+                trajectory_variant=variant,excluded_invalid_online_records=len(trajectory['records'])-len(records),
+                ground_truth_status='WITH_VERIFIED_REFERENCE',trajectory_metrics=metrics)
 
 
 def main():

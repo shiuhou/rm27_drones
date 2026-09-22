@@ -17,8 +17,9 @@ from .transforms import prepare_images
 def run(config, *, _fixture_token=None):
     require(type(config.get('schema_version')) is int and config['schema_version']==1,'RUN_SCHEMA_UNSUPPORTED','version 1')
     require(set(config)<= {'schema_version','purpose','run_id','backend','dataset','installation','output','subset',
-                          'input_hz','transforms','timeout_s','native_mask'},'RUN_CONFIG_UNSUPPORTED','unknown keys')
+                          'input_hz','transforms','timeout_s','native_mask','online'},'RUN_CONFIG_UNSUPPORTED','unknown keys')
     require(isinstance(config.get('run_id'),str) and config['run_id'],'RUN_CONFIG_INVALID','run_id')
+    require(type(config.get('online',False)) is bool, 'RUN_CONFIG_INVALID', 'online must be boolean')
     testing=fixture_mode(_fixture_token,config)
     root=Path(config['output']).resolve()
     root.mkdir(parents=True,exist_ok=False)
@@ -49,6 +50,9 @@ def run(config, *, _fixture_token=None):
         write_json(root/'run.json',result)
         adapter=BackendAdapter(config['backend'],config.get('installation'))
         install=adapter.describe_version(_fixture_token=_fixture_token)
+        if config.get('online',False):
+            require(install.get('online_observation',{}).get('format') == 'rm27_online_csv_v1',
+                    'ONLINE_OBSERVATION_UNAVAILABLE', 'requires an explicitly instrumented installation')
         images,derived,transform_provenance=prepare_images(frames,calibration,root/'inputs',config.get('transforms',{}))
         nominal_fps=config.get('input_hz') or dataset.manifest['observed_geometry']['nominal_fps']
         if not config.get('input_hz'):
@@ -71,6 +75,26 @@ def run(config, *, _fixture_token=None):
                          selected_source_frame_ids=[f.source_frame_id for f in frames],purpose=result['purpose'])
         result['benchmark']=benchmark
         write_json(root/'benchmark.json',benchmark)
+        # Retain partial runtime traces even if a backend subsequently fails.
+        if config.get('online',False):
+            from .online import parse_online, online_metrics
+            online_path=raw/'online.csv'
+            if online_path.is_file():
+                observed=parse_online(online_path,frames,config['backend'],install,config['run_id'])
+                (root/'online').mkdir()
+                write_json(root/'online/trajectory.json',dict(schema_version=1,purpose=result['purpose'],
+                    trajectory_variant='online',records=observed,coordinate_continuity='UNVERIFIED',
+                    raw_source='raw/online.csv',raw_sha256=file_hash(online_path),
+                    limits='runtime public API snapshots; no final-pose substitution; map/reset/relocalization unavailable'))
+                metrics=online_metrics(frames,observed)
+                write_json(root/'online/evaluation.json',metrics)
+                result.update(online_trajectory='online/trajectory.json',online_evaluation='online/evaluation.json')
+                result['artifacts']['online']='online/'
+                write_json(root/'run.json',result)
+                if benchmark['failure_reason'] is None:
+                    require(len(observed)==len(frames),'ONLINE_TRACE_INCOMPLETE','successful run requires one observation per input')
+            elif benchmark['failure_reason'] is None:
+                require(False,'ONLINE_OUTPUT_MISSING','instrumented binary did not emit online.csv')
         require(benchmark['failure_reason'] is None,'BACKEND_EXECUTION_FAILED',str(benchmark['failure_reason']))
         outputs=adapter.collect_outputs(raw)
         normalized=parse_tum(outputs['final_trajectory'],frames,direction=outputs['pose_direction'],

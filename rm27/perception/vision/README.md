@@ -29,3 +29,5 @@ Future offline infrastructure is documented in
 These are preparation tools; stage execution and physical qualification remain blocked.
 
 Public backend execution evidence: [VSL-3P qualification](docs/VSL-3P_PUBLIC_BACKEND_QUALIFICATION.md). Stella passes on pinned public TUM data; ORB-SLAM3 requires the recorded shutdown patch. Real RM27 VSL-3 remains NOT_STARTED.
+
+Runtime state observation: [VSL-3P.1 report](docs/VSL-3P1_ONLINE_STATE_REPORT.md), with separate online and final artifacts.
