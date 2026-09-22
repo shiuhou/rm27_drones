@@ -70,3 +70,13 @@ def test_stella_unix_timestamp_precision_is_bounded_and_unambiguous(tmp_path):
     with pytest.raises(ExperimentError,match='TRAJECTORY_TIME_UNMATCHED'):
         parse_tum(raw,[f,replace(f,source_frame_id=1,encoded_pts='1305031102.175301')],
                   **options,timestamp_significant_digits=15)
+
+
+def test_orb_settings_requires_integer_nominal_fps():
+    from rm27.perception.vision.localization.experiments.public_tum import PARAMETERS, CALIBRATION_ID
+    from rm27.perception.vision.localization.experiments.backends import camera_config
+    c=dict(PARAMETERS,calibration_id=CALIBRATION_ID)
+    config=camera_config('ORB-SLAM3',c,{'sha256':'test'},30.)
+    assert '\nCamera.fps: 30\n' in config
+    with pytest.raises(ExperimentError,match='BACKEND_RATE_UNSUPPORTED'):
+        camera_config('ORB-SLAM3',c,{'sha256':'test'},29.97)

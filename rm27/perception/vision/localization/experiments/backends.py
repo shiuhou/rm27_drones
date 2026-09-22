@@ -27,10 +27,12 @@ def camera_config(backend, calibration, provenance, nominal_fps, grayscale=False
                       **{k:calibration[k] for k in ('fx','fy','cx','cy')}, k1=k1,k2=k2,p1=p1,p2=p2,k3=k3)
         return comment+'Camera:\n'+''.join(f'  {k}: {json.dumps(v)}\n' for k,v in fields.items())
     require(backend == 'ORB-SLAM3', 'BACKEND_UNSUPPORTED', backend)
+    require(float(nominal_fps).is_integer(), 'BACKEND_RATE_UNSUPPORTED',
+            'pinned ORB-SLAM3 Settings requires integer Camera.fps; do not round source cadence')
     fields = {'File.version':'1.0', 'Camera.type':'PinHole',
               **{f'Camera1.{k}':float(calibration[k]) for k in ('fx','fy','cx','cy')},
               'Camera1.k1':float(k1),'Camera1.k2':float(k2),'Camera1.p1':float(p1),'Camera1.p2':float(p2),'Camera1.k3':float(k3),
-              'Camera.fps':float(nominal_fps), 'Camera.RGB':0, 'Camera.width':calibration['image_width'],
+              'Camera.fps':int(nominal_fps), 'Camera.RGB':0, 'Camera.width':calibration['image_width'],
               'Camera.height':calibration['image_height'],
               'ORBextractor.nFeatures':1000,'ORBextractor.scaleFactor':1.2,'ORBextractor.nLevels':8,
               'ORBextractor.iniThFAST':20,'ORBextractor.minThFAST':7,

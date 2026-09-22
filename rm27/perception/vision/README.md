@@ -27,3 +27,5 @@ Future offline infrastructure is documented in
 [the VSL-4 host benchmark plan](docs/VSL-4_M3C_BENCHMARK_PLAN.md), and
 [the VSL-6 evidence contract](docs/VSL-6_VIO_DATA_REQUIREMENTS.md).
 These are preparation tools; stage execution and physical qualification remain blocked.
+
+Public backend execution evidence: [VSL-3P qualification](docs/VSL-3P_PUBLIC_BACKEND_QUALIFICATION.md). Stella passes on pinned public TUM data; ORB-SLAM3 requires the recorded shutdown patch. Real RM27 VSL-3 remains NOT_STARTED.

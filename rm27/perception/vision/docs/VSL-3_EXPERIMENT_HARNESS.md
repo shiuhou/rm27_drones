@@ -1,5 +1,11 @@
 # Future VSL-3 offline experiment harness
 
+Current integration note (2026-09-23): this historical preparation report used
+LocalizationEstimate v1. The unified branch now includes v2 hardening and
+[VSL-3P public backend qualification](VSL-3P_PUBLIC_BACKEND_QUALIFICATION.md),
+including timestamp-export precision and integer ORB FPS fixes. Its explicit
+public-provider calibration scope does not satisfy RM27 hardware calibration.
+
 Implementation: **IMPLEMENTED**, Python utilities and two external-process CLI
 adapters. Validation: host software tests and explicitly labeled stub executions;
 upstream source contracts reviewed at pinned commits. Neither upstream backend
