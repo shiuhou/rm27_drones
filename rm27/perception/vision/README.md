@@ -21,3 +21,9 @@ is it in the image*, while SLAM/localization answers *how the camera is moving
 and where it is in the scene*. Neither result is automatically metric or
 control-safe. Both must pass calibration, timing, frame-convention and
 failure-state checks before feeding ExternalNav or flight control.
+
+Future offline infrastructure is documented in
+[the VSL-3 harness](docs/VSL-3_EXPERIMENT_HARNESS.md),
+[the VSL-4 host benchmark plan](docs/VSL-4_M3C_BENCHMARK_PLAN.md), and
+[the VSL-6 evidence contract](docs/VSL-6_VIO_DATA_REQUIREMENTS.md).
+These are preparation tools; stage execution and physical qualification remain blocked.
