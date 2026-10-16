@@ -7,17 +7,22 @@
 /research/astra/results/*
 !/research/astra/results/.gitkeep
 # Raw CAD is kept locally and indexed by hash in the relevant report.
-/references/cad_raw/*.stp
-/references/cad_raw/*.step
-/references/cad_raw/*.SLDASM
+/data/references/cad_raw/*.stp
+/data/references/cad_raw/*.step
+/data/references/cad_raw/*.SLDASM
 /.vscode/
 /artifacts/
-/flight_logs/data/
+# MuJoCo local window/GLFW diagnostic output.
+/MUJOCO_LOG.TXT
+/data/flight_logs/data/
 /RoboMaster*.pdf
 /UTF-8__RoboMaster*.pdf
-/references/rules/*.pdf
-/references/images/*
+/data/references/rules/*.pdf
+/data/references/images/*
 /docs/archive/chatgptre.md
-/references/cad_raw/*.STEP
-/references/cad_raw/*.STP
-/references/cad_raw/retired/
+/data/references/cad_raw/*.STEP
+/data/references/cad_raw/*.STP
+/data/references/cad_raw/retired/
+# Local engineering plans and run records; only .agents/docs/ is tracked.
+/.agents/plans/
+/.agents/runs/
