@@ -14,7 +14,31 @@
 	branch = components/mujoco-uav-ardupilot
 [submodule "rm27/perception/vision/maixcam2_dart_vision"]
 	path = rm27/perception/vision/maixcam2_dart_vision
-	url = https://github.com/blademaster679/maixcam2_dart.git
+	url = https://github.com/blademaster679/maixcam2_dart_vision.git
 [submodule "rm27/simulation/field/rmuc2026_battlefield_mjcf"]
 	path = rm27/simulation/field/rmuc2026_battlefield_mjcf
 	url = https://github.com/CosmosMount/rmuc2026_battlefield_mjcf.git
+[submodule "components/rm27_slam"]
+	path = components/rm27_slam
+	url = https://github.com/shiuhou/rm27_slam.git
+	branch = main
+[submodule "components/rm27_vio"]
+	path = components/rm27_vio
+	url = https://github.com/shiuhou/rm27_vio.git
+	branch = main
+[submodule "components/rm27_RL"]
+	path = components/rm27_RL
+	url = https://github.com/shiuhou/rm27_RL.git
+	branch = refactor/repository-separation
+[submodule "components/rm27_drone_px4"]
+	path = components/rm27_drone_px4
+	url = https://github.com/shiuhou/rm27_drone_px4.git
+	branch = codex/px4-v1.17-migration
+[submodule "components/rm_uav_mujoco"]
+	path = components/rm_uav_mujoco
+	url = https://github.com/shiuhou/rm_uav_mujoco.git
+	branch = master
+[submodule "components/rm_mjcf"]
+	path = components/rm_mjcf
+	url = https://github.com/CosmosMount/rm_mjcf.git
+	branch = main
