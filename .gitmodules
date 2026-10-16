@@ -15,6 +15,7 @@
 [submodule "rm27/perception/vision/maixcam2_dart_vision"]
 	path = rm27/perception/vision/maixcam2_dart_vision
 	url = https://github.com/blademaster679/maixcam2_dart_vision.git
+	branch = main
 [submodule "rm27/simulation/field/rmuc2026_battlefield_mjcf"]
 	path = rm27/simulation/field/rmuc2026_battlefield_mjcf
 	url = https://github.com/CosmosMount/rmuc2026_battlefield_mjcf.git
@@ -29,15 +30,15 @@
 [submodule "components/rm27_RL"]
 	path = components/rm27_RL
 	url = https://github.com/shiuhou/rm27_RL.git
-	branch = refactor/repository-separation
+	branch = main
 [submodule "components/rm27_drone_px4"]
 	path = components/rm27_drone_px4
 	url = https://github.com/shiuhou/rm27_drone_px4.git
-	branch = codex/px4-v1.17-migration
+	branch = main
 [submodule "components/rm_uav_mujoco"]
 	path = components/rm_uav_mujoco
 	url = https://github.com/shiuhou/rm_uav_mujoco.git
-	branch = master
+	branch = main
 [submodule "components/rm_mjcf"]
 	path = components/rm_mjcf
 	url = https://github.com/CosmosMount/rm_mjcf.git
