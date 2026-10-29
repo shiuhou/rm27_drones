@@ -5,6 +5,25 @@ These instructions apply to work from the repository root. A more specific
 
 ## Task-specific references
 
+The user-designated cross-repository overview is `report.md`. Keep it
+self-contained for sharing with ChatGPT. When a task changes a component
+milestone, acceptance result, blocker, ownership, baseline or publication state,
+update the relevant section, date and evidence/version references before handoff.
+Distinguish documented results, checks performed now, assumptions and unknowns;
+preserve negative results. Do not create numbered overview copies. Detailed
+progress remains in the owning repository's activity plan §0 and requirements
+remain in their existing sources; the report is a derived snapshot. Standalone
+component work without access to this root should identify the pending overview
+update rather than claim it was synchronized.
+
+New simulation scene composition, mission execution and viewers belong in the
+independent `shiuhou/rm27_sim` repository (`components/rm_uav_mujoco/rm27_sim/`
+in the development workspace). Root integration, historical baselines and
+compatibility consumers retain their contracts. This documentation update does
+not migrate code or update pins; check the selected checkout before following
+newer commands. The 180 g and historical-field contracts below describe the
+published root baseline, not the newer Ver2 development workspace.
+
 Read only the references needed for the requested change:
 
 - `README.md`: project scope and current capability.

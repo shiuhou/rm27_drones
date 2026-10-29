@@ -1,6 +1,12 @@
 # RM27 快速啟動
 
-目前主線：先讓一架飛機穩定完成起飛、飛向基地、返回機庫及降落，再擴展至多機。基地高速接觸、碰撞後恢復與視覺導航尚未完成。
+先讀 [全倉庫進度 report.md](report.md)，了解目前研發成果和本分支／submodule pins 的差距。
+新共用仿真、完整任務與 viewer 在 [rm27_sim](https://github.com/shiuhou/rm27_sim)
+開發；本地目錄名仍為 `components/rm_uav_mujoco`，請使用該 checkout 自己的 README。
+
+下列指令是既有 root 場景／錄製與短程 SITL 的入口，不承諾乾淨 clone 已包含本地
+`artifacts/`、CAD、固件二進位或其他錄製。先確認輸入存在及模型版本，建立新輸出目錄。
+它們不驗收新 Ver2／2027 場地的完整接觸、恢復和返航，也不代表相機定位或真機性能。
 
 ## 每次開機
 
