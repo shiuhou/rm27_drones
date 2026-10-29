@@ -1,9 +1,12 @@
 # Repository map
 
-This repository is one RM27 research project. The root integration package is
-the main runtime entry point; the other directories provide research, external
-components, source evidence, or generated results. This map is an orientation
-guide, not a statement that the working tree is clean.
+This repository coordinates independently versioned RM27 components. Read
+[report.md](../report.md) for the dated development snapshot and publication gaps.
+New simulation work belongs in `shiuhou/rm27_sim`, whose local component folder
+remains `components/rm_uav_mujoco/`; its own README defines the supported runtime.
+Root `rm27/` retains integration, historical experiments and migration compatibility.
+The ownership decision does not imply that this branch's implementation or
+submodule pins have already migrated. This map is not a clean-worktree claim.
 
 | Path | Responsibility | Owner | Independent Git repository | Movable? |
 |---|---|---|---|---|
@@ -11,7 +14,7 @@ guide, not a statement that the working tree is clean.
 | `baselines/` | Four development entry points: RL, PX4, VIO and Tracking | RM27 root | No | Documentation boundary; migrate code only with verified import/config updates |
 | `components/` | Project-level submodules for the independent RM27 repositories | RM27 root | Yes, each child | Keep paths stable; update the parent commit when a component revision changes |
 | `configs/` | Reviewed scene, vehicle, target, hardware and experiment configuration | RM27 root | No | Yes, with config path updates |
-| `components/rm_mjcf/` | Reusable MuJoCo runtime assets: current Ver2 visual/dynamic aircraft, docks, bases, darts and fields; model conversion and experiments remain in root `rm27/` | `CosmosMount/rm_mjcf` submodule | Yes | Keep the pinned parent revision and update root config references when assets move |
+| `components/rm_mjcf/` | Reusable MuJoCo runtime assets: current Ver2 visual/dynamic aircraft, docks, bases, darts and fields; new simulation composition belongs in Sim; historical root experiments retain their contracts | `CosmosMount/rm_mjcf` submodule | Yes | Keep the pinned parent revision and update root config references when assets move |
 | `tests/` | Root unit and integration tests | RM27 root | No | Yes, with test/config path updates |
 | `docs/` | Current contracts, reports, milestones and historical archive | RM27 root | No | Yes |
 | `rm27/perception/` | Complete RM27 sensing layer: vision (SLAM, camera calibration and target recognition), target estimates, guidance handoff and simulator producers | RM27 root | No | Yes, with import updates |
@@ -33,7 +36,11 @@ guide, not a statement that the working tree is clean.
 
 ## Ownership rule
 
-Current RM27 behavior belongs in `rm27/`, `configs/`, `tests/` and `docs/`.
+Cross-component integration belongs in root `rm27/`, `configs/`, `tests/` and
+`docs/`. Shared simulation belongs in Sim's `rm27_sim/` and `packages/physics/`;
+RL environments, rewards, policies and training Docker belong in `rm27_RL`.
+Use the owning repository's README and version, not a command copied from a
+newer local branch. SLAM and VIO remain independent component repositories.
 Research packages remain separate when they are independent studies. The
 M3C/OS04A10, camera-calibration, SLAM and target-recognition work is part of
 `rm27/perception/vision/` because it defines the project's camera sensing path.
@@ -45,13 +52,13 @@ historical results keep their original version boundaries.
 
 1. Update this map and the directory READMEs.
 2. Make output paths configurable and index existing artifacts.
-3. Migrate reusable code into `rm27/` with tests and provenance records.
+3. Migrate code into its owning repository with tests and provenance; shared simulation goes to Sim, not a duplicate root implementation.
 4. Move or archive old workspaces only after commands and submodule paths pass.
 
 The detailed code migration sequence is maintained in
 [`MIGRATION_PLAN.md`](MIGRATION_PLAN.md).
 
-## Current orientation (2026-10-16)
+## Historical workspace orientation (2026-10-16)
 
 - **Work here first:** `rm27/`, `configs/`, `tests/`, `docs/`, `research/` and
   the reviewed runtime assets in `components/rm_mjcf/`.

@@ -1,5 +1,21 @@
 # RM27 integrated development contract
 
+## Ownership and evidence update (2026-10-29)
+
+New shared simulation, scene composition, mission execution and viewers belong
+in the independent `shiuhou/rm27_sim` repository (`components/rm_uav_mujoco/`
+in the development workspace). The root owns cross-component contracts and
+pins, historical experiments and migration compatibility. Do not add a second
+simulation implementation here. This documentation change does not migrate the
+published root implementation or update its submodule pins.
+
+[The cross-repository report](../report.md) distinguishes local Ver2/new-field
+work, published component results and the older root baseline described below.
+The 180 g vehicle, RMUC2026 field and historical S0/S1 evidence below retain
+their original scope. Component successes do not automatically satisfy the
+root mission gates, and neither replay nor simulation truth establishes real
+sensor or aircraft accuracy.
+
 ## Accepted objective (2026-09-12)
 
 Develop inside this root project with a unified entry point, while retaining
