@@ -43,3 +43,7 @@
 	path = components/rm_mjcf
 	url = https://github.com/CosmosMount/rm_mjcf.git
 	branch = main
+[submodule "components/rm27_tracking"]
+	path = components/rm27_tracking
+	url = https://github.com/shiuhou/rm27_tracking.git
+	branch = main
