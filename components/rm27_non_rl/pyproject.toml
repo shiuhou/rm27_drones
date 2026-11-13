@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rm27-non-rl"
+version = "0.1.0"
+description = "RM27 Non-RL planning, guidance, state estimation and recovery"
+requires-python = ">=3.12,<3.13"
+dependencies = ["rm27-sim==0.1.0", "rm27-contact-physics==0.1.0"]
+
+[tool.setuptools]
+packages = ["rm27_non_rl"]
+include-package-data = false
