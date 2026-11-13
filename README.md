@@ -1,5 +1,27 @@
 # RM27 autonomous micro-UAV development
 
+## 進度與工作入口
+
+[report.md](report.md) 是可單獨分享給 ChatGPT 的跨倉庫研發快照：包含各組件進度、
+已驗證結果、失敗、工程假設、來源與本地／GitHub 差距。里程碑變更時更新同一檔案。
+它整理本地研發成果，**不表示本分支及全部 submodule pins 已包含這些成果**。
+
+| 要做的工作 | 工作位置／入口 |
+|---|---|
+| 跨組件契約、版本釘選、總進度 | 本 repo；[倉庫地圖](docs/REPOSITORY_MAP.md)、[總覽](report.md) |
+| 共用物理、場景、完整任務與 viewer | [rm27_sim](https://github.com/shiuhou/rm27_sim)；本地沿用 `components/rm_uav_mujoco/` 名稱 |
+| RL 訓練、reward、policy、Docker | [rm27_RL](https://github.com/shiuhou/rm27_RL) |
+| PX4 固件／SITL 整合 | [rm27_drone_px4](https://github.com/shiuhou/rm27_drone_px4) |
+| VIO／單目 SLAM | [rm27_vio](https://github.com/shiuhou/rm27_vio) ／ [rm27_slam](https://github.com/shiuhou/rm27_slam) |
+| 可重用機型與場地資產 | [rm_mjcf](https://github.com/CosmosMount/rm_mjcf) |
+| Tracking | [maixcam2_dart_vision](https://github.com/blademaster679/maixcam2_dart_vision)，在 `rm27/perception/vision/` 下 |
+
+新仿真開發歸 Sim 的 `rm27_sim/`；根 `rm27/` 保有整合、歷史研究與遷移兼容責任。
+本分支下方的 180 g／RMUC2026 命令與結果屬既有 root 基線；新 Ver2／2027 場地
+應依對應 Sim 版本的 README 操作，不能把不同機型或導航來源的成功混為完整任務驗收。
+父 repo 記錄固定 gitlink，`branch = main` 不會自動更新它。此文件修訂沒有更換 pins
+或 `.gitmodules`；舊 simulator URL 與新版獨立 repo 的差異見 [總覽 §13](report.md)。
+
 日常啟動與查看指令：[START_HERE.md](START_HERE.md)（繁體中文速查表）。
 
 RoboMaster 2027 simulation and research workspace. The current priority is one
@@ -25,7 +47,7 @@ Current real-aircraft parts and pending measurements are tracked in the
 [real-hardware baseline](docs/REAL_HARDWARE.md). `docs/archive/chatgptre.md` is retained as
 historical conversation context only and is not a current specification.
 
-## Current integration
+## Published root baseline (180 g / RMUC2026)
 
 - `configs/scene.json`: field revision, named H platform, dock placement and
   sequential mission contract.
@@ -42,7 +64,9 @@ The dock is placed on the red H platform by default. Four separate physical
 vehicle proxies occupy its slots. A separate [single-vehicle flight gate](docs/MICRO_FLIGHT.md)
 uses real ArduPilot SITL for takeoff, hover, return and landing, with simulation
 truth assisting precision return. The scene builder itself is a static preview.
-Base-contact missions and four ArduPilot instances are not implemented.
+This root baseline does not qualify base-contact missions or four simultaneous
+ArduPilot instances. Later component/local studies have separate evidence in
+[report.md](report.md).
 A separate [provisional base target](docs/BASE_TARGET.md) adds a green marker
 and collision test patch to the existing field base without replacing it.
 The [S0 batch report](docs/S0_REPORT.md) records ten independent passing dock
