@@ -36,8 +36,8 @@
 	url = https://github.com/shiuhou/rm27_drone_px4.git
 	branch = main
 [submodule "components/rm_uav_mujoco"]
-	path = components/rm_uav_mujoco
-	url = https://github.com/shiuhou/rm_uav_mujoco.git
+	path = components/rm27_sim
+	url = https://github.com/shiuhou/rm27_sim.git
 	branch = main
 [submodule "components/rm_mjcf"]
 	path = components/rm_mjcf

@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "scope": "R2.2-B optional sensor-only M3 predict/complementary correction replay; no flight commands",
+  "external_position_gain": 0.5,
+  "external_velocity_gain": 0.35,
+  "gain_provenance": "Existing M3 alpha_tof and alpha_flow reused as fixed full-vector external measurement gains, not optical flow",
+  "imu_max_age_s": 0.01,
+  "external_max_age_s": 0.05,
+  "age_provenance": "Unchanged R2 sensor validity limits; freshness is not accuracy or integrity",
+  "history_horizon_s": 0.1,
+  "history_provenance": "Bounded delayed-update replay horizon, twice declared external max age; not calibrated uncertainty",
+  "query_period_s": 0.005,
+  "initialization": "No true attitude input. Default identity is unaligned local navigation gauge, not measured world orientation. Stationary bootstrap requires explicit valid static evidence; yaw remains unobserved.",
+  "covariance": null,
+  "covariance_status": "NOT_PROVIDED_BY_REUSED_COMPLEMENTARY_ESTIMATOR",
+  "imu_transport_s": 0.0,
+  "external_transport_s": 0.015,
+  "event_transport_s": 0.0025,
+  "transport_provenance": "Declared simulation schedules, not measured hardware transport",
+  "noise_or_parameter_tuning_on_heldout": false
+}
