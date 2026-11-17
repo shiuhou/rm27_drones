@@ -1,0 +1,320 @@
+{
+  "schema": "evaluation.schema.json#/$defs/EpisodeEvaluationResult",
+  "synthetic": true,
+  "record": {
+    "record_type": "EpisodeEvaluationResult",
+    "metadata": {
+      "contract_id": "rm27.evaluation",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-contract-run",
+      "record_id": "synthetic-EpisodeEvaluationResult",
+      "source": "synthetic-contract-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-model",
+        "version": "fixture-1",
+        "sha256": "6bd8f29788b203c2c450e1f34c8de0bd01b55eb7f05d55d24672b070251e1d64"
+      },
+      "geometry": {
+        "id": "synthetic-geometry",
+        "version": "fixture-1",
+        "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "case_id": "synthetic-evaluation-case",
+    "seed": 3,
+    "provenance": {
+      "execution_provenance": "PLANNER_GENERATED",
+      "trial_role": "DEVELOPMENT",
+      "observation_provenance": [
+        {
+          "input_kind": "ESTIMATED",
+          "source": "synthetic-estimator",
+          "record_id": "synthetic-estimate"
+        },
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "synthetic-sensor"
+        }
+      ],
+      "initial_state_provenance": [
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "synthetic-test-sampling"
+        }
+      ],
+      "feedback_source": "PREDICTED_ORACLE",
+      "event_source": {
+        "controller_trigger": "NATIVE_ORACLE",
+        "independent_scorer": "NATIVE_ORACLE"
+      },
+      "frozen_config": {
+        "id": "synthetic-frozen-controller",
+        "version": "fixture-1",
+        "sha256": "e8bab13dee73398666f4e55772a6a8750ba3983060237414a6c99239736fae6f"
+      }
+    },
+    "identities": {
+      "scene": {
+        "id": "synthetic-scene",
+        "version": "fixture-1",
+        "sha256": "29c0064e991cc530cbd47699cbcc3dd861c2f588394d993c79df4e1d3f5e192b"
+      },
+      "profile": {
+        "id": "synthetic-profile",
+        "version": "fixture-1",
+        "sha256": "d11e81bc8942960c211bce52582136c6852e1131625828cefe5c9b5412062d07"
+      },
+      "scorer": {
+        "id": "synthetic-scorer",
+        "version": "fixture-1",
+        "sha256": "7777f885bffcb23c5c870a53704c14a012310e2f95372d39ea991b35afbf5b6b"
+      },
+      "simulator": {
+        "id": "synthetic-simulator",
+        "version": "fixture-1",
+        "sha256": "3575e409443badeabbe704a2f96e29fd9849ae129eeef9c415961f810e8667c1"
+      },
+      "controller": {
+        "id": "synthetic-controller",
+        "version": "fixture-1",
+        "sha256": "4f3459f08890069b47db08a00bda8aa9519433b66e752637337d9141dbaf5601"
+      },
+      "allocator": {
+        "id": "synthetic-allocator",
+        "version": "fixture-1",
+        "sha256": "0b0f23fa330ab2eadf46b306fba28f6e409ab5bc719d33e70b5fb02e082eba8d"
+      },
+      "integrator": "synthetic-integrator",
+      "timestep_s": 0.1
+    },
+    "episode_start_s": 0,
+    "episode_end_s": 3,
+    "window_coverage": {
+      "complete": false,
+      "interval": {
+        "start_s": 0,
+        "end_s": 3.0
+      },
+      "missing_intervals": [
+        {
+          "start_s": 1.2,
+          "end_s": 3.0
+        }
+      ],
+      "reason": "synthetic interrupted trace"
+    },
+    "first_contact": {
+      "event_id": "synthetic-first-contact",
+      "interval": {
+        "start_s": 0.5,
+        "end_s": 0.6
+      },
+      "pairs": [
+        {
+          "aircraft_geom_id": "synthetic-pad",
+          "other_geom_id": "synthetic-surface",
+          "region_id": "synthetic-region",
+          "classification": "PATCH_REGISTERED_ARMOR",
+          "point_W_m": [
+            1,
+            0,
+            -1
+          ],
+          "pair_normal_W": [
+            -1,
+            0,
+            0
+          ],
+          "surface_normal_W": [
+            -1,
+            0,
+            0
+          ],
+          "signed_distance_m": -0.002,
+          "solver_active": true,
+          "force_N": 0.3,
+          "native_impulse_Ns": null,
+          "normal_speed_m_s": 0.2,
+          "tangent_speed_m_s": 0.0,
+          "contact_checks": [
+            {
+              "gate": "synthetic-motion-gate",
+              "result": "PASS",
+              "reason": "synthetic qualification evidence"
+            }
+          ]
+        }
+      ]
+    },
+    "forbidden_events": [],
+    "secondary_contacts": [],
+    "clearance": {
+      "assessment": {
+        "verdict": "BLOCKED",
+        "reason": "synthetic missing clearance samples",
+        "coverage": {
+          "complete": false,
+          "interval": {
+            "start_s": 0,
+            "end_s": 3.0
+          },
+          "missing_intervals": [
+            {
+              "start_s": 1.2,
+              "end_s": 3.0
+            }
+          ],
+          "reason": "synthetic interrupted trace"
+        }
+      },
+      "metric": "synthetic registered clearance",
+      "minimum_m": 0.02,
+      "margin_threshold_m": 0.01,
+      "method": "CONTINUOUS_NATIVE",
+      "window": {
+        "start_s": 0,
+        "end_s": 3.0
+      },
+      "limitations": []
+    },
+    "separation": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "synthetic separation with dwell",
+        "coverage": {
+          "complete": true,
+          "interval": {
+            "start_s": 0.6,
+            "end_s": 1.0
+          }
+        }
+      },
+      "metric": "synthetic plane/pad distance",
+      "threshold_m": 0.04,
+      "no_contact_dwell_s": 0.1,
+      "achieved_time_s": 1.0,
+      "window": {
+        "start_s": 0.6,
+        "end_s": 1.0
+      }
+    },
+    "recovery": {
+      "assessment": {
+        "verdict": "BLOCKED",
+        "reason": "synthetic interrupted recovery trace"
+      },
+      "start_basis": "SENSOR_DETECTOR",
+      "started_at_s": 0.62,
+      "detection_latency_s": 0.02,
+      "control_phase_trace": [
+        "synthetic-phase-trace"
+      ],
+      "state_validity_trace": [
+        "synthetic-state-trace"
+      ],
+      "terminal_time_s": null
+    },
+    "stability": {
+      "assessment": {
+        "verdict": "NOT_RUN",
+        "reason": "synthetic hold not reached"
+      },
+      "tilt_convention": "synthetic tilt convention",
+      "tilt_limit_rad": 0.3,
+      "rate_limit_rad_s": 0.4,
+      "speed_limit_m_s": 0.5,
+      "height_loss_limit_m": 0.7,
+      "hold_s": 1,
+      "deadline_s": 2,
+      "hold_interval": null,
+      "extrema": null
+    },
+    "Q_contact": {
+      "verdict": "PASS",
+      "reason": "synthetic first contact qualified",
+      "coverage": {
+        "complete": true,
+        "interval": {
+          "start_s": 0,
+          "end_s": 0.6
+        }
+      }
+    },
+    "Q_clearance": {
+      "verdict": "BLOCKED",
+      "reason": "synthetic missing clearance samples",
+      "coverage": {
+        "complete": false,
+        "interval": {
+          "start_s": 0,
+          "end_s": 3.0
+        },
+        "missing_intervals": [
+          {
+            "start_s": 1.2,
+            "end_s": 3.0
+          }
+        ],
+        "reason": "synthetic interrupted trace"
+      }
+    },
+    "Q_separation": {
+      "verdict": "PASS",
+      "reason": "synthetic separation with dwell",
+      "coverage": {
+        "complete": true,
+        "interval": {
+          "start_s": 0.6,
+          "end_s": 1.0
+        }
+      }
+    },
+    "Q_stable": {
+      "verdict": "NOT_RUN",
+      "reason": "synthetic hold not reached"
+    },
+    "Q_complete": {
+      "verdict": "PASS",
+      "reason": "unsupported synthetic success",
+      "coverage": {
+        "complete": false,
+        "interval": {
+          "start_s": 0,
+          "end_s": 3.0
+        },
+        "missing_intervals": [
+          {
+            "start_s": 1.2,
+            "end_s": 3.0
+          }
+        ],
+        "reason": "synthetic interrupted trace"
+      }
+    },
+    "continuation_status": "NOT_RUN",
+    "termination_reason": "synthetic assessment end",
+    "numerical_health": "synthetic complete trace",
+    "artifacts": [
+      {
+        "id": "synthetic-evaluation-trace",
+        "version": "fixture-1",
+        "sha256": "61c8367a872d68334b9a03307a7d3c5cb40214a8ec94dc890b5bdd04a23970a2"
+      }
+    ]
+  },
+  "expect": {
+    "semantic": "evaluation_verdict_aggregation"
+  }
+}

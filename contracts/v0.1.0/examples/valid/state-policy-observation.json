@@ -1,0 +1,65 @@
+{
+  "schema": "state.schema.json#/$defs/PolicyObservation",
+  "synthetic": true,
+  "record": {
+    "metadata": {
+      "contract_id": "rm27.state",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-policy-observation",
+      "source": "synthetic-fixture",
+      "sequence": 0,
+      "input_kind": "ESTIMATED",
+      "lineage": [
+        {
+          "input_kind": "ESTIMATED",
+          "source": "synthetic-estimator",
+          "record_id": "synthetic-estimate"
+        }
+      ],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {}
+    },
+    "observation": {
+      "id": "synthetic-toy-observation-layout",
+      "version": "fixture",
+      "sha256": "e80334180a123c11047e2f9b277537e263276285f5420080a67211b6702b5fd7"
+    },
+    "state_time_s": 2.0,
+    "epoch_provenance": "Recorded estimator generation in synthetic fixture",
+    "feature_order": [
+      "toy-feature-a",
+      "toy-feature-b"
+    ],
+    "shape": [
+      2
+    ],
+    "normalizer": {
+      "id": "synthetic-toy-identity-normalizer",
+      "version": "fixture",
+      "sha256": "abec7a4990c1dd255ae90f005c0e0de409e71c0ef4b7c72fde880a6bddd1cca4"
+    },
+    "values": [
+      0.2,
+      null
+    ],
+    "mask": [
+      true,
+      false
+    ],
+    "missing_data_policy": "Illustrative mask-only layout, no final RL observation implied",
+    "permitted_sources": [
+      "ESTIMATED"
+    ],
+    "privileged_training": false,
+    "source_timestamps": [
+      {
+        "record_id": "synthetic-estimate",
+        "time_s": 1.9,
+        "clock_id": "synthetic-physics-clock"
+      }
+    ]
+  }
+}

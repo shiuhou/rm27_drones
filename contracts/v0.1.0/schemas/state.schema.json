@@ -1,0 +1,1055 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rm27.example/contracts/v0.1.0/state.schema.json",
+  "title": "RM27 State contract draft",
+  "x-rm27": {
+    "version": "0.1.0-draft",
+    "status": "PROPOSED",
+    "document": ".agents/docs/contracts/STATE.md"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/GroundTruthState"
+    },
+    {
+      "$ref": "#/$defs/EstimatedState"
+    },
+    {
+      "$ref": "#/$defs/PolicyObservation"
+    }
+  ],
+  "$defs": {
+    "CommonRecordMetadata": {
+      "$ref": "common.schema.json#/$defs/RecordMetadata"
+    },
+    "Validity": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "availability": {
+            "$ref": "common.schema.json#/$defs/Availability"
+          },
+          "initialized": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "aligned": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "finite": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "current": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "availability",
+          "initialized",
+          "aligned",
+          "finite",
+          "current"
+        ],
+        "additionalProperties": false
+      },
+      "propertyNames": {
+        "minLength": 1
+      }
+    },
+    "Uncertainty": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "COVARIANCE",
+            "BOUNDS"
+          ]
+        },
+        "covariance": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            },
+            "minItems": 1
+          },
+          "minItems": 1
+        },
+        "bounds": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "lower": {
+                "type": "number"
+              },
+              "upper": {
+                "type": "number"
+              }
+            },
+            "required": [
+              "lower",
+              "upper"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        },
+        "field_order": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "units": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1
+        },
+        "frame_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "error_convention": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "source": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "time_s": {
+          "type": "number",
+          "description": "Uncertainty epoch in seconds."
+        },
+        "clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "kind",
+        "field_order",
+        "units",
+        "frame_id",
+        "error_convention",
+        "source",
+        "time_s",
+        "clock_id"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "COVARIANCE"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "covariance"
+            ],
+            "not": {
+              "required": [
+                "bounds"
+              ]
+            }
+          },
+          "else": {
+            "required": [
+              "bounds"
+            ],
+            "not": {
+              "required": [
+                "covariance"
+              ]
+            }
+          }
+        }
+      ],
+      "description": "Small-angle attitude errors, not quaternion components; the matrix/bounds and unit vectors follow field_order."
+    },
+    "AppliedMotorInput": {
+      "type": "object",
+      "properties": {
+        "command_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "apply_time_s": {
+          "type": "number",
+          "description": "Application time in seconds in clock_id."
+        },
+        "clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "rotor_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "input": {
+          "$ref": "control.schema.json#/$defs/MotorInput"
+        }
+      },
+      "required": [
+        "command_id",
+        "apply_time_s",
+        "clock_id",
+        "rotor_ids",
+        "input"
+      ],
+      "additionalProperties": false,
+      "description": "Last applied ordered input, not actuator output or rotor speed. Non-force input requires its explicit units and mapping identity."
+    },
+    "ActuatorState": {
+      "type": "object",
+      "properties": {
+        "rotor_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "rotor_speed_rad_s": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "description": "Actual or estimated nonnegative shaft speed magnitude in rad/s.",
+                "minimum": 0
+              },
+              "minItems": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "x-unit": "rad/s"
+        },
+        "rotor_thrust_N": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "description": "Actual or estimated thrust magnitude in N, along model-defined thrust axis.",
+                "minimum": 0
+              },
+              "minItems": 1
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "x-unit": "N"
+        },
+        "motor_command_applied": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/AppliedMotorInput"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "rotor_ids"
+      ],
+      "additionalProperties": false,
+      "description": "Lists are aligned to Dynamics rotor order. Missing and null channels are not zero."
+    },
+    "TargetRelativeState": {
+      "type": "object",
+      "properties": {
+        "target_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "target_pose_WT": {
+          "type": "object",
+          "properties": {
+            "position_W_m": {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "description": "Metres; T origin resolved in W."
+            },
+            "q_WT_wxyz": {
+              "$ref": "common.schema.json#/$defs/QuaternionWxyz",
+              "description": "Hamilton [w,x,y,z], rotation from T to W."
+            }
+          },
+          "required": [
+            "position_W_m",
+            "q_WT_wxyz"
+          ],
+          "additionalProperties": false
+        },
+        "target_velocity_W_m_s": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "description": "Metres per second; velocity of target frame origin resolved in W."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "x-unit": "m/s",
+          "x-frame": "W"
+        },
+        "target_omega_T_rad_s": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "description": "Radians per second; target angular velocity resolved in T."
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "x-unit": "rad/s",
+          "x-frame": "T"
+        },
+        "relative_position_T_m": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Metres; R_WT^T (p_WB - p_WT), vehicle relative to target.",
+          "x-unit": "m",
+          "x-frame": "T"
+        },
+        "relative_velocity_T_m_s": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Metres per second; rotating-target derivative of relative_position_T_m, not contact-point velocity.",
+          "x-unit": "m/s",
+          "x-frame": "T"
+        },
+        "surface_normal_W": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Unit direction; Target outward toward free approach space, resolved in W.",
+          "x-unit": "1",
+          "x-frame": "W"
+        }
+      },
+      "required": [
+        "target_id"
+      ],
+      "additionalProperties": false,
+      "description": "Only capabilities claimed are supplied; a static-target zero must come from the registered target, not an absent motion estimate."
+    },
+    "ReplaySnapshot": {
+      "type": "object",
+      "properties": {
+        "snapshot": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "state_layout": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "integration_time_s": {
+          "type": "number",
+          "description": "Simulation integration time in seconds."
+        },
+        "history": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Identity"
+          },
+          "minItems": 1
+        },
+        "solver_state": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "snapshot",
+        "state_layout",
+        "integration_time_s",
+        "history",
+        "solver_state"
+      ],
+      "additionalProperties": false,
+      "description": "Exact replay uses a simulator snapshot plus integration/solver state, actuator and command history, and applicable controller/estimator history. Shape validation does not verify payload closure."
+    },
+    "GroundTruthState": {
+      "$ref": "#/$defs/PhysicalStateFields",
+      "properties": {
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.state"
+            },
+            "input_kind": {
+              "const": "GROUND_TRUTH"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "replay_snapshot": {
+          "$ref": "#/$defs/ReplaySnapshot"
+        }
+      },
+      "unevaluatedProperties": false,
+      "description": "Simulator truth; optional replay payload required only for the exact replay capability."
+    },
+    "EstimatedState": {
+      "$ref": "#/$defs/PhysicalStateFields",
+      "properties": {
+        "metadata": {
+          "properties": {
+            "input_kind": {
+              "enum": [
+                "ESTIMATED",
+                "PREDICTED"
+              ]
+            }
+          }
+        }
+      },
+      "unevaluatedProperties": false,
+      "description": "Consumer-visible state; predicted estimates retain informative measurement ancestry and ages."
+    },
+    "PolicyObservation": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.state"
+            }
+          },
+          "required": []
+        },
+        "observation": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "state_time_s": {
+          "type": "number",
+          "description": "Represented state time in seconds."
+        },
+        "epoch_provenance": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "feature_order": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        },
+        "shape": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "minItems": 1
+        },
+        "history_stride_s": {
+          "type": "number",
+          "description": "Interval between history slots in seconds.",
+          "exclusiveMinimum": 0
+        },
+        "normalizer": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "minItems": 1
+        },
+        "mask": {
+          "type": "array",
+          "items": {
+            "type": "boolean"
+          },
+          "minItems": 1
+        },
+        "missing_data_policy": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "permitted_sources": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/SourceKind"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "privileged_training": {
+          "type": "boolean"
+        },
+        "source_timestamps": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "record_id": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "time_s": {
+                "type": "number",
+                "description": "Informative source time in seconds."
+              },
+              "clock_id": {
+                "$ref": "common.schema.json#/$defs/Id"
+              }
+            },
+            "required": [
+              "record_id",
+              "time_s",
+              "clock_id"
+            ],
+            "additionalProperties": false
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "metadata",
+        "observation",
+        "state_time_s",
+        "epoch_provenance",
+        "feature_order",
+        "shape",
+        "normalizer",
+        "values",
+        "missing_data_policy",
+        "permitted_sources",
+        "privileged_training",
+        "source_timestamps"
+      ],
+      "additionalProperties": false,
+      "description": "Flat values in declared consumer layout. Shape, feature order, masking and normalizer are consumer/version specific; no canonical RL dimension.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "normalizer": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "normalizer"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "normalizer": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "normalizer"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        }
+      ]
+    },
+    "PhysicalStateFields": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.state"
+            }
+          },
+          "required": []
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "state_time_s": {
+          "type": "number",
+          "description": "Physical epoch represented by state, in metadata.clock_id, seconds.",
+          "x-unit": "s"
+        },
+        "position_W_m": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Metres; B-origin position resolved in W.",
+          "x-unit": "m",
+          "x-frame": "W"
+        },
+        "velocity_W_m_s": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Metres per second; time derivative of the registered B-origin position, resolved in W.",
+          "x-unit": "m/s",
+          "x-frame": "W"
+        },
+        "q_WB_wxyz": {
+          "$ref": "common.schema.json#/$defs/QuaternionWxyz",
+          "description": "Hamilton [w,x,y,z], rotation from FRD body frame B to NED world frame W.",
+          "x-unit": "1",
+          "x-frame": "W"
+        },
+        "body_rates_B_rad_s": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Radians per second; angular velocity in FRD B, not Euler-angle derivatives or setpoints.",
+          "x-unit": "rad/s",
+          "x-frame": "B"
+        },
+        "actuator_state": {
+          "$ref": "#/$defs/ActuatorState"
+        },
+        "target_relative": {
+          "$ref": "#/$defs/TargetRelativeState"
+        },
+        "measurement_times_s": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "time_s": {
+                "type": "number",
+                "description": "Informative acquisition time in seconds."
+              },
+              "clock_id": {
+                "$ref": "common.schema.json#/$defs/Id"
+              }
+            },
+            "required": [
+              "time_s",
+              "clock_id"
+            ],
+            "additionalProperties": false
+          },
+          "propertyNames": {
+            "minLength": 1
+          }
+        },
+        "published_time_s": {
+          "type": "number",
+          "description": "Producer completion in seconds.",
+          "x-unit": "s"
+        },
+        "published_clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "received_time_s": {
+          "type": "number",
+          "description": "Receiver receipt in seconds.",
+          "x-unit": "s"
+        },
+        "received_clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "data_age_s": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "description": "Receiver-computed age in seconds.",
+            "minimum": 0
+          },
+          "propertyNames": {
+            "minLength": 1
+          }
+        },
+        "validity": {
+          "$ref": "#/$defs/Validity"
+        },
+        "uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/Uncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "epoch_provenance": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "metadata",
+        "frames",
+        "state_time_s",
+        "validity",
+        "epoch_provenance"
+      ],
+      "description": "Shared represented state and optional capabilities. A clock identifier is required for timestamp interpretation; a missing mapping does not authorize use.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "uncertainty": {
+                "type": "null"
+              }
+            },
+            "required": [
+              "uncertainty"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "uncertainty": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "uncertainty"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "actuator_state": {
+                "properties": {
+                  "rotor_speed_rad_s": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "rotor_speed_rad_s"
+                ]
+              }
+            },
+            "required": [
+              "actuator_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "rotor_speed_rad_s": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "rotor_speed_rad_s"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "actuator_state": {
+                "properties": {
+                  "rotor_thrust_N": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "rotor_thrust_N"
+                ]
+              }
+            },
+            "required": [
+              "actuator_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "rotor_thrust_N": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "rotor_thrust_N"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "actuator_state": {
+                "properties": {
+                  "motor_command_applied": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "motor_command_applied"
+                ]
+              }
+            },
+            "required": [
+              "actuator_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "motor_command_applied": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "motor_command_applied"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_relative": {
+                "properties": {
+                  "target_velocity_W_m_s": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "target_velocity_W_m_s"
+                ]
+              }
+            },
+            "required": [
+              "target_relative"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "target_velocity_W_m_s": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "target_velocity_W_m_s"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "target_relative": {
+                "properties": {
+                  "target_omega_T_rad_s": {
+                    "type": "null"
+                  }
+                },
+                "required": [
+                  "target_omega_T_rad_s"
+                ]
+              }
+            },
+            "required": [
+              "target_relative"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "properties": {
+                  "availability": {
+                    "properties": {
+                      "target_omega_T_rad_s": {
+                        "$ref": "#/$defs/UnavailableCapability"
+                      }
+                    },
+                    "required": [
+                      "target_omega_T_rad_s"
+                    ]
+                  }
+                },
+                "required": [
+                  "availability"
+                ]
+              }
+            },
+            "required": [
+              "metadata"
+            ]
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "actuator_state"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "required": [
+                  "model"
+                ]
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "required": [
+              "target_relative"
+            ]
+          },
+          "then": {
+            "properties": {
+              "metadata": {
+                "required": [
+                  "geometry"
+                ]
+              }
+            }
+          }
+        }
+      ],
+      "dependentRequired": {
+        "published_time_s": [
+          "published_clock_id"
+        ],
+        "published_clock_id": [
+          "published_time_s"
+        ],
+        "received_time_s": [
+          "received_clock_id"
+        ],
+        "received_clock_id": [
+          "received_time_s"
+        ]
+      }
+    },
+    "UnavailableCapability": {
+      "$ref": "common.schema.json#/$defs/Availability",
+      "properties": {
+        "status": {
+          "not": {
+            "const": "AVAILABLE"
+          }
+        }
+      }
+    }
+  }
+}

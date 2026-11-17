@@ -1,0 +1,39 @@
+{
+  "version": "1",
+  "dataset_readiness": "BLOCKED",
+  "reasons": [
+    "Only one recorded source trajectory family is registered; no independent train/dev/held-out families are established.",
+    "Recorded telemetry lacks a registered world/body-origin-to-COM transform and unified estimator reset epoch.",
+    "PX4 boot and simulator sample/receipt clocks are distinct; a validated mapping is not recorded.",
+    "Normalized sampled controls are retained unchanged, but complete command timing/history, actuator activation and profile identity are unavailable.",
+    "This historical navigation scene is not the accepted ASM2 canonical baseline; no model/profile equivalence or physical feasibility is established."
+  ],
+  "sources": [
+    {
+      "source_run_id": "fixed-waypoints-half-height-001",
+      "source_family_id": "fixed-waypoints-half-height-001:single-source-trajectory",
+      "source_path": "components/rm27_sim/artifacts/fixed-waypoints-half-height-001/flight/frames.jsonl",
+      "source_sha256": "e3d8666efab977c3525cebd21f6cc62686498a3f9f473175b71e9fb3648d712d",
+      "fixture_path": "tests/contracts/fixtures/handover_navigation_recorded.json",
+      "fixture_sha256": "ec84c27d83244290d128b62abe22b91e89eda5345819098e7c57a68829eb4331",
+      "input_kind": "RECORDED",
+      "lineage": [
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "MuJoCo truth-generated ODOMETRY fused by PX4 EKF2; not VIO"
+        },
+        {
+          "input_kind": "GROUND_TRUTH",
+          "source": "physical_state is separately recorded simulator truth; not a runtime estimate"
+        }
+      ],
+      "split": "dev"
+    }
+  ],
+  "synthetic_fixture": {
+    "path": "tests/contracts/fixtures/handover_synthetic.json",
+    "purpose": "FORMAT_AND_PROTOCOL_ONLY",
+    "sha256": "e827fe9ffc79ce3324a724bcd26dc3ddd3c6135ec1cfbdbdd4c303cd235cc33e"
+  },
+  "snapshot_format": "rm27.handover/1"
+}

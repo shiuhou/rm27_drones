@@ -1,0 +1,950 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rm27.example/contracts/v0.1.0/control.schema.json",
+  "title": "RM27 Control draft",
+  "x-rm27": {
+    "version": "0.1.0-draft",
+    "status": "PROPOSED",
+    "document": ".agents/docs/contracts/CONTROL.md"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ReferenceTrajectory"
+    },
+    {
+      "$ref": "#/$defs/DirectCTBR"
+    },
+    {
+      "$ref": "#/$defs/MotorAllocationRequest"
+    },
+    {
+      "$ref": "#/$defs/AppliedActuatorCommand"
+    },
+    {
+      "$ref": "#/$defs/ControlAuthority"
+    }
+  ],
+  "$defs": {
+    "Layer": {
+      "enum": [
+        "REFERENCE_TRAJECTORY",
+        "DIRECT_CTBR",
+        "MOTOR_ALLOCATION"
+      ]
+    },
+    "AuthorityLease": {
+      "type": "object",
+      "properties": {
+        "vehicle_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "owner_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "lease_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "generation": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "allowed_layer": {
+          "$ref": "#/$defs/Layer"
+        },
+        "phase": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "lease_expires_at_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "handoff_state": {
+          "enum": [
+            "ACTIVE",
+            "PENDING",
+            "TRANSFERRED",
+            "REVOKED"
+          ]
+        }
+      },
+      "required": [
+        "vehicle_id",
+        "owner_id",
+        "lease_id",
+        "generation",
+        "allowed_layer",
+        "phase",
+        "lease_expires_at_s",
+        "handoff_state"
+      ],
+      "additionalProperties": false,
+      "description": "For an admitted command, identity and epoch are inherited from its metadata and matched to the receiving lease registry."
+    },
+    "Handoff": {
+      "type": "object",
+      "properties": {
+        "predecessor": {
+          "$ref": "#/$defs/AuthorityLease"
+        },
+        "successor": {
+          "$ref": "#/$defs/AuthorityLease"
+        },
+        "effective_apply_time_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "acknowledged_successor": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "predecessor",
+        "successor",
+        "effective_apply_time_s",
+        "acknowledged_successor"
+      ],
+      "additionalProperties": false,
+      "description": "The successor generation and effective application instant are checked with both lease records. A pending handoff is representable and is not admitted until acknowledged."
+    },
+    "ControlAuthority": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "ControlAuthority"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.control"
+            },
+            "clock_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "authority": {
+          "$ref": "#/$defs/AuthorityLease"
+        },
+        "handoff": {
+          "$ref": "#/$defs/Handoff"
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "authority"
+      ],
+      "additionalProperties": false
+    },
+    "HoldPolicy": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "late_sample_behavior": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "missing_sample_behavior": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "method",
+        "late_sample_behavior",
+        "missing_sample_behavior"
+      ],
+      "additionalProperties": false
+    },
+    "CommandTiming": {
+      "type": "object",
+      "properties": {
+        "generated_time_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "apply_time_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "valid_from_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "expires_at_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "source_state_time_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "measurement_age_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "sample_period_s": {
+          "type": "number",
+          "x-unit": "s",
+          "exclusiveMinimum": 0
+        },
+        "hold_policy": {
+          "$ref": "#/$defs/HoldPolicy"
+        }
+      },
+      "required": [
+        "generated_time_s",
+        "apply_time_s",
+        "valid_from_s",
+        "expires_at_s",
+        "source_state_time_s",
+        "measurement_age_s",
+        "hold_policy"
+      ],
+      "additionalProperties": false,
+      "description": "All timestamps refer to the enclosing registered clock. Application is in [valid_from_s, expires_at_s); consumers recompute freshness."
+    },
+    "ReferenceKnot": {
+      "type": "object",
+      "properties": {
+        "time_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "position_ref_W_m": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "m",
+          "x-frame": "W"
+        },
+        "velocity_ref_W_m_s": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "m/s",
+          "x-frame": "W"
+        },
+        "acceleration_ref_W_m_s2": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "m/s^2",
+          "x-frame": "W",
+          "description": "Inertial acceleration; gravity convention per Control contract."
+        },
+        "jerk_ref_W_m_s3": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "m/s^3",
+          "x-frame": "W"
+        },
+        "q_ref_WB_wxyz": {
+          "$ref": "common.schema.json#/$defs/QuaternionWxyz",
+          "x-frame": "W<-B",
+          "x-unit": "1"
+        },
+        "body_rate_ref_B_rad_s": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "rad/s",
+          "x-frame": "B"
+        },
+        "angular_acceleration_ref_B_rad_s2": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "rad/s^2",
+          "x-frame": "B"
+        }
+      },
+      "required": [
+        "time_s",
+        "position_ref_W_m",
+        "velocity_ref_W_m_s",
+        "acceleration_ref_W_m_s2"
+      ],
+      "additionalProperties": false
+    },
+    "ReferenceInterpolation": {
+      "type": "object",
+      "properties": {
+        "method": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "polynomial_order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "boundary_derivatives": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "body_basis": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "authoritative_fields": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "attitude_derivation": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "method",
+        "authoritative_fields"
+      ],
+      "additionalProperties": false
+    },
+    "ReferenceTrajectory": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "ReferenceTrajectory"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.control"
+            },
+            "clock_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "authority": {
+          "$ref": "#/$defs/AuthorityLease",
+          "properties": {
+            "allowed_layer": {
+              "const": "REFERENCE_TRAJECTORY"
+            }
+          }
+        },
+        "timing": {
+          "$ref": "#/$defs/CommandTiming"
+        },
+        "source_state_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "parent_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tracker": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "knots": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ReferenceKnot"
+          },
+          "minItems": 1
+        },
+        "interpolation": {
+          "$ref": "#/$defs/ReferenceInterpolation"
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "frames",
+        "authority",
+        "timing",
+        "source_state_id",
+        "target_id",
+        "reference_id",
+        "parent_id",
+        "tracker",
+        "knots",
+        "interpolation"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "knots": {
+                "contains": {
+                  "not": {
+                    "required": [
+                      "q_ref_WB_wxyz"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "interpolation": {
+                "required": [
+                  "attitude_derivation"
+                ]
+              }
+            }
+          }
+        }
+      ]
+    },
+    "DirectCTBR": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "DirectCTBR"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.control"
+            },
+            "clock_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "authority": {
+          "$ref": "#/$defs/AuthorityLease",
+          "properties": {
+            "allowed_layer": {
+              "const": "DIRECT_CTBR"
+            }
+          }
+        },
+        "timing": {
+          "$ref": "#/$defs/CommandTiming"
+        },
+        "source_state_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "collective_thrust_N": {
+          "type": "number",
+          "x-unit": "N",
+          "minimum": 0
+        },
+        "body_rate_sp_B_rad_s": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "rad/s",
+          "x-frame": "B"
+        },
+        "adapter": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "rate_actuator_profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "frames",
+        "authority",
+        "timing",
+        "source_state_id",
+        "target_id",
+        "collective_thrust_N",
+        "body_rate_sp_B_rad_s",
+        "adapter",
+        "rate_actuator_profile"
+      ],
+      "additionalProperties": false
+    },
+    "AllocatorProfile": {
+      "type": "object",
+      "properties": {
+        "path": {
+          "enum": [
+            "SIMULATION",
+            "PX4_FLIGHT"
+          ]
+        },
+        "owner": {
+          "enum": [
+            "rm27_sim",
+            "rm27_drone_px4"
+          ]
+        },
+        "allocator": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "inner_loop": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "firmware": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "config_hash": {
+          "$ref": "common.schema.json#/$defs/Sha256"
+        }
+      },
+      "required": [
+        "path",
+        "owner",
+        "allocator",
+        "inner_loop",
+        "config_hash"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "path": {
+                "const": "PX4_FLIGHT"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "owner": {
+                "const": "rm27_drone_px4"
+              }
+            },
+            "required": [
+              "firmware"
+            ]
+          },
+          "else": {
+            "properties": {
+              "owner": {
+                "const": "rm27_sim"
+              }
+            }
+          }
+        }
+      ]
+    },
+    "MotorInput": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "units": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "mapping": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "values": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "kind",
+        "units",
+        "mapping",
+        "values"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "FORCE_TARGET_N"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "units": {
+                "const": "N"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "x-unit": "N",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "NORMALIZED_THROTTLE"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "units": {
+                "const": "1"
+              }
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "SHAFT_SPEED_RAD_S"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "units": {
+                "const": "rad/s"
+              },
+              "values": {
+                "type": "array",
+                "items": {
+                  "type": "number",
+                  "x-unit": "rad/s",
+                  "minimum": 0
+                }
+              }
+            }
+          }
+        }
+      ],
+      "description": "Rotor-aligned inputs. A named mapping defines supported kinds, units, scaling and bounds; no default normalized-throttle conversion."
+    },
+    "MotorLimits": {
+      "type": "object",
+      "properties": {
+        "profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "unit": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "lower": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1
+        },
+        "upper": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "lower": [
+          "upper",
+          "unit"
+        ],
+        "upper": [
+          "lower",
+          "unit"
+        ]
+      }
+    },
+    "Saturation": {
+      "type": "object",
+      "properties": {
+        "clipped_rotor_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "rate_limited_rotor_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "allocation_infeasible": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "clipped_rotor_ids",
+        "rate_limited_rotor_ids",
+        "allocation_infeasible"
+      ],
+      "additionalProperties": false
+    },
+    "MotorAllocationRequest": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "MotorAllocationRequest"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.control"
+            },
+            "clock_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "authority": {
+          "$ref": "#/$defs/AuthorityLease",
+          "properties": {
+            "allowed_layer": {
+              "const": "MOTOR_ALLOCATION"
+            }
+          }
+        },
+        "timing": {
+          "$ref": "#/$defs/CommandTiming"
+        },
+        "source_state_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "allocation_profile": {
+          "$ref": "#/$defs/AllocatorProfile"
+        },
+        "rotor_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "collective_thrust_N": {
+          "type": "number",
+          "x-unit": "N",
+          "minimum": 0
+        },
+        "torque_request_B_Nm": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "N*m",
+          "x-frame": "B"
+        },
+        "rotor_thrust_request_N": {
+          "type": "array",
+          "items": {
+            "type": "number",
+            "x-unit": "N",
+            "minimum": 0
+          },
+          "minItems": 1
+        },
+        "motor_command_requested": {
+          "$ref": "#/$defs/MotorInput"
+        },
+        "limits": {
+          "$ref": "#/$defs/MotorLimits"
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "frames",
+        "authority",
+        "timing",
+        "source_state_id",
+        "target_id",
+        "allocation_profile",
+        "rotor_ids",
+        "limits"
+      ],
+      "additionalProperties": false,
+      "anyOf": [
+        {
+          "required": [
+            "collective_thrust_N",
+            "torque_request_B_Nm"
+          ]
+        },
+        {
+          "required": [
+            "rotor_thrust_request_N"
+          ]
+        },
+        {
+          "required": [
+            "motor_command_requested"
+          ]
+        }
+      ]
+    },
+    "AppliedActuatorCommand": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "AppliedActuatorCommand"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.control"
+            },
+            "clock_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "authority": {
+          "$ref": "#/$defs/AuthorityLease",
+          "properties": {
+            "allowed_layer": {
+              "const": "MOTOR_ALLOCATION"
+            }
+          }
+        },
+        "timing": {
+          "$ref": "#/$defs/CommandTiming"
+        },
+        "source_state_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "target_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "command_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "allocation_profile": {
+          "$ref": "#/$defs/AllocatorProfile"
+        },
+        "rotor_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "motor_command_requested": {
+          "$ref": "#/$defs/MotorInput"
+        },
+        "motor_command_applied": {
+          "$ref": "#/$defs/MotorInput"
+        },
+        "limits": {
+          "$ref": "#/$defs/MotorLimits"
+        },
+        "saturation": {
+          "$ref": "#/$defs/Saturation"
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "frames",
+        "authority",
+        "timing",
+        "source_state_id",
+        "target_id",
+        "command_id",
+        "allocation_profile",
+        "rotor_ids",
+        "motor_command_applied",
+        "limits",
+        "saturation"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

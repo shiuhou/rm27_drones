@@ -1,0 +1,93 @@
+{
+  "schema": "control.schema.json#/$defs/MotorAllocationRequest",
+  "synthetic": true,
+  "record": {
+    "record_type": "MotorAllocationRequest",
+    "metadata": {
+      "contract_id": "rm27.control",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-contract-run",
+      "record_id": "synthetic-MotorAllocationRequest",
+      "source": "synthetic-contract-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-model",
+        "version": "fixture-1",
+        "sha256": "6bd8f29788b203c2c450e1f34c8de0bd01b55eb7f05d55d24672b070251e1d64"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "authority": {
+      "vehicle_id": "synthetic-vehicle",
+      "owner_id": "synthetic-adapter",
+      "lease_id": "synthetic-lease",
+      "generation": 2,
+      "allowed_layer": "MOTOR_ALLOCATION",
+      "phase": "synthetic-control-phase",
+      "lease_expires_at_s": 11.0,
+      "handoff_state": "ACTIVE"
+    },
+    "timing": {
+      "generated_time_s": 10.0,
+      "apply_time_s": 10.2,
+      "valid_from_s": 10.1,
+      "expires_at_s": 10.6,
+      "source_state_time_s": 9.9,
+      "measurement_age_s": 0.3,
+      "sample_period_s": 0.4,
+      "hold_policy": {
+        "method": "ZERO_ORDER_HOLD",
+        "late_sample_behavior": "REJECT_IF_EXPIRED",
+        "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+      }
+    },
+    "source_state_id": "synthetic-state-record",
+    "target_id": "synthetic-target",
+    "allocation_profile": {
+      "path": "SIMULATION",
+      "owner": "rm27_sim",
+      "allocator": {
+        "id": "synthetic-simulation-allocation",
+        "version": "fixture-1",
+        "sha256": "9c0b8f76d51739fe2e065d46671ac35838094ca969540e538df8adef858626c7"
+      },
+      "inner_loop": {
+        "id": "synthetic-simulation-inner-loop",
+        "version": "fixture-1",
+        "sha256": "5b67f9056bfc68571e7ac35ded3db68750570b2660e914c17ff08507d3cd1853"
+      },
+      "config_hash": "69849c6190e6b4a9e93e19bd754fa50da0f8c098962cac16ec97530f81927f23"
+    },
+    "rotor_ids": [
+      "synthetic-r0",
+      "synthetic-r1"
+    ],
+    "rotor_thrust_request_N": [
+      0.2,
+      0.3
+    ],
+    "limits": {
+      "profile": {
+        "id": "synthetic-simulation-limits",
+        "version": "fixture-1",
+        "sha256": "afb0d64edbfd6f03e6db3c0bc00e29d656e801202b9623fc3034634cea62b78b"
+      }
+    }
+  },
+  "context": {
+    "rotor_order": [
+      "synthetic-r0",
+      "synthetic-r1"
+    ]
+  }
+}

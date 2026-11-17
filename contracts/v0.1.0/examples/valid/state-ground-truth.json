@@ -1,0 +1,70 @@
+{
+  "schema": "state.schema.json#/$defs/GroundTruthState",
+  "synthetic": true,
+  "record": {
+    "metadata": {
+      "contract_id": "rm27.state",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-truth",
+      "source": "synthetic-fixture",
+      "sequence": 0,
+      "input_kind": "GROUND_TRUTH",
+      "lineage": [
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "synthetic-input"
+        }
+      ],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-vehicle-model",
+        "version": "fixture",
+        "sha256": "b9c24a84bb0ddc68a1db9a4ca22bb0182bbf84761b20a62c3167aeb2b3ac35c7"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "state_time_s": 2.0,
+    "position_W_m": [
+      0.3,
+      0.5,
+      -0.1
+    ],
+    "velocity_W_m_s": [
+      0.05,
+      0,
+      0
+    ],
+    "q_WB_wxyz": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "body_rates_B_rad_s": [
+      0.01,
+      0.02,
+      0.03
+    ],
+    "validity": {
+      "pose": {
+        "availability": {
+          "status": "AVAILABLE",
+          "reason": null
+        },
+        "initialized": true,
+        "aligned": true,
+        "finite": true,
+        "current": true
+      }
+    },
+    "epoch_provenance": "Recorded simulator generation in synthetic fixture"
+  }
+}

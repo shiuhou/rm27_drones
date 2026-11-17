@@ -1,0 +1,89 @@
+{
+  "schema": "state.schema.json#/$defs/GroundTruthState",
+  "synthetic": true,
+  "record": {
+    "metadata": {
+      "contract_id": "rm27.state",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-prediction",
+      "source": "synthetic-fixture",
+      "sequence": 0,
+      "input_kind": "PREDICTED",
+      "lineage": [
+        {
+          "input_kind": "ESTIMATED",
+          "source": "synthetic-estimator",
+          "record_id": "synthetic-estimate"
+        }
+      ],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {
+        "rotor_speed_rad_s": {
+          "status": "UNKNOWN",
+          "reason": "Shaft speed is unobserved"
+        },
+        "uncertainty": {
+          "status": "UNKNOWN",
+          "reason": "Estimator covariance was not recorded"
+        }
+      },
+      "model": {
+        "id": "synthetic-vehicle-model",
+        "version": "fixture",
+        "sha256": "b9c24a84bb0ddc68a1db9a4ca22bb0182bbf84761b20a62c3167aeb2b3ac35c7"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "state_time_s": 2.1,
+    "q_WB_wxyz": [
+      1,
+      0,
+      0,
+      0
+    ],
+    "actuator_state": {
+      "rotor_ids": [
+        "synthetic-rotor-left",
+        "synthetic-rotor-right"
+      ],
+      "rotor_speed_rad_s": null
+    },
+    "measurement_times_s": {
+      "orientation": {
+        "time_s": 1.9,
+        "clock_id": "synthetic-physics-clock"
+      }
+    },
+    "validity": {
+      "orientation": {
+        "availability": {
+          "status": "AVAILABLE",
+          "reason": null
+        },
+        "initialized": true,
+        "aligned": true,
+        "finite": true,
+        "current": true
+      }
+    },
+    "uncertainty": null,
+    "epoch_provenance": "Recorded estimator generation in synthetic fixture",
+    "data_age_s": {
+      "orientation": 0.2
+    }
+  },
+  "expect": {
+    "keyword": "const",
+    "path": [
+      "metadata",
+      "input_kind"
+    ]
+  }
+}

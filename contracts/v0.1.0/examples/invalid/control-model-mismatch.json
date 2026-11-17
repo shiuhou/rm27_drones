@@ -1,0 +1,83 @@
+{
+  "schema": "control.schema.json#/$defs/DirectCTBR",
+  "synthetic": true,
+  "record": {
+    "record_type": "DirectCTBR",
+    "metadata": {
+      "contract_id": "rm27.control",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-contract-run",
+      "record_id": "synthetic-DirectCTBR",
+      "source": "synthetic-contract-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-model",
+        "version": "fixture-1",
+        "sha256": "6bd8f29788b203c2c450e1f34c8de0bd01b55eb7f05d55d24672b070251e1d64"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "authority": {
+      "vehicle_id": "synthetic-vehicle",
+      "owner_id": "synthetic-adapter",
+      "lease_id": "synthetic-lease",
+      "generation": 2,
+      "allowed_layer": "DIRECT_CTBR",
+      "phase": "synthetic-control-phase",
+      "lease_expires_at_s": 11.0,
+      "handoff_state": "ACTIVE"
+    },
+    "timing": {
+      "generated_time_s": 10.0,
+      "apply_time_s": 10.2,
+      "valid_from_s": 10.1,
+      "expires_at_s": 10.6,
+      "source_state_time_s": 9.9,
+      "measurement_age_s": 0.3,
+      "sample_period_s": 0.4,
+      "hold_policy": {
+        "method": "ZERO_ORDER_HOLD",
+        "late_sample_behavior": "REJECT_IF_EXPIRED",
+        "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+      }
+    },
+    "source_state_id": "synthetic-state-record",
+    "target_id": "synthetic-target",
+    "collective_thrust_N": 1.2,
+    "body_rate_sp_B_rad_s": [
+      0.0,
+      0.0,
+      0.1
+    ],
+    "adapter": {
+      "id": "synthetic-controller-adapter",
+      "version": "fixture-1",
+      "sha256": "f724e1dd29aa8e3c5030c93716fc35b08362255788fdd45608601b6d15ae5097"
+    },
+    "rate_actuator_profile": {
+      "id": "synthetic-rate-actuator-profile",
+      "version": "fixture-1",
+      "sha256": "4f46b1b6b16218b316b8e94acf6b69a1af82eeb8f7303ce490820a7534bd2028"
+    }
+  },
+  "context": {
+    "model": {
+      "id": "synthetic-model",
+      "version": "fixture-1",
+      "sha256": "01b7005c59eadac770363a1d112fbfad32da7f02445e98257135fd130322d1a0"
+    }
+  },
+  "expect": {
+    "semantic": "model_identity_mismatch"
+  }
+}

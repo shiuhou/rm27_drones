@@ -1,5 +1,17 @@
 # RM27 全倉庫研發進度與研究背景
 
+G0 共用 Navigation → Handover（2026-11-18，Asia/Shanghai）：已實作 Snapshot、
+登錄准入檢查、離線交接協議、Scenario Set v1 和跨程序測試。
+相同 Snapshot 可在各自既有環境建立 RL／Non-RL 真實原生資料型別；僅限合成離線型別驗證，
+未執行策略、控制器或 physics。真實導航三筆移動紀錄與九筆 ULog 姿態保留來源及缺項；
+**完整 Handover Dataset 仍 BLOCKED**，不能作為真實導航分布或可行性證據。
+80 項 Contract／G0 測試在兩個本機 Python 環境全數通過；相關回歸 12 PASS／1 既有 FAIL，
+歷史 full-worker 回歸仍被原 source lock 阻塞，未改鎖檔。
+詳細範圍、命令及 PASS／BLOCKED／NOT_RUN 見 [G0 交付](.agents/docs/G0_HANDOVER.md)。
+上述為本機離線驗證；未執行遠端研究或 N1／R9，契約與 schema 仍為草案。
+G0 發布納入必要的未發布契約／離線 helpers；原始資料、模型 payload、環境和其餘研發修改留本地。
+完整 80 項重現仍需要原工作區的受核對輸入；乾淨 checkout 的可執行範圍見交付文件。
+
 RM27 Non-RL 最新追加診斷：**0.95 m/s 是配置的機體總速度資格上限，非物理極限；超過它不等同不可恢復。** 使用者授權 1 趟，已完成 `straight_contact_09_diagnostic`：保持 08 控制器、估測、起點及 seed，只允許超速後有界觀察；原速度 FAIL 永久保留，其他原停止條件不變，另設診斷 2.0 m/s 上限。共同前 412 個物理狀態逐位相同，所有保護來源與原始證據雜湊不變。首觸仍在 1.8426 s 合格；2.0564 s 首次超 0.95，峰值 1.032029，約 2.215 s 降回限額內；2.100 s 達 8 cm 分離，2.650 s 開始符合原穩定條件。沒有承載禁碰、再次接觸或馬達飽和。**正式任務仍 FAIL，完整一秒恢復未證實：** 2.9056 s 越過原 x 下界 10.8861 m 而停止，速度已降至 0.256264 m/s、傾角 0.73465°，穩定段只觀察到 0.2556 s。不是計算超時；wall 53.91 s。這證明先前的速度截斷遮住後續分離／減速，並未證明框外完整恢復。保持原評分，不把短暫穩定改成成功。
 
 [診斷回放](components/rm27_non_rl/artifacts/asm2_handover/replays_fixed_camera/straight_contact_09_diagnostic/maneuver.gif)／[速度與事件圖](components/rm27_non_rl/artifacts/asm2_handover/speed_diagnostic_01/comparison/speed_envelope.png)／[配對完整性](components/rm27_non_rl/artifacts/asm2_handover/speed_diagnostic_01/integrity.json)。活動計劃 §0 記錄唯一進度與授權。未做新控制器調參、獨立留出、硬體、RL、commit 或 push。

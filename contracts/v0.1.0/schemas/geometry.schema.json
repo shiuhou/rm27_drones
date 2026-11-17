@@ -1,0 +1,607 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rm27.example/contracts/v0.1.0/geometry.schema.json",
+  "title": "RM27 Geometry contract draft",
+  "x-rm27": {
+    "version": "0.1.0-draft",
+    "status": "PROPOSED",
+    "document": ".agents/docs/contracts/GEOMETRY.md"
+  },
+  "$ref": "#/$defs/GeometryManifest",
+  "$defs": {
+    "CoordinateTransform": {
+      "type": "object",
+      "properties": {
+        "parent_frame_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "child_frame_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "translation_parent_m": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Metres; child-origin position resolved in parent."
+        },
+        "rotation_parent_child_wxyz": {
+          "$ref": "common.schema.json#/$defs/QuaternionWxyz",
+          "description": "Maps child coordinates into parent using Hamilton order."
+        },
+        "registration": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "parent_frame_id",
+        "child_frame_id",
+        "translation_parent_m",
+        "rotation_parent_child_wxyz",
+        "registration"
+      ],
+      "additionalProperties": false,
+      "description": "Registered rigid transform; translations apply to points but not directions."
+    },
+    "CollisionHullReference": {
+      "type": "object",
+      "properties": {
+        "geom_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "part_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "mesh": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "T_Bpart": {
+          "$ref": "#/$defs/CoordinateTransform"
+        },
+        "contype": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "conaffinity": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "enabled": {
+          "type": "boolean"
+        },
+        "group": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "material_contact_profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "geom_id",
+        "part_id",
+        "mesh",
+        "T_Bpart",
+        "contype",
+        "conaffinity",
+        "enabled",
+        "group",
+        "material_contact_profile"
+      ],
+      "additionalProperties": false
+    },
+    "DesignatedContactPatch": {
+      "type": "object",
+      "properties": {
+        "patch_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "geom_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "group": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "shape": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "T_Bpart": {
+          "$ref": "#/$defs/CoordinateTransform"
+        },
+        "source_surface": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "normal_part": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Unit direction; Patch material outward in its registered part frame."
+        },
+        "area_m2": {
+          "anyOf": [
+            {
+              "type": "number",
+              "description": "Geometric area in square metres, not pressure-bearing area.",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "area_definition": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "patch_id",
+        "geom_id",
+        "group",
+        "shape",
+        "T_Bpart",
+        "source_surface",
+        "normal_part",
+        "area_m2",
+        "area_definition"
+      ],
+      "additionalProperties": false,
+      "description": "Patch membership and stable IDs belong to the named geometry release."
+    },
+    "ForbiddenContactRegion": {
+      "type": "object",
+      "properties": {
+        "region_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "geom_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "reason": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "region_id",
+        "geom_ids",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "TargetGeometry": {
+      "type": "object",
+      "properties": {
+        "target_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "geometry": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "armor_surface": {
+          "type": "object",
+          "properties": {
+            "geom_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "reference_shape": {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            "surface_center_T_m": {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "description": "Metres; reference center in T."
+            },
+            "region_halfwidth_across_slope_m": {
+              "type": "array",
+              "items": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "backing_geom_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "uniqueItems": true
+            }
+          },
+          "required": [
+            "geom_ids",
+            "reference_shape",
+            "surface_center_T_m",
+            "region_halfwidth_across_slope_m",
+            "backing_geom_ids"
+          ],
+          "additionalProperties": false
+        },
+        "target_frame_WT": {
+          "$ref": "#/$defs/CoordinateTransform"
+        },
+        "target_axes": {
+          "const": [
+            "across",
+            "slope",
+            "normal"
+          ]
+        },
+        "surface_normal_W": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "description": "Unit direction; Outward from target into free approach space, resolved in W."
+        },
+        "motion": {
+          "enum": [
+            "STATIC",
+            "MOVING",
+            "UNKNOWN"
+          ]
+        },
+        "pose_time_s": {
+          "type": "number",
+          "description": "Target pose time in seconds."
+        },
+        "pose_clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "registration_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "pose_uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "state.schema.json#/$defs/Uncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "target_id",
+        "geometry",
+        "armor_surface",
+        "target_frame_WT",
+        "target_axes",
+        "surface_normal_W",
+        "motion",
+        "registration_epoch"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "motion": {
+                "const": "MOVING"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "pose_time_s",
+              "pose_clock_id",
+              "pose_uncertainty"
+            ]
+          }
+        }
+      ],
+      "dependentRequired": {
+        "pose_time_s": [
+          "pose_clock_id"
+        ],
+        "pose_clock_id": [
+          "pose_time_s"
+        ]
+      },
+      "description": "Canonical target-frame columns are across, slope, normal; proper rotation and alignment are semantic checks."
+    },
+    "CollisionPairRule": {
+      "type": "object",
+      "properties": {
+        "first_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "second_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "classification": {
+          "enum": [
+            "ADMISSIBLE",
+            "FORBIDDEN",
+            "IGNORED"
+          ]
+        },
+        "phases": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "window": {
+          "$ref": "common.schema.json#/$defs/TimeInterval"
+        },
+        "reason": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "first_id",
+        "second_id",
+        "classification",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "description": "An ignored pair is not evidence of clearance."
+    },
+    "GeometryManifest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.geometry"
+            }
+          },
+          "required": [
+            "geometry"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "aircraft_frame": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "asset_release": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "registration_epoch": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "collision_hulls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/CollisionHullReference"
+          },
+          "minItems": 1
+        },
+        "underside_shell": {
+          "type": "object",
+          "properties": {
+            "geom_ids": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "minItems": 1,
+              "uniqueItems": true
+            },
+            "shape": {
+              "$ref": "common.schema.json#/$defs/Identity"
+            }
+          },
+          "required": [
+            "geom_ids",
+            "shape"
+          ],
+          "additionalProperties": false
+        },
+        "designated_patches": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DesignatedContactPatch"
+          },
+          "minItems": 1
+        },
+        "forbidden_aircraft_regions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ForbiddenContactRegion"
+          }
+        },
+        "target": {
+          "$ref": "#/$defs/TargetGeometry"
+        },
+        "obstacles": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "geometry": {
+                "$ref": "common.schema.json#/$defs/Identity"
+              },
+              "transform": {
+                "$ref": "#/$defs/CoordinateTransform"
+              },
+              "roles": {
+                "type": "array",
+                "items": {
+                  "$ref": "common.schema.json#/$defs/Id"
+                },
+                "minItems": 1,
+                "uniqueItems": true
+              }
+            },
+            "required": [
+              "id",
+              "geometry",
+              "transform",
+              "roles"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "scene_subset_exclusions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "collision_pair_policy": {
+          "type": "object",
+          "properties": {
+            "identity": {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            "rules": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/CollisionPairRule"
+              }
+            },
+            "default_classification": {
+              "enum": [
+                "FORBIDDEN",
+                "IGNORED"
+              ]
+            }
+          },
+          "required": [
+            "identity",
+            "rules",
+            "default_classification"
+          ],
+          "additionalProperties": false
+        },
+        "tolerances": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "name": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "minimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "units": {
+                "enum": [
+                  "m",
+                  "rad",
+                  "s"
+                ]
+              },
+              "purpose": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "profile": {
+                "$ref": "common.schema.json#/$defs/Identity"
+              },
+              "reason": {
+                "anyOf": [
+                  {
+                    "$ref": "common.schema.json#/$defs/Id"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "name",
+              "value",
+              "units",
+              "purpose",
+              "profile",
+              "reason"
+            ],
+            "additionalProperties": false,
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "reason": {
+                      "$ref": "common.schema.json#/$defs/Id"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "derived_geometry": {
+          "type": "object",
+          "properties": {
+            "source_geometry": {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            "algorithm": {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            "method": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "coverage": {
+              "$ref": "common.schema.json#/$defs/Coverage"
+            },
+            "conservatism_assumptions": {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/Id"
+              }
+            },
+            "applicability": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "source_geometry",
+            "algorithm",
+            "method",
+            "coverage",
+            "conservatism_assumptions",
+            "applicability"
+          ],
+          "additionalProperties": false
+        }
+      },
+      "required": [
+        "metadata",
+        "frames",
+        "aircraft_frame",
+        "asset_release",
+        "registration_epoch",
+        "collision_hulls",
+        "underside_shell",
+        "designated_patches",
+        "forbidden_aircraft_regions",
+        "target",
+        "obstacles",
+        "scene_subset_exclusions",
+        "collision_pair_policy",
+        "tolerances"
+      ],
+      "additionalProperties": false,
+      "description": "Geometry identity covers effective hulls, masks, contact settings and exclusions. No universal hull count or patch membership count is imposed."
+    }
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "control.schema.json#/$defs/AppliedActuatorCommand",
+  "synthetic": true,
+  "record": {
+    "record_type": "AppliedActuatorCommand",
+    "metadata": {
+      "contract_id": "rm27.control",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-contract-run",
+      "record_id": "synthetic-AppliedActuatorCommand",
+      "source": "synthetic-contract-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-model",
+        "version": "fixture-1",
+        "sha256": "6bd8f29788b203c2c450e1f34c8de0bd01b55eb7f05d55d24672b070251e1d64"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "authority": {
+      "vehicle_id": "synthetic-vehicle",
+      "owner_id": "synthetic-adapter",
+      "lease_id": "synthetic-lease",
+      "generation": 2,
+      "allowed_layer": "MOTOR_ALLOCATION",
+      "phase": "synthetic-control-phase",
+      "lease_expires_at_s": 11.0,
+      "handoff_state": "ACTIVE"
+    },
+    "timing": {
+      "generated_time_s": 10.0,
+      "apply_time_s": 10.2,
+      "valid_from_s": 10.1,
+      "expires_at_s": 10.6,
+      "source_state_time_s": 9.9,
+      "measurement_age_s": 0.3,
+      "sample_period_s": 0.4,
+      "hold_policy": {
+        "method": "ZERO_ORDER_HOLD",
+        "late_sample_behavior": "REJECT_IF_EXPIRED",
+        "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+      }
+    },
+    "source_state_id": "synthetic-state-record",
+    "target_id": "synthetic-target",
+    "command_id": "synthetic-applied-command",
+    "allocation_profile": {
+      "path": "PX4_FLIGHT",
+      "owner": "rm27_drone_px4",
+      "allocator": {
+        "id": "synthetic-px4-allocation",
+        "version": "fixture-1",
+        "sha256": "8f016bc78ecbecc1374202650c2c3a93f5ca9bc4d3a2bf004574d8716f3ab97d"
+      },
+      "inner_loop": {
+        "id": "synthetic-px4-inner-loop",
+        "version": "fixture-1",
+        "sha256": "26c4adcdf16b9366e459d5c317c7b9fafb00e80b344101b5b60332c0a613fd51"
+      },
+      "firmware": {
+        "id": "synthetic-px4-firmware",
+        "version": "fixture-1",
+        "sha256": "d4fa0f5d2e8ed6d7557f763da3f3147435cf5e1d34cfd3a17a75eee795ed4cbe"
+      },
+      "config_hash": "7eac16160327f91f2a3170a79b4952c3d37ecdaa2e3cc2ba0fccab217be38d5e"
+    },
+    "rotor_ids": [
+      "synthetic-r0",
+      "synthetic-r1"
+    ],
+    "motor_command_applied": {
+      "kind": "NORMALIZED_THROTTLE",
+      "units": "1",
+      "mapping": {
+        "id": "synthetic-normalized-throttle-mapping",
+        "version": "fixture-1",
+        "sha256": "09d43460a0a7ff7a568f4648360b39414cfeae89403399ae13d278c763c68e7b"
+      },
+      "values": [
+        0.3,
+        0.4
+      ]
+    },
+    "limits": {
+      "profile": {
+        "id": "synthetic-px4-limits",
+        "version": "fixture-1",
+        "sha256": "377e035ba967aa84eadbb17a9d260c7f4ca09ae2cf1c17fa38c2ab04674c8dfb"
+      }
+    },
+    "saturation": {
+      "clipped_rotor_ids": [],
+      "rate_limited_rotor_ids": [],
+      "allocation_infeasible": false
+    }
+  }
+}

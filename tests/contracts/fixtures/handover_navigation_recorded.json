@@ -1,0 +1,339 @@
+{
+  "version": "1",
+  "purpose": "RECORDED_NAVIGATION_PROJECTION_NOT_ADMISSIBLE_RUNTIME_STATE",
+  "source": {
+    "source_run_id": "fixed-waypoints-half-height-001",
+    "source_family_id": "fixed-waypoints-half-height-001:single-source-trajectory",
+    "source_path": "components/rm27_sim/artifacts/fixed-waypoints-half-height-001/flight/frames.jsonl",
+    "source_sha256": "e3d8666efab977c3525cebd21f6cc62686498a3f9f473175b71e9fb3648d712d",
+    "summary_path": "components/rm27_sim/artifacts/fixed-waypoints-half-height-001/flight/summary.json",
+    "summary_sha256": "36813baf1118930fc3a591c59759b05b27e7ca1c995e427f50872dcdc72f5e08"
+  },
+  "registration": {
+    "world_to_contract": null,
+    "body_origin_to_com": null,
+    "clock_mapping": null,
+    "estimator_reset_epoch": null,
+    "actuator_profile": null
+  },
+  "rows": [
+    {
+      "scenario_id": "fixed-waypoints-half-height-001:line-1176",
+      "source_line": 1176,
+      "input_kind": "RECORDED",
+      "payload": {
+        "simulation_s": 23.503999999997852,
+        "phase": "WAYPOINT",
+        "telemetry": {
+          "local_position": [
+            -0.1301489919424057,
+            -0.00017336169548798352,
+            -1.3277854919433594
+          ],
+          "local_velocity": [
+            -0.20223960280418396,
+            0.001648117322474718,
+            -0.0018241169163957238
+          ],
+          "local_time": 23.48799999999786,
+          "quaternion": [
+            0.9914363622665405,
+            -0.0009577139280736446,
+            0.006796946283429861,
+            -0.13041023910045624
+          ],
+          "rates": [
+            0.0031662771943956614,
+            -0.011643446050584316,
+            -0.00108101568184793
+          ],
+          "attitude_time": 23.499999999997854,
+          "estimator_flags": 303,
+          "source_timing": {
+            "LOCAL_POSITION_NED": {
+              "timestamp_field": "time_boot_ms",
+              "timestamp_unit": "ms",
+              "clock_domain": "px4_boot",
+              "source_epoch": 0,
+              "valid": true,
+              "accepted": true,
+              "last_accepted_source_timestamp": 23480,
+              "last_accepted_receipt_sim_time": 23.48799999999786,
+              "duplicate_count": 0,
+              "rejected_count": 0,
+              "restart_required": false,
+              "source_timestamp": 23480,
+              "receipt_sim_time": 23.48799999999786,
+              "order": "forward"
+            },
+            "ATTITUDE_QUATERNION": {
+              "timestamp_field": "time_boot_ms",
+              "timestamp_unit": "ms",
+              "clock_domain": "px4_boot",
+              "source_epoch": 0,
+              "valid": true,
+              "accepted": true,
+              "last_accepted_source_timestamp": 23496,
+              "last_accepted_receipt_sim_time": 23.499999999997854,
+              "duplicate_count": 0,
+              "rejected_count": 0,
+              "restart_required": false,
+              "source_timestamp": 23496,
+              "receipt_sim_time": 23.499999999997854,
+              "order": "forward"
+            }
+          }
+        },
+        "physical_state": {
+          "timestamp": 23.503999999997852,
+          "imu": {
+            "gyro": [
+              0.003763535380827922,
+              -0.011726203048577384,
+              -0.0015936661236798761
+            ],
+            "accel_body": [
+              0.0,
+              6.938893903907228e-18,
+              -9.808268268544165
+            ]
+          },
+          "position": [
+            -0.13497739792084062,
+            -0.00036113880748489535,
+            -1.3277333005126548
+          ],
+          "velocity": [
+            -0.20725430613069307,
+            0.0007677603988206181,
+            -0.0015978116041515267
+          ],
+          "quaternion": [
+            0.9914375638386622,
+            -0.0009018427270679852,
+            0.006809342684395425,
+            -0.1304008302947521
+          ]
+        },
+        "controls": [
+          0.3330000042915344,
+          0.3330000042915344,
+          0.3330000042915344,
+          0.33400002121925354
+        ]
+      }
+    },
+    {
+      "scenario_id": "fixed-waypoints-half-height-001:line-1177",
+      "source_line": 1177,
+      "input_kind": "RECORDED",
+      "payload": {
+        "simulation_s": 23.52399999999784,
+        "phase": "WAYPOINT",
+        "telemetry": {
+          "local_position": [
+            -0.13512875139713287,
+            -0.0001520519144833088,
+            -1.3278268575668335
+          ],
+          "local_velocity": [
+            -0.20560570061206818,
+            0.0015914698597043753,
+            -0.0017764416988939047
+          ],
+          "local_time": 23.50799999999785,
+          "quaternion": [
+            0.9914357662200928,
+            -0.0009407575707882643,
+            0.006682360544800758,
+            -0.13042083382606506
+          ],
+          "rates": [
+            0.003292189911007881,
+            -0.011115491390228271,
+            -0.001078323693946004
+          ],
+          "attitude_time": 23.519999999997843,
+          "estimator_flags": 303,
+          "source_timing": {
+            "LOCAL_POSITION_NED": {
+              "timestamp_field": "time_boot_ms",
+              "timestamp_unit": "ms",
+              "clock_domain": "px4_boot",
+              "source_epoch": 0,
+              "valid": true,
+              "accepted": true,
+              "last_accepted_source_timestamp": 23504,
+              "last_accepted_receipt_sim_time": 23.50799999999785,
+              "duplicate_count": 0,
+              "rejected_count": 0,
+              "restart_required": false,
+              "source_timestamp": 23504,
+              "receipt_sim_time": 23.50799999999785,
+              "order": "forward"
+            },
+            "ATTITUDE_QUATERNION": {
+              "timestamp_field": "time_boot_ms",
+              "timestamp_unit": "ms",
+              "clock_domain": "px4_boot",
+              "source_epoch": 0,
+              "valid": true,
+              "accepted": true,
+              "last_accepted_source_timestamp": 23516,
+              "last_accepted_receipt_sim_time": 23.519999999997843,
+              "duplicate_count": 0,
+              "rejected_count": 0,
+              "restart_required": false,
+              "source_timestamp": 23516,
+              "receipt_sim_time": 23.519999999997843,
+              "order": "forward"
+            }
+          }
+        },
+        "physical_state": {
+          "timestamp": 23.52399999999784,
+          "imu": {
+            "gyro": [
+              0.003912773222013746,
+              -0.012986081676390884,
+              -0.001401270285467102
+            ],
+            "accel_body": [
+              0.0,
+              0.0,
+              -9.810179596047806
+            ]
+          },
+          "position": [
+            -0.13915196775943395,
+            -0.0003458022820663764,
+            -1.3277648670613018
+          ],
+          "velocity": [
+            -0.20992726795230543,
+            0.0007664085789871086,
+            -0.0015698982253559523
+          ],
+          "quaternion": [
+            0.9914364893789952,
+            -0.0008796253294251306,
+            0.006683058274255746,
+            -0.13041568356312191
+          ]
+        },
+        "controls": [
+          0.3330000042915344,
+          0.33400002121925354,
+          0.3330000042915344,
+          0.3330000042915344
+        ]
+      }
+    },
+    {
+      "scenario_id": "fixed-waypoints-half-height-001:line-1178",
+      "source_line": 1178,
+      "input_kind": "RECORDED",
+      "payload": {
+        "simulation_s": 23.54399999999783,
+        "phase": "WAYPOINT",
+        "telemetry": {
+          "local_position": [
+            -0.13849227130413055,
+            -0.0001386980147799477,
+            -1.3278533220291138
+          ],
+          "local_velocity": [
+            -0.20780789852142334,
+            0.0015663582598790526,
+            -0.0017498815432190895
+          ],
+          "local_time": 23.52799999999784,
+          "quaternion": [
+            0.9914352893829346,
+            -0.0009268951835110784,
+            0.006560636684298515,
+            -0.1304313987493515
+          ],
+          "rates": [
+            0.0031325246673077345,
+            -0.012796472758054733,
+            -0.0010784172918647528
+          ],
+          "attitude_time": 23.539999999997832,
+          "estimator_flags": 303,
+          "source_timing": {
+            "LOCAL_POSITION_NED": {
+              "timestamp_field": "time_boot_ms",
+              "timestamp_unit": "ms",
+              "clock_domain": "px4_boot",
+              "source_epoch": 0,
+              "valid": true,
+              "accepted": true,
+              "last_accepted_source_timestamp": 23520,
+              "last_accepted_receipt_sim_time": 23.52799999999784,
+              "duplicate_count": 0,
+              "rejected_count": 0,
+              "restart_required": false,
+              "source_timestamp": 23520,
+              "receipt_sim_time": 23.52799999999784,
+              "order": "forward"
+            },
+            "ATTITUDE_QUATERNION": {
+              "timestamp_field": "time_boot_ms",
+              "timestamp_unit": "ms",
+              "clock_domain": "px4_boot",
+              "source_epoch": 0,
+              "valid": true,
+              "accepted": true,
+              "last_accepted_source_timestamp": 23536,
+              "last_accepted_receipt_sim_time": 23.539999999997832,
+              "duplicate_count": 0,
+              "rejected_count": 0,
+              "restart_required": false,
+              "source_timestamp": 23536,
+              "receipt_sim_time": 23.539999999997832,
+              "order": "forward"
+            }
+          }
+        },
+        "physical_state": {
+          "timestamp": 23.54399999999783,
+          "imu": {
+            "gyro": [
+              0.004035377541383691,
+              -0.013350568449678196,
+              -0.0012967501139407784
+            ],
+            "accel_body": [
+              0.0,
+              6.938893903907228e-18,
+              -9.810186635167682
+            ]
+          },
+          "position": [
+            -0.14337942969304018,
+            -0.000330472426213424,
+            -1.327796170742822
+          ],
+          "velocity": [
+            -0.21254783115991246,
+            0.0007667303596625537,
+            -0.0015619241170432214
+          ],
+          "quaternion": [
+            0.9914356987407257,
+            -0.0008584025717818341,
+            0.006545162154783616,
+            -0.1304288283313215
+          ]
+        },
+        "controls": [
+          0.33400002121925354,
+          0.3330000042915344,
+          0.3330000042915344,
+          0.3330000042915344
+        ]
+      }
+    }
+  ]
+}

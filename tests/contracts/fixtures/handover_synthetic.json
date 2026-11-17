@@ -1,0 +1,1248 @@
+{
+  "purpose": "SYNTHETIC_FORMAT_AND_PROTOCOL_ONLY_NO_NAVIGATION_REACHABILITY",
+  "registry": {
+    "identity": {
+      "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+      "model": {
+        "id": "ASM2",
+        "version": "1.0.0",
+        "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+      },
+      "geometry": {
+        "id": "ASM2-local-native-3522",
+        "version": "0.1.0",
+        "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+      },
+      "plant_profile": {
+        "id": "ASM2-plant-metadata",
+        "version": "1.0.0",
+        "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+      },
+      "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+    },
+    "frame": {
+      "registration_id": "g0-test-frame-map",
+      "source_id": "g0-test-native-frame",
+      "destination_id": "g0-test-NED",
+      "source_clock_id": "g0-test-native-clock",
+      "epoch": 2,
+      "source_valid_s": [
+        0,
+        20
+      ],
+      "rotation_ned_native": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "translation_ned_m": [
+        0,
+        0,
+        0
+      ],
+      "source_body": "FRD",
+      "body_origin": "COM"
+    },
+    "clock": {
+      "registration_id": "g0-test-clock-map",
+      "source_id": "g0-test-native-clock",
+      "destination_id": "g0-test-exchange-clock",
+      "epoch": 2,
+      "source_valid_s": [
+        0,
+        20
+      ],
+      "scale": 1.0,
+      "offset_s": 0.0,
+      "uncertainty_s": 0.0
+    },
+    "epoch": 2,
+    "max_age_s": 0.2,
+    "mode": "SYNTHETIC_TEST",
+    "targets": {}
+  },
+  "initial_authority": {
+    "vehicle_id": "g0-test-vehicle",
+    "owner_id": "g0-navigation",
+    "lease_id": "g0-lease-navigation",
+    "generation": 1,
+    "allowed_layer": "REFERENCE_TRAJECTORY",
+    "phase": "NO_CONTACT_OFFLINE_TEST",
+    "lease_expires_at_s": 10.3,
+    "handoff_state": "ACTIVE"
+  },
+  "parent_reference_id": "g0-navigation-reference",
+  "snapshot": {
+    "format": "rm27.handover/1",
+    "snapshot_id": "g0-synthetic-snapshot-101",
+    "source": {
+      "run_id": "g0-synthetic-only",
+      "trajectory_family_id": "g0-synthetic-format-family",
+      "input_kind": "SYNTHETIC",
+      "artifact": {
+        "id": "G0-synthetic-test-constructor",
+        "version": "1",
+        "sha256": "a26eab34d0b591a9bcf7f1ca4c85cc9a32aededd282aa353f199b8b280f6ff0c"
+      },
+      "record_locator": "synthetic-boundary-101"
+    },
+    "state": {
+      "schema": "state.schema.json#/$defs/EstimatedState",
+      "record": {
+        "metadata": {
+          "contract_id": "rm27.state",
+          "contract_version": "0.1.0-draft",
+          "run_id": "g0-synthetic-only",
+          "record_id": "g0-boundary-state",
+          "source": "g0-test-estimator",
+          "sequence": 101,
+          "input_kind": "ESTIMATED",
+          "lineage": [
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "G0 format-only fixture",
+              "transform": "g0-test-frame-map"
+            },
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "G0 format-only fixture",
+              "transform": "g0-test-clock-map"
+            }
+          ],
+          "clock_id": "g0-test-exchange-clock",
+          "frame_id": "g0-test-NED",
+          "reset_epoch": 2,
+          "availability": {
+            "uncertainty": {
+              "status": "UNKNOWN",
+              "reason": "Synthetic interface fixture supplies no measured covariance"
+            }
+          },
+          "model": {
+            "id": "ASM2",
+            "version": "1.0.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "geometry": {
+            "id": "ASM2-local-native-3522",
+            "version": "0.1.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+        },
+        "frames": {
+          "world": "NED",
+          "body": "FRD",
+          "quaternion": "HAMILTON_WXYZ"
+        },
+        "state_time_s": 10.0,
+        "position_W_m": [
+          0.4,
+          0.2,
+          -0.8
+        ],
+        "velocity_W_m_s": [
+          0.2,
+          -0.03,
+          0.01
+        ],
+        "q_WB_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "body_rates_B_rad_s": [
+          0.1,
+          -0.2,
+          0.05
+        ],
+        "validity": {
+          "position_W_m": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "velocity_W_m_s": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "q_WB_wxyz": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "body_rates_B_rad_s": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          }
+        },
+        "epoch_provenance": "Explicit synthetic test epoch; not a live estimator registration",
+        "measurement_times_s": {
+          "position_W_m": {
+            "time_s": 9.995,
+            "clock_id": "g0-test-exchange-clock"
+          },
+          "velocity_W_m_s": {
+            "time_s": 9.995,
+            "clock_id": "g0-test-exchange-clock"
+          },
+          "q_WB_wxyz": {
+            "time_s": 9.995,
+            "clock_id": "g0-test-exchange-clock"
+          },
+          "body_rates_B_rad_s": {
+            "time_s": 9.995,
+            "clock_id": "g0-test-exchange-clock"
+          }
+        },
+        "uncertainty": null,
+        "actuator_state": {
+          "rotor_ids": [
+            "g0-test-r0",
+            "g0-test-r1",
+            "g0-test-r2",
+            "g0-test-r3"
+          ],
+          "rotor_thrust_N": [
+            0.308,
+            0.318,
+            0.328,
+            0.338
+          ],
+          "motor_command_applied": {
+            "command_id": "g0-applied-command-1",
+            "apply_time_s": 9.99,
+            "clock_id": "g0-test-exchange-clock",
+            "rotor_ids": [
+              "g0-test-r0",
+              "g0-test-r1",
+              "g0-test-r2",
+              "g0-test-r3"
+            ],
+            "input": {
+              "kind": "FORCE_TARGET_N",
+              "units": "N",
+              "mapping": {
+                "id": "g0-synthetic-force-map",
+                "version": "1",
+                "sha256": "2afd64bac318490a00e7d7ccd555b21e290da84c3784684539035fb13baa5d36"
+              },
+              "values": [
+                0.311,
+                0.32,
+                0.33,
+                0.34
+              ]
+            }
+          }
+        }
+      }
+    },
+    "identity": {
+      "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+      "model": {
+        "id": "ASM2",
+        "version": "1.0.0",
+        "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+      },
+      "geometry": {
+        "id": "ASM2-local-native-3522",
+        "version": "0.1.0",
+        "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+      },
+      "plant_profile": {
+        "id": "ASM2-plant-metadata",
+        "version": "1.0.0",
+        "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+      },
+      "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+    },
+    "registration": {
+      "frame": "g0-test-frame-map",
+      "clock": "g0-test-clock-map"
+    },
+    "control_history": {
+      "availability": {
+        "status": "AVAILABLE",
+        "reason": null
+      },
+      "records": [
+        {
+          "schema": "control.schema.json#/$defs/AppliedActuatorCommand",
+          "record": {
+            "record_type": "AppliedActuatorCommand",
+            "metadata": {
+              "contract_id": "rm27.control",
+              "contract_version": "0.1.0-draft",
+              "run_id": "g0-synthetic-only",
+              "record_id": "g0-applied-0",
+              "source": "rm27_sim",
+              "sequence": 0,
+              "input_kind": "SYNTHETIC",
+              "lineage": [
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "G0 format-only fixture",
+                  "transform": "g0-test-frame-map"
+                },
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "G0 format-only fixture",
+                  "transform": "g0-test-clock-map"
+                }
+              ],
+              "clock_id": "g0-test-exchange-clock",
+              "frame_id": "g0-test-NED",
+              "reset_epoch": 2,
+              "availability": {},
+              "model": {
+                "id": "ASM2",
+                "version": "1.0.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "geometry": {
+                "id": "ASM2-local-native-3522",
+                "version": "0.1.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+            },
+            "frames": {
+              "world": "NED",
+              "body": "FRD",
+              "quaternion": "HAMILTON_WXYZ"
+            },
+            "authority": {
+              "vehicle_id": "g0-test-vehicle",
+              "owner_id": "rm27_sim",
+              "lease_id": "g0-offline-allocator",
+              "generation": 0,
+              "allowed_layer": "MOTOR_ALLOCATION",
+              "phase": "NO_CONTACT_OFFLINE_TEST",
+              "lease_expires_at_s": 10.3,
+              "handoff_state": "ACTIVE"
+            },
+            "timing": {
+              "generated_time_s": 9.978,
+              "apply_time_s": 9.98,
+              "valid_from_s": 9.979000000000001,
+              "expires_at_s": 9.985000000000001,
+              "source_state_time_s": 9.976,
+              "measurement_age_s": 0.004,
+              "sample_period_s": 0.01,
+              "hold_policy": {
+                "method": "ZERO_ORDER_HOLD",
+                "late_sample_behavior": "REJECT_IF_EXPIRED",
+                "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+              }
+            },
+            "source_state_id": "g0-earlier-state-0",
+            "target_id": null,
+            "command_id": "g0-applied-command-0",
+            "allocation_profile": {
+              "path": "SIMULATION",
+              "owner": "rm27_sim",
+              "allocator": {
+                "id": "g0-synthetic-allocator",
+                "version": "1",
+                "sha256": "ea80c7919909b37c4b82c36d39c5ed95af0a32a8b3a42453261deba2681a0b05"
+              },
+              "inner_loop": {
+                "id": "g0-synthetic-inner_loop",
+                "version": "1",
+                "sha256": "cdba2982eeef7ad8447f97001a70d4e54cea56cb589261da4f4927d985f3f8ad"
+              },
+              "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+            },
+            "rotor_ids": [
+              "g0-test-r0",
+              "g0-test-r1",
+              "g0-test-r2",
+              "g0-test-r3"
+            ],
+            "motor_command_applied": {
+              "kind": "FORCE_TARGET_N",
+              "units": "N",
+              "mapping": {
+                "id": "g0-synthetic-force-map",
+                "version": "1",
+                "sha256": "2afd64bac318490a00e7d7ccd555b21e290da84c3784684539035fb13baa5d36"
+              },
+              "values": [
+                0.31,
+                0.32,
+                0.33,
+                0.34
+              ]
+            },
+            "limits": {
+              "profile": {
+                "id": "g0-synthetic-limits",
+                "version": "1",
+                "sha256": "083ef6aaef42c74409a3b478928e8213c79e75a9f889cd43c688665844af86a2"
+              }
+            },
+            "saturation": {
+              "clipped_rotor_ids": [],
+              "rate_limited_rotor_ids": [],
+              "allocation_infeasible": false
+            }
+          }
+        },
+        {
+          "schema": "control.schema.json#/$defs/AppliedActuatorCommand",
+          "record": {
+            "record_type": "AppliedActuatorCommand",
+            "metadata": {
+              "contract_id": "rm27.control",
+              "contract_version": "0.1.0-draft",
+              "run_id": "g0-synthetic-only",
+              "record_id": "g0-applied-1",
+              "source": "rm27_sim",
+              "sequence": 1,
+              "input_kind": "SYNTHETIC",
+              "lineage": [
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "G0 format-only fixture",
+                  "transform": "g0-test-frame-map"
+                },
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "G0 format-only fixture",
+                  "transform": "g0-test-clock-map"
+                }
+              ],
+              "clock_id": "g0-test-exchange-clock",
+              "frame_id": "g0-test-NED",
+              "reset_epoch": 2,
+              "availability": {},
+              "model": {
+                "id": "ASM2",
+                "version": "1.0.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "geometry": {
+                "id": "ASM2-local-native-3522",
+                "version": "0.1.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+            },
+            "frames": {
+              "world": "NED",
+              "body": "FRD",
+              "quaternion": "HAMILTON_WXYZ"
+            },
+            "authority": {
+              "vehicle_id": "g0-test-vehicle",
+              "owner_id": "rm27_sim",
+              "lease_id": "g0-offline-allocator",
+              "generation": 0,
+              "allowed_layer": "MOTOR_ALLOCATION",
+              "phase": "NO_CONTACT_OFFLINE_TEST",
+              "lease_expires_at_s": 10.3,
+              "handoff_state": "ACTIVE"
+            },
+            "timing": {
+              "generated_time_s": 9.988,
+              "apply_time_s": 9.99,
+              "valid_from_s": 9.989,
+              "expires_at_s": 9.995000000000001,
+              "source_state_time_s": 9.986,
+              "measurement_age_s": 0.004,
+              "sample_period_s": 0.01,
+              "hold_policy": {
+                "method": "ZERO_ORDER_HOLD",
+                "late_sample_behavior": "REJECT_IF_EXPIRED",
+                "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+              }
+            },
+            "source_state_id": "g0-earlier-state-1",
+            "target_id": null,
+            "command_id": "g0-applied-command-1",
+            "allocation_profile": {
+              "path": "SIMULATION",
+              "owner": "rm27_sim",
+              "allocator": {
+                "id": "g0-synthetic-allocator",
+                "version": "1",
+                "sha256": "ea80c7919909b37c4b82c36d39c5ed95af0a32a8b3a42453261deba2681a0b05"
+              },
+              "inner_loop": {
+                "id": "g0-synthetic-inner_loop",
+                "version": "1",
+                "sha256": "cdba2982eeef7ad8447f97001a70d4e54cea56cb589261da4f4927d985f3f8ad"
+              },
+              "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+            },
+            "rotor_ids": [
+              "g0-test-r0",
+              "g0-test-r1",
+              "g0-test-r2",
+              "g0-test-r3"
+            ],
+            "motor_command_applied": {
+              "kind": "FORCE_TARGET_N",
+              "units": "N",
+              "mapping": {
+                "id": "g0-synthetic-force-map",
+                "version": "1",
+                "sha256": "2afd64bac318490a00e7d7ccd555b21e290da84c3784684539035fb13baa5d36"
+              },
+              "values": [
+                0.311,
+                0.32,
+                0.33,
+                0.34
+              ]
+            },
+            "limits": {
+              "profile": {
+                "id": "g0-synthetic-limits",
+                "version": "1",
+                "sha256": "083ef6aaef42c74409a3b478928e8213c79e75a9f889cd43c688665844af86a2"
+              }
+            },
+            "saturation": {
+              "clipped_rotor_ids": [],
+              "rate_limited_rotor_ids": [],
+              "allocation_infeasible": false
+            }
+          }
+        }
+      ]
+    },
+    "target_geometry": null,
+    "native_record": null
+  },
+  "request": {
+    "request_id": "g0-request-1",
+    "snapshot": {
+      "format": "rm27.handover/1",
+      "snapshot_id": "g0-synthetic-snapshot-101",
+      "source": {
+        "run_id": "g0-synthetic-only",
+        "trajectory_family_id": "g0-synthetic-format-family",
+        "input_kind": "SYNTHETIC",
+        "artifact": {
+          "id": "G0-synthetic-test-constructor",
+          "version": "1",
+          "sha256": "a26eab34d0b591a9bcf7f1ca4c85cc9a32aededd282aa353f199b8b280f6ff0c"
+        },
+        "record_locator": "synthetic-boundary-101"
+      },
+      "state": {
+        "schema": "state.schema.json#/$defs/EstimatedState",
+        "record": {
+          "metadata": {
+            "contract_id": "rm27.state",
+            "contract_version": "0.1.0-draft",
+            "run_id": "g0-synthetic-only",
+            "record_id": "g0-boundary-state",
+            "source": "g0-test-estimator",
+            "sequence": 101,
+            "input_kind": "ESTIMATED",
+            "lineage": [
+              {
+                "input_kind": "SYNTHETIC",
+                "source": "G0 format-only fixture",
+                "transform": "g0-test-frame-map"
+              },
+              {
+                "input_kind": "SYNTHETIC",
+                "source": "G0 format-only fixture",
+                "transform": "g0-test-clock-map"
+              }
+            ],
+            "clock_id": "g0-test-exchange-clock",
+            "frame_id": "g0-test-NED",
+            "reset_epoch": 2,
+            "availability": {
+              "uncertainty": {
+                "status": "UNKNOWN",
+                "reason": "Synthetic interface fixture supplies no measured covariance"
+              }
+            },
+            "model": {
+              "id": "ASM2",
+              "version": "1.0.0",
+              "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+            },
+            "geometry": {
+              "id": "ASM2-local-native-3522",
+              "version": "0.1.0",
+              "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+            },
+            "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+          },
+          "frames": {
+            "world": "NED",
+            "body": "FRD",
+            "quaternion": "HAMILTON_WXYZ"
+          },
+          "state_time_s": 10.0,
+          "position_W_m": [
+            0.4,
+            0.2,
+            -0.8
+          ],
+          "velocity_W_m_s": [
+            0.2,
+            -0.03,
+            0.01
+          ],
+          "q_WB_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "body_rates_B_rad_s": [
+            0.1,
+            -0.2,
+            0.05
+          ],
+          "validity": {
+            "position_W_m": {
+              "availability": {
+                "status": "AVAILABLE",
+                "reason": null
+              },
+              "initialized": true,
+              "aligned": true,
+              "finite": true,
+              "current": true
+            },
+            "velocity_W_m_s": {
+              "availability": {
+                "status": "AVAILABLE",
+                "reason": null
+              },
+              "initialized": true,
+              "aligned": true,
+              "finite": true,
+              "current": true
+            },
+            "q_WB_wxyz": {
+              "availability": {
+                "status": "AVAILABLE",
+                "reason": null
+              },
+              "initialized": true,
+              "aligned": true,
+              "finite": true,
+              "current": true
+            },
+            "body_rates_B_rad_s": {
+              "availability": {
+                "status": "AVAILABLE",
+                "reason": null
+              },
+              "initialized": true,
+              "aligned": true,
+              "finite": true,
+              "current": true
+            }
+          },
+          "epoch_provenance": "Explicit synthetic test epoch; not a live estimator registration",
+          "measurement_times_s": {
+            "position_W_m": {
+              "time_s": 9.995,
+              "clock_id": "g0-test-exchange-clock"
+            },
+            "velocity_W_m_s": {
+              "time_s": 9.995,
+              "clock_id": "g0-test-exchange-clock"
+            },
+            "q_WB_wxyz": {
+              "time_s": 9.995,
+              "clock_id": "g0-test-exchange-clock"
+            },
+            "body_rates_B_rad_s": {
+              "time_s": 9.995,
+              "clock_id": "g0-test-exchange-clock"
+            }
+          },
+          "uncertainty": null,
+          "actuator_state": {
+            "rotor_ids": [
+              "g0-test-r0",
+              "g0-test-r1",
+              "g0-test-r2",
+              "g0-test-r3"
+            ],
+            "rotor_thrust_N": [
+              0.308,
+              0.318,
+              0.328,
+              0.338
+            ],
+            "motor_command_applied": {
+              "command_id": "g0-applied-command-1",
+              "apply_time_s": 9.99,
+              "clock_id": "g0-test-exchange-clock",
+              "rotor_ids": [
+                "g0-test-r0",
+                "g0-test-r1",
+                "g0-test-r2",
+                "g0-test-r3"
+              ],
+              "input": {
+                "kind": "FORCE_TARGET_N",
+                "units": "N",
+                "mapping": {
+                  "id": "g0-synthetic-force-map",
+                  "version": "1",
+                  "sha256": "2afd64bac318490a00e7d7ccd555b21e290da84c3784684539035fb13baa5d36"
+                },
+                "values": [
+                  0.311,
+                  0.32,
+                  0.33,
+                  0.34
+                ]
+              }
+            }
+          }
+        }
+      },
+      "identity": {
+        "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+        "model": {
+          "id": "ASM2",
+          "version": "1.0.0",
+          "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+        },
+        "geometry": {
+          "id": "ASM2-local-native-3522",
+          "version": "0.1.0",
+          "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+        },
+        "plant_profile": {
+          "id": "ASM2-plant-metadata",
+          "version": "1.0.0",
+          "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+        },
+        "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+      },
+      "registration": {
+        "frame": "g0-test-frame-map",
+        "clock": "g0-test-clock-map"
+      },
+      "control_history": {
+        "availability": {
+          "status": "AVAILABLE",
+          "reason": null
+        },
+        "records": [
+          {
+            "schema": "control.schema.json#/$defs/AppliedActuatorCommand",
+            "record": {
+              "record_type": "AppliedActuatorCommand",
+              "metadata": {
+                "contract_id": "rm27.control",
+                "contract_version": "0.1.0-draft",
+                "run_id": "g0-synthetic-only",
+                "record_id": "g0-applied-0",
+                "source": "rm27_sim",
+                "sequence": 0,
+                "input_kind": "SYNTHETIC",
+                "lineage": [
+                  {
+                    "input_kind": "SYNTHETIC",
+                    "source": "G0 format-only fixture",
+                    "transform": "g0-test-frame-map"
+                  },
+                  {
+                    "input_kind": "SYNTHETIC",
+                    "source": "G0 format-only fixture",
+                    "transform": "g0-test-clock-map"
+                  }
+                ],
+                "clock_id": "g0-test-exchange-clock",
+                "frame_id": "g0-test-NED",
+                "reset_epoch": 2,
+                "availability": {},
+                "model": {
+                  "id": "ASM2",
+                  "version": "1.0.0",
+                  "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+                },
+                "geometry": {
+                  "id": "ASM2-local-native-3522",
+                  "version": "0.1.0",
+                  "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+                },
+                "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+              },
+              "frames": {
+                "world": "NED",
+                "body": "FRD",
+                "quaternion": "HAMILTON_WXYZ"
+              },
+              "authority": {
+                "vehicle_id": "g0-test-vehicle",
+                "owner_id": "rm27_sim",
+                "lease_id": "g0-offline-allocator",
+                "generation": 0,
+                "allowed_layer": "MOTOR_ALLOCATION",
+                "phase": "NO_CONTACT_OFFLINE_TEST",
+                "lease_expires_at_s": 10.3,
+                "handoff_state": "ACTIVE"
+              },
+              "timing": {
+                "generated_time_s": 9.978,
+                "apply_time_s": 9.98,
+                "valid_from_s": 9.979000000000001,
+                "expires_at_s": 9.985000000000001,
+                "source_state_time_s": 9.976,
+                "measurement_age_s": 0.004,
+                "sample_period_s": 0.01,
+                "hold_policy": {
+                  "method": "ZERO_ORDER_HOLD",
+                  "late_sample_behavior": "REJECT_IF_EXPIRED",
+                  "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+                }
+              },
+              "source_state_id": "g0-earlier-state-0",
+              "target_id": null,
+              "command_id": "g0-applied-command-0",
+              "allocation_profile": {
+                "path": "SIMULATION",
+                "owner": "rm27_sim",
+                "allocator": {
+                  "id": "g0-synthetic-allocator",
+                  "version": "1",
+                  "sha256": "ea80c7919909b37c4b82c36d39c5ed95af0a32a8b3a42453261deba2681a0b05"
+                },
+                "inner_loop": {
+                  "id": "g0-synthetic-inner_loop",
+                  "version": "1",
+                  "sha256": "cdba2982eeef7ad8447f97001a70d4e54cea56cb589261da4f4927d985f3f8ad"
+                },
+                "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+              },
+              "rotor_ids": [
+                "g0-test-r0",
+                "g0-test-r1",
+                "g0-test-r2",
+                "g0-test-r3"
+              ],
+              "motor_command_applied": {
+                "kind": "FORCE_TARGET_N",
+                "units": "N",
+                "mapping": {
+                  "id": "g0-synthetic-force-map",
+                  "version": "1",
+                  "sha256": "2afd64bac318490a00e7d7ccd555b21e290da84c3784684539035fb13baa5d36"
+                },
+                "values": [
+                  0.31,
+                  0.32,
+                  0.33,
+                  0.34
+                ]
+              },
+              "limits": {
+                "profile": {
+                  "id": "g0-synthetic-limits",
+                  "version": "1",
+                  "sha256": "083ef6aaef42c74409a3b478928e8213c79e75a9f889cd43c688665844af86a2"
+                }
+              },
+              "saturation": {
+                "clipped_rotor_ids": [],
+                "rate_limited_rotor_ids": [],
+                "allocation_infeasible": false
+              }
+            }
+          },
+          {
+            "schema": "control.schema.json#/$defs/AppliedActuatorCommand",
+            "record": {
+              "record_type": "AppliedActuatorCommand",
+              "metadata": {
+                "contract_id": "rm27.control",
+                "contract_version": "0.1.0-draft",
+                "run_id": "g0-synthetic-only",
+                "record_id": "g0-applied-1",
+                "source": "rm27_sim",
+                "sequence": 1,
+                "input_kind": "SYNTHETIC",
+                "lineage": [
+                  {
+                    "input_kind": "SYNTHETIC",
+                    "source": "G0 format-only fixture",
+                    "transform": "g0-test-frame-map"
+                  },
+                  {
+                    "input_kind": "SYNTHETIC",
+                    "source": "G0 format-only fixture",
+                    "transform": "g0-test-clock-map"
+                  }
+                ],
+                "clock_id": "g0-test-exchange-clock",
+                "frame_id": "g0-test-NED",
+                "reset_epoch": 2,
+                "availability": {},
+                "model": {
+                  "id": "ASM2",
+                  "version": "1.0.0",
+                  "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+                },
+                "geometry": {
+                  "id": "ASM2-local-native-3522",
+                  "version": "0.1.0",
+                  "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+                },
+                "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+              },
+              "frames": {
+                "world": "NED",
+                "body": "FRD",
+                "quaternion": "HAMILTON_WXYZ"
+              },
+              "authority": {
+                "vehicle_id": "g0-test-vehicle",
+                "owner_id": "rm27_sim",
+                "lease_id": "g0-offline-allocator",
+                "generation": 0,
+                "allowed_layer": "MOTOR_ALLOCATION",
+                "phase": "NO_CONTACT_OFFLINE_TEST",
+                "lease_expires_at_s": 10.3,
+                "handoff_state": "ACTIVE"
+              },
+              "timing": {
+                "generated_time_s": 9.988,
+                "apply_time_s": 9.99,
+                "valid_from_s": 9.989,
+                "expires_at_s": 9.995000000000001,
+                "source_state_time_s": 9.986,
+                "measurement_age_s": 0.004,
+                "sample_period_s": 0.01,
+                "hold_policy": {
+                  "method": "ZERO_ORDER_HOLD",
+                  "late_sample_behavior": "REJECT_IF_EXPIRED",
+                  "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+                }
+              },
+              "source_state_id": "g0-earlier-state-1",
+              "target_id": null,
+              "command_id": "g0-applied-command-1",
+              "allocation_profile": {
+                "path": "SIMULATION",
+                "owner": "rm27_sim",
+                "allocator": {
+                  "id": "g0-synthetic-allocator",
+                  "version": "1",
+                  "sha256": "ea80c7919909b37c4b82c36d39c5ed95af0a32a8b3a42453261deba2681a0b05"
+                },
+                "inner_loop": {
+                  "id": "g0-synthetic-inner_loop",
+                  "version": "1",
+                  "sha256": "cdba2982eeef7ad8447f97001a70d4e54cea56cb589261da4f4927d985f3f8ad"
+                },
+                "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+              },
+              "rotor_ids": [
+                "g0-test-r0",
+                "g0-test-r1",
+                "g0-test-r2",
+                "g0-test-r3"
+              ],
+              "motor_command_applied": {
+                "kind": "FORCE_TARGET_N",
+                "units": "N",
+                "mapping": {
+                  "id": "g0-synthetic-force-map",
+                  "version": "1",
+                  "sha256": "2afd64bac318490a00e7d7ccd555b21e290da84c3784684539035fb13baa5d36"
+                },
+                "values": [
+                  0.311,
+                  0.32,
+                  0.33,
+                  0.34
+                ]
+              },
+              "limits": {
+                "profile": {
+                  "id": "g0-synthetic-limits",
+                  "version": "1",
+                  "sha256": "083ef6aaef42c74409a3b478928e8213c79e75a9f889cd43c688665844af86a2"
+                }
+              },
+              "saturation": {
+                "clipped_rotor_ids": [],
+                "rate_limited_rotor_ids": [],
+                "allocation_infeasible": false
+              }
+            }
+          }
+        ]
+      },
+      "target_geometry": null,
+      "native_record": null
+    },
+    "reference": {
+      "schema": "control.schema.json#/$defs/ReferenceTrajectory",
+      "record": {
+        "record_type": "ReferenceTrajectory",
+        "metadata": {
+          "contract_id": "rm27.control",
+          "contract_version": "0.1.0-draft",
+          "run_id": "g0-synthetic-only",
+          "record_id": "g0-reference-record",
+          "source": "g0-successor",
+          "sequence": 1,
+          "input_kind": "SYNTHETIC",
+          "lineage": [
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "G0 format-only fixture",
+              "transform": "g0-test-frame-map"
+            },
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "G0 format-only fixture",
+              "transform": "g0-test-clock-map"
+            }
+          ],
+          "clock_id": "g0-test-exchange-clock",
+          "frame_id": "g0-test-NED",
+          "reset_epoch": 2,
+          "availability": {},
+          "model": {
+            "id": "ASM2",
+            "version": "1.0.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "geometry": {
+            "id": "ASM2-local-native-3522",
+            "version": "0.1.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+        },
+        "frames": {
+          "world": "NED",
+          "body": "FRD",
+          "quaternion": "HAMILTON_WXYZ"
+        },
+        "authority": {
+          "vehicle_id": "g0-test-vehicle",
+          "owner_id": "g0-successor",
+          "lease_id": "g0-lease-successor",
+          "generation": 2,
+          "allowed_layer": "REFERENCE_TRAJECTORY",
+          "phase": "NO_CONTACT_OFFLINE_TEST",
+          "lease_expires_at_s": 10.3,
+          "handoff_state": "PENDING"
+        },
+        "timing": {
+          "generated_time_s": 10.005,
+          "apply_time_s": 10.02,
+          "valid_from_s": 10.01,
+          "expires_at_s": 10.15,
+          "source_state_time_s": 10.0,
+          "measurement_age_s": 0.025,
+          "sample_period_s": 0.01,
+          "hold_policy": {
+            "method": "ZERO_ORDER_HOLD",
+            "late_sample_behavior": "REJECT_IF_EXPIRED",
+            "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+          }
+        },
+        "source_state_id": "g0-boundary-state",
+        "target_id": null,
+        "reference_id": "g0-successor-reference",
+        "parent_id": "g0-navigation-reference",
+        "tracker": {
+          "id": "g0-offline-test-tracker",
+          "version": "1",
+          "sha256": "7df82a67445512d1ebb78f2b80efe79af220eec3eba0fb3fedc27d53d4b7431e"
+        },
+        "knots": [
+          {
+            "time_s": 10.02,
+            "position_ref_W_m": [
+              0.4,
+              0.2,
+              -0.8
+            ],
+            "velocity_ref_W_m_s": [
+              0.2,
+              -0.03,
+              0.01
+            ],
+            "acceleration_ref_W_m_s2": [
+              0,
+              0,
+              0
+            ],
+            "q_ref_WB_wxyz": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "body_rate_ref_B_rad_s": [
+              0.1,
+              -0.2,
+              0.05
+            ]
+          },
+          {
+            "time_s": 10.15,
+            "position_ref_W_m": [
+              0.4,
+              0.2,
+              -0.8
+            ],
+            "velocity_ref_W_m_s": [
+              0.2,
+              -0.03,
+              0.01
+            ],
+            "acceleration_ref_W_m_s2": [
+              0,
+              0,
+              0
+            ],
+            "q_ref_WB_wxyz": [
+              1,
+              0,
+              0,
+              0
+            ],
+            "body_rate_ref_B_rad_s": [
+              0.1,
+              -0.2,
+              0.05
+            ]
+          }
+        ],
+        "interpolation": {
+          "method": "LINEAR",
+          "authoritative_fields": [
+            "position_ref_W_m",
+            "q_ref_WB_wxyz"
+          ]
+        }
+      }
+    },
+    "authority": {
+      "schema": "control.schema.json#/$defs/ControlAuthority",
+      "record": {
+        "record_type": "ControlAuthority",
+        "metadata": {
+          "contract_id": "rm27.control",
+          "contract_version": "0.1.0-draft",
+          "run_id": "g0-synthetic-only",
+          "record_id": "g0-transfer-record",
+          "source": "g0-navigation",
+          "sequence": 1,
+          "input_kind": "SYNTHETIC",
+          "lineage": [
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "G0 format-only fixture",
+              "transform": "g0-test-frame-map"
+            },
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "G0 format-only fixture",
+              "transform": "g0-test-clock-map"
+            }
+          ],
+          "clock_id": "g0-test-exchange-clock",
+          "frame_id": "g0-test-NED",
+          "reset_epoch": 2,
+          "availability": {},
+          "model": {
+            "id": "ASM2",
+            "version": "1.0.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "geometry": {
+            "id": "ASM2-local-native-3522",
+            "version": "0.1.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "config_hash": "69f0778d2e5b377b9a2a99e62ca7004f57487db2d232092b8b354bc3dfee15f6"
+        },
+        "authority": {
+          "vehicle_id": "g0-test-vehicle",
+          "owner_id": "g0-navigation",
+          "lease_id": "g0-lease-navigation",
+          "generation": 1,
+          "allowed_layer": "REFERENCE_TRAJECTORY",
+          "phase": "NO_CONTACT_OFFLINE_TEST",
+          "lease_expires_at_s": 10.3,
+          "handoff_state": "ACTIVE"
+        },
+        "handoff": {
+          "predecessor": {
+            "vehicle_id": "g0-test-vehicle",
+            "owner_id": "g0-navigation",
+            "lease_id": "g0-lease-navigation",
+            "generation": 1,
+            "allowed_layer": "REFERENCE_TRAJECTORY",
+            "phase": "NO_CONTACT_OFFLINE_TEST",
+            "lease_expires_at_s": 10.3,
+            "handoff_state": "ACTIVE"
+          },
+          "successor": {
+            "vehicle_id": "g0-test-vehicle",
+            "owner_id": "g0-successor",
+            "lease_id": "g0-lease-successor",
+            "generation": 2,
+            "allowed_layer": "REFERENCE_TRAJECTORY",
+            "phase": "NO_CONTACT_OFFLINE_TEST",
+            "lease_expires_at_s": 10.3,
+            "handoff_state": "PENDING"
+          },
+          "effective_apply_time_s": 10.02,
+          "acknowledged_successor": false
+        }
+      }
+    },
+    "ack_deadline_s": 10.018
+  }
+}

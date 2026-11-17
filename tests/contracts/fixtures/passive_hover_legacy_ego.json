@@ -1,0 +1,17 @@
+{
+  "source_path": "components/rm27_sim/artifacts/passive-hover-half-height-001/flight/frames.jsonl",
+  "source_sha256": "e60044fe5ad0268232591115eb3a200174054aec667485336d3c17c29c2ac852",
+  "source_line": 843,
+  "phase": "HOVER",
+  "physical_state": {
+    "position": [-0.00042957436798185533, -0.0024225811108846695, -1.2554692754612276],
+    "velocity": [-0.00022997502441828192, -0.006747905409417942, -0.03705714936065357],
+    "quaternion": [0.991522122281211, -0.0003947959676145473, 0.0003638014275212702, -0.12993688010579854],
+    "timestamp": 16.840000000001545
+  },
+  "registration": {
+    "frame": null,
+    "clock": null,
+    "epoch": null
+  }
+}

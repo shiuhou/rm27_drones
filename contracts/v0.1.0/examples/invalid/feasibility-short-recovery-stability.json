@@ -1,0 +1,419 @@
+{
+  "schema": "feasibility.schema.json#/$defs/FeasibilityResult",
+  "synthetic": true,
+  "record": {
+    "record_type": "FeasibilityResult",
+    "metadata": {
+      "contract_id": "rm27.feasibility",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-native-result",
+      "source": "fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {}
+    },
+    "request_id": "synthetic-request",
+    "candidate_id": "synthetic-candidate",
+    "parent_reference_id": null,
+    "versions": {
+      "physics_model": {
+        "id": "synthetic-physics-model",
+        "version": "fixture",
+        "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+      },
+      "geometry": {
+        "id": "synthetic-geometry",
+        "version": "fixture",
+        "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+      },
+      "scene": {
+        "id": "synthetic-scene",
+        "version": "fixture",
+        "sha256": "29c0064e991cc530cbd47699cbcc3dd861c2f588394d993c79df4e1d3f5e192b"
+      },
+      "scorer": {
+        "id": "synthetic-scorer",
+        "version": "fixture",
+        "sha256": "7777f885bffcb23c5c870a53704c14a012310e2f95372d39ea991b35afbf5b6b"
+      },
+      "scorer_profile": {
+        "id": "synthetic-scorer-profile",
+        "version": "fixture",
+        "sha256": "bb713b26bd707c8dc4e86238ceeebc2c88a81fc8adb4b86198e9d68b6ff1f94d"
+      },
+      "planner": {
+        "id": "synthetic-planner",
+        "version": "fixture",
+        "sha256": "73b09c6b834d26b8198318b7849d875355a263554b2fd77daa17406641cf620b"
+      },
+      "config_hash": "c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a",
+      "controller": {
+        "id": "synthetic-controller",
+        "version": "fixture",
+        "sha256": "4f3459f08890069b47db08a00bda8aa9519433b66e752637337d9141dbaf5601"
+      },
+      "allocator": {
+        "id": "synthetic-allocator",
+        "version": "fixture",
+        "sha256": "0b0f23fa330ab2eadf46b306fba28f6e409ab5bc719d33e70b5fb02e082eba8d"
+      },
+      "simulator": {
+        "id": "synthetic-simulator",
+        "version": "fixture",
+        "sha256": "3575e409443badeabbe704a2f96e29fd9849ae129eeef9c415961f810e8667c1"
+      },
+      "integration_profile": {
+        "id": "synthetic-integration-profile",
+        "version": "fixture",
+        "sha256": "2150c0d76305d8b2e508cba3dad9820b0e9695e0af5d570e0f081d2300302239"
+      }
+    },
+    "required_stages": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "evidence": [
+      {
+        "stage": 1,
+        "verdict": "PASS",
+        "state_source": {
+          "kind": "STATE_REFERENCE",
+          "source_ref": "synthetic-initial-state",
+          "reason": null
+        },
+        "state_lineage": [
+          {
+            "input_kind": "ESTIMATED",
+            "source": "synthetic-estimator",
+            "record_id": "synthetic-initial-state"
+          }
+        ],
+        "feedback_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "contact_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "scorer_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "model": {
+          "id": "synthetic-geometry",
+          "version": "fixture",
+          "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+        },
+        "evaluator": {
+          "id": "synthetic-stage-1-evaluator",
+          "version": "fixture",
+          "sha256": "7da67da8311379dabadcd6eed45de78acfd75d058f373307fbe88f873a1e6476"
+        },
+        "coverage": {
+          "complete": true
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": [
+          "synthetic-stage-1-trace"
+        ]
+      },
+      {
+        "stage": 2,
+        "verdict": "PASS",
+        "state_source": {
+          "kind": "STATE_REFERENCE",
+          "source_ref": "synthetic-initial-state",
+          "reason": null
+        },
+        "state_lineage": [
+          {
+            "input_kind": "ESTIMATED",
+            "source": "synthetic-estimator",
+            "record_id": "synthetic-initial-state"
+          }
+        ],
+        "feedback_source": {
+          "kind": "OPEN_LOOP",
+          "source_ref": "synthetic-command-sequence",
+          "reason": null
+        },
+        "contact_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "scorer_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "model": {
+          "id": "synthetic-physics-model",
+          "version": "fixture",
+          "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+        },
+        "evaluator": {
+          "id": "synthetic-stage-2-evaluator",
+          "version": "fixture",
+          "sha256": "d9439004de4ea8602978cd290a0ca519890b48ae035c7fe394638bcd9394a3ea"
+        },
+        "coverage": {
+          "complete": true
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": [
+          "synthetic-stage-2-trace"
+        ]
+      },
+      {
+        "stage": 3,
+        "verdict": "PASS",
+        "state_source": {
+          "kind": "STATE_REFERENCE",
+          "source_ref": "synthetic-initial-state",
+          "reason": null
+        },
+        "state_lineage": [
+          {
+            "input_kind": "ESTIMATED",
+            "source": "synthetic-estimator",
+            "record_id": "synthetic-initial-state"
+          }
+        ],
+        "feedback_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "contact_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "scorer_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "model": {
+          "id": "synthetic-geometry",
+          "version": "fixture",
+          "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+        },
+        "evaluator": {
+          "id": "synthetic-stage-3-evaluator",
+          "version": "fixture",
+          "sha256": "9b7f453c93d29480833f65cba4e98763e30e04668ea256ccf07417da44bad7ff"
+        },
+        "coverage": {
+          "complete": true
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": [
+          "synthetic-stage-3-trace"
+        ]
+      },
+      {
+        "stage": 4,
+        "verdict": "BLOCKED",
+        "state_source": {
+          "kind": "STATE_REFERENCE",
+          "source_ref": "synthetic-initial-state",
+          "reason": null
+        },
+        "state_lineage": [
+          {
+            "input_kind": "ESTIMATED",
+            "source": "synthetic-estimator",
+            "record_id": "synthetic-initial-state"
+          },
+          {
+            "input_kind": "PREDICTED",
+            "source": "synthetic-native-forecast",
+            "transform": "propagation"
+          }
+        ],
+        "feedback_source": {
+          "kind": "PREDICTED",
+          "source_ref": "synthetic-perfect-prediction",
+          "reason": null
+        },
+        "contact_event_source": {
+          "kind": "NATIVE_ORACLE",
+          "source_ref": "synthetic-contact-oracle",
+          "reason": null
+        },
+        "scorer_event_source": {
+          "kind": "NATIVE_SCORER",
+          "source_ref": "synthetic-independent-scorer",
+          "reason": null
+        },
+        "model": {
+          "id": "synthetic-physics-model",
+          "version": "fixture",
+          "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+        },
+        "evaluator": {
+          "id": "synthetic-stage-4-evaluator",
+          "version": "fixture",
+          "sha256": "e117dc925854dcd3251c76924d637d6ef6410f277ded83df8db54c51bb3398d7"
+        },
+        "coverage": {
+          "complete": false,
+          "reason": "Forecast horizon shorter than required hold"
+        },
+        "assumptions": [],
+        "limitations": [
+          {
+            "code": "SHORT_HORIZON",
+            "detail": "Fixture did not cover the declared hold"
+          }
+        ],
+        "evidence_refs": [
+          "synthetic-stage-4-trace"
+        ]
+      }
+    ],
+    "dynamics_feasible": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Synthetic bounded model screen",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "constraints": [
+        "fixture-constraint"
+      ],
+      "prediction_model": {
+        "id": "synthetic-physics-model",
+        "version": "fixture",
+        "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+      },
+      "margins": [],
+      "saturation": false,
+      "limitations": []
+    },
+    "geometry_feasible": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Coarse geometry only",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "method": "CONSERVATIVE_SWEEP",
+      "geometry": {
+        "id": "synthetic-geometry",
+        "version": "fixture",
+        "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+      },
+      "forbidden_pair_policy": null,
+      "tolerance_m": null,
+      "conservative_bound_m": 0.01,
+      "obstacle_coverage": {
+        "complete": false,
+        "reason": "No swept path was evaluated"
+      }
+    },
+    "clearance_valid": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Synthetic swept interval checked",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "metric": "separation-distance",
+      "minimum_m": 0.04,
+      "margin_threshold_m": 0.02,
+      "method": "CONSERVATIVE_SWEEP",
+      "window": {
+        "start_s": 0,
+        "end_s": 0.5
+      },
+      "limitations": []
+    },
+    "contact_admissible": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Synthetic forecast evidence",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "evidence_kind": "PREDICTED",
+      "expected_first_pair": [
+        "synthetic-patch",
+        "synthetic-surface"
+      ],
+      "event_ref": "synthetic-forecast-event"
+    },
+    "terminal_state": null,
+    "recovery_assessed": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Bounded forecast executed with its declared inputs",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "predicted_recovery_outcome": "BLOCKED",
+      "horizon_s": 0.25,
+      "required_stability_hold_s": 1.0,
+      "stability_status": "PASS",
+      "execution_mode": "OPTIMISTIC_PREDICTION",
+      "branch_ref": "synthetic-branch",
+      "assumptions": [
+        {
+          "code": "ORACLE_ASSISTANCE",
+          "detail": "Perfect predicted feedback and a native trigger"
+        }
+      ]
+    },
+    "validation_status": "BLOCKED",
+    "validation_level": {
+      "highest_completed_stage": 3,
+      "scope": "FULL_PHYSICAL",
+      "coverage": {
+        "complete": false,
+        "reason": "No complete recovery hold"
+      }
+    },
+    "request_state_time_s": 0.0,
+    "acquisition_time_s": {
+      "synthetic-position": 0.0
+    },
+    "request_wall_time_s": 5.0,
+    "solve_wall_s": 0.02,
+    "deadline_s": 5.1,
+    "wall_clock_id": "synthetic-wall-clock",
+    "apply_time_s": null,
+    "expires_at_s": null,
+    "assumptions": [],
+    "limitations": [
+      {
+        "code": "SCOPED_SCREENING",
+        "detail": "Only coarse geometry and bounded dynamics were checked"
+      }
+    ],
+    "failure_reasons": []
+  },
+  "expect": {
+    "semantic": "feasibility_recovery_hold"
+  }
+}

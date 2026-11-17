@@ -1,0 +1,1480 @@
+{
+  "schema": "geometry.schema.json#/$defs/GeometryManifest",
+  "synthetic": true,
+  "record": {
+    "metadata": {
+      "contract_id": "rm27.geometry",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-geometry",
+      "source": "synthetic-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "synthetic-input"
+        }
+      ],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {}
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "aircraft_frame": "synthetic-FRD-body",
+    "asset_release": {
+      "id": "synthetic-geometry-release-not-ASM2",
+      "version": "fixture",
+      "sha256": "fd1a8a04ad40600a6b99fd0a2a804b8510842ffbccdb1c088b4f332b2bacf25a"
+    },
+    "registration_epoch": 0,
+    "collision_hulls": [
+      {
+        "geom_id": "contact_front_000",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_000",
+          "version": "fixture",
+          "sha256": "3e8e79ddfab54558cec595e8d4d78686a2ad7f497ee841b4ef961c82460814e7"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_001",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_001",
+          "version": "fixture",
+          "sha256": "c8afc52589a86f82fba629f42aef61bb059911c9b8ea4632e0cbe5ed10b62e92"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_002",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_002",
+          "version": "fixture",
+          "sha256": "0eb011446eb79c9551612a554e52022b626e6f69f55dd2c7262b1e77f2d074de"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_003",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_003",
+          "version": "fixture",
+          "sha256": "560bc3782b4bfb074876245a5a6f3ff5b6653d587c4e6bbe2e18c1e0d852a3ec"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_004",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_004",
+          "version": "fixture",
+          "sha256": "f20968fec509d5bb48c96d80a1e15f7301a2c6b9660f9d2941b35870283e826d"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_005",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_005",
+          "version": "fixture",
+          "sha256": "ec0e831216c45808fb3082d25d33f8954b17735161274852b004e37fa181fd18"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_006",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_006",
+          "version": "fixture",
+          "sha256": "6fb95a887174c78f3e8cf5337e6eb6db4e4bf01bdd32060852e3b415db4f495f"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_007",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_007",
+          "version": "fixture",
+          "sha256": "d6025768db5e37dc39eb09a3228fd0184f13042967a5799636316e7ef765e1b3"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_008",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_008",
+          "version": "fixture",
+          "sha256": "0add2a008a7d021e0a1727526993cf64873e1e1642af3a5476f4521177026059"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_009",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_009",
+          "version": "fixture",
+          "sha256": "9249a8efbf38442ce8e072eb3c21b0d6f11c578da8c754ee223414852226bf6f"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_010",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_010",
+          "version": "fixture",
+          "sha256": "86e5aadef46cff9960885db310332d9583c287a4842fd5af9355b4aeac5d921c"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_011",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_011",
+          "version": "fixture",
+          "sha256": "ec774114e10db77915a5384c3d8c7736f0f8907be3fb049ff13bf40a76beebde"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_012",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_012",
+          "version": "fixture",
+          "sha256": "d389031c73c4470b25ec919c5e20d4b6380dcb36d70c8ab85a1ca4e627ddfdcb"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_front_013",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_front_013",
+          "version": "fixture",
+          "sha256": "98c4bd5c5cd5e153fc236eceb85bceb1343305f88658559d853534a6577c0541"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "contact_rear_000",
+        "part_id": "synthetic-patch-part",
+        "mesh": {
+          "id": "synthetic-mesh-contact_rear_000",
+          "version": "fixture",
+          "sha256": "ea8904f4a71658a36ee90007a6c7c3032fccd680427f23a12ab32158bca77e64"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-contact",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      },
+      {
+        "geom_id": "synthetic-shell",
+        "part_id": "synthetic-shell-part",
+        "mesh": {
+          "id": "synthetic-mesh-synthetic-shell",
+          "version": "fixture",
+          "sha256": "69ff86c5e3e680e76b9a7c0c67d03403534b79329569c9c69549a0d0c854a99e"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-shell-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "contype": 1,
+        "conaffinity": 1,
+        "enabled": true,
+        "group": "synthetic-shell",
+        "material_contact_profile": {
+          "id": "synthetic-material",
+          "version": "fixture",
+          "sha256": "8bdabb7c32152b6a0173f83eb92c67f7e89a910965b3774d4d30274ececc1a76"
+        }
+      }
+    ],
+    "underside_shell": {
+      "geom_ids": [
+        "synthetic-shell"
+      ],
+      "shape": {
+        "id": "synthetic-underside-shell",
+        "version": "fixture",
+        "sha256": "52c4420b4932a240c6091a01ead8671bea68d87710b2f7116295312f44dface9"
+      }
+    },
+    "designated_patches": [
+      {
+        "patch_id": "contact_front_000",
+        "geom_id": "contact_front_000",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_000",
+          "version": "fixture",
+          "sha256": "c880928e70fdcf3d3280fbc78411d48a50d3eff22a0f85426715ab38b040547e"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_000",
+          "version": "fixture",
+          "sha256": "e1666f49ed65b112bc8a59172dba9a7210eadda127225c26b14a9a5c8eb1f774"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_001",
+        "geom_id": "contact_front_001",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_001",
+          "version": "fixture",
+          "sha256": "53d1ec112dc727148fc2d8b2771e73e62b55c619ed3c630ce8112c971d09477c"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_001",
+          "version": "fixture",
+          "sha256": "005297ce16ef175a13865c765b2d2ff78df07e09323152ae67badbb62202d7da"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_002",
+        "geom_id": "contact_front_002",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_002",
+          "version": "fixture",
+          "sha256": "3fe07fa7e236075d86aaa4405c3d46d04054f4098abc302efa64ac1568a13d55"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_002",
+          "version": "fixture",
+          "sha256": "5d42bc387462ba50020fedb3b13c5e31499070873f86e7141c20f0977fbe4497"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_003",
+        "geom_id": "contact_front_003",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_003",
+          "version": "fixture",
+          "sha256": "7c38540c8101997f78834a9fd0aa2cf2372c6d1045c191199764308e7e302a79"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_003",
+          "version": "fixture",
+          "sha256": "3865af0c871c9aad4491de27ba000a57dbfdbe71e3d191a8ec7781a7f901e2e6"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_004",
+        "geom_id": "contact_front_004",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_004",
+          "version": "fixture",
+          "sha256": "f3f23d4b4a14521a18d1128bc5491c2742fcf76b10a3bc24c423eb11a092029d"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_004",
+          "version": "fixture",
+          "sha256": "820c2e88a96fa30f2727129de1d0bc060f3f38a6833ac1689b37a1526e491434"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_005",
+        "geom_id": "contact_front_005",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_005",
+          "version": "fixture",
+          "sha256": "b013c742383f8e1e5ef606d57dda77a969e6a8c71356131c528975fccbad5b22"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_005",
+          "version": "fixture",
+          "sha256": "d898a46a6ebd81ae9f450ed0757560aff07f8f25378ec71abb805066a75dd215"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_006",
+        "geom_id": "contact_front_006",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_006",
+          "version": "fixture",
+          "sha256": "dae6af60a0f5b1420c532c5e19f92a61178e9d0e8cef0f7da66092a466d3fcf3"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_006",
+          "version": "fixture",
+          "sha256": "12e6df60a1f88ff733635eeab898266ce4aab3ad8f90e33c916083a18fc7ae5b"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_007",
+        "geom_id": "contact_front_007",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_007",
+          "version": "fixture",
+          "sha256": "c13451c055aed45b56f6c6eb6fadf68069aea4f47251fbcc948562679d56cf8c"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_007",
+          "version": "fixture",
+          "sha256": "c72f6fb8c72d1780b0fd125463891363fdf7a4a12f2d61f4035a9eb5118c84d8"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_008",
+        "geom_id": "contact_front_008",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_008",
+          "version": "fixture",
+          "sha256": "b6cbcc9b4dc5667c3ddd89f69f00e04e16dd5e2a8d7275fef78dae428179fd45"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_008",
+          "version": "fixture",
+          "sha256": "1178f4c4c004499edd93412bb83d148e50588fa36ce5e8fb85c3b8ac018586b1"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_009",
+        "geom_id": "contact_front_009",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_009",
+          "version": "fixture",
+          "sha256": "86065e7b2e809df12520af14230e0f944a37ea8defa94701de1ca7c2f6621d97"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_009",
+          "version": "fixture",
+          "sha256": "154b5665506a3dfda3bf55fdd4d528946067eff90e9fda88839b0309f0086064"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_010",
+        "geom_id": "contact_front_010",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_010",
+          "version": "fixture",
+          "sha256": "5ed14d474f5885f41ca7e3be6a907faf34f3860af7171fd5d99a68c4ce7e0a95"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_010",
+          "version": "fixture",
+          "sha256": "5d99ad9a09d78962a96a8ac9ba103d62e6bae08627821c0a262bda9bd7307157"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_011",
+        "geom_id": "contact_front_011",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_011",
+          "version": "fixture",
+          "sha256": "d3b0513c091e769ecbbf4e7afb7126b3d674975685b720e1f50e315cf1ac72b2"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_011",
+          "version": "fixture",
+          "sha256": "53c11d55a8690ebb8948911f253a92b1ec448089a6c49a35fe723bf78d4e42c5"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_012",
+        "geom_id": "contact_front_012",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_012",
+          "version": "fixture",
+          "sha256": "696e2897132cab9ba2d3025ac29b16117d71458281810b9d160d8c371776b961"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_012",
+          "version": "fixture",
+          "sha256": "cdc434b460a05c0b21fc5b462be1ee16627fe8b3b497e8888abeac3c263782cb"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_front_013",
+        "geom_id": "contact_front_013",
+        "group": "front",
+        "shape": {
+          "id": "synthetic-shape-contact_front_013",
+          "version": "fixture",
+          "sha256": "ae193e3aebd5dc3c4510aea3e2cf5bc091000315f71aeb212ff04c97c66cddd1"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_front_013",
+          "version": "fixture",
+          "sha256": "a26e1e976bd57e9a9da2f600ea517863b665c3784257f2eb219a3679c1458fac"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      },
+      {
+        "patch_id": "contact_rear_000",
+        "geom_id": "contact_rear_000",
+        "group": "rear",
+        "shape": {
+          "id": "synthetic-shape-contact_rear_000",
+          "version": "fixture",
+          "sha256": "3d12766ef0b615eb7aac30cd06d11cf29ac102860f6f51ca05fc4e4d058a8acb"
+        },
+        "T_Bpart": {
+          "parent_frame_id": "synthetic-FRD-body",
+          "child_frame_id": "synthetic-patch-part",
+          "translation_parent_m": [
+            0,
+            0,
+            0
+          ],
+          "rotation_parent_child_wxyz": [
+            1,
+            0,
+            0,
+            0
+          ],
+          "registration": {
+            "id": "synthetic-frame-registration",
+            "version": "fixture",
+            "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+          }
+        },
+        "source_surface": {
+          "id": "synthetic-source-contact_rear_000",
+          "version": "fixture",
+          "sha256": "a903269b6107a3580ac4658d147a429216ac7386a298bd62f25a7d08afd3f9f2"
+        },
+        "normal_part": [
+          0,
+          0,
+          -1
+        ],
+        "area_m2": null,
+        "area_definition": "Synthetic identity-only patch: area unavailable, not a measured force area"
+      }
+    ],
+    "forbidden_aircraft_regions": [
+      {
+        "region_id": "synthetic-shell-region",
+        "geom_ids": [
+          "synthetic-shell"
+        ],
+        "reason": "Enabled shell is outside admissible patches"
+      }
+    ],
+    "target": {
+      "target_id": "synthetic-target",
+      "geometry": {
+        "id": "synthetic-target-geometry",
+        "version": "fixture",
+        "sha256": "9386a01f0bd34e62e8cff415652c6e886794005ffbccecef509214d122ea047b"
+      },
+      "armor_surface": {
+        "geom_ids": [
+          "synthetic-target-surface"
+        ],
+        "reference_shape": {
+          "id": "synthetic-target-reference-shape",
+          "version": "fixture",
+          "sha256": "a131043b43d72bb0e9afb48ec56fe232d452c393a54c5ad96504deb464348896"
+        },
+        "surface_center_T_m": [
+          0,
+          0,
+          0
+        ],
+        "region_halfwidth_across_slope_m": [
+          0.15,
+          0.3
+        ],
+        "backing_geom_ids": []
+      },
+      "target_frame_WT": {
+        "parent_frame_id": "synthetic-local-NED",
+        "child_frame_id": "synthetic-target-frame",
+        "translation_parent_m": [
+          0.5,
+          0,
+          0
+        ],
+        "rotation_parent_child_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "registration": {
+          "id": "synthetic-frame-registration",
+          "version": "fixture",
+          "sha256": "7449a0095264267193af1ee8579dbed23ce8ad971b49a820d91834372b6c902a"
+        }
+      },
+      "target_axes": [
+        "across",
+        "slope",
+        "normal"
+      ],
+      "surface_normal_W": [
+        0,
+        0,
+        1
+      ],
+      "motion": "STATIC",
+      "registration_epoch": 0
+    },
+    "obstacles": [],
+    "scene_subset_exclusions": [],
+    "collision_pair_policy": {
+      "identity": {
+        "id": "synthetic-collision-policy",
+        "version": "fixture",
+        "sha256": "d57cb09aa64dfe9fa0416e76cab19a5b65c38cac8f3192daa41ce12f7018fcce"
+      },
+      "rules": [
+        {
+          "first_id": "contact_front_000",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_001",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_002",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_003",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_004",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_005",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_006",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_007",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_008",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_009",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_010",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_011",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_012",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_front_013",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        },
+        {
+          "first_id": "contact_rear_000",
+          "second_id": "synthetic-target-surface",
+          "classification": "ADMISSIBLE",
+          "reason": "Synthetic registered pair; profile gates still apply"
+        }
+      ],
+      "default_classification": "FORBIDDEN"
+    },
+    "tolerances": [
+      {
+        "name": "continuous-sweep-error",
+        "value": null,
+        "units": "m",
+        "purpose": "Conservative coverage claim",
+        "profile": {
+          "id": "synthetic-synthetic-sweep",
+          "version": "fixture",
+          "sha256": "c598ade703567c1279d65b6f59ff71b0f27780d1dc3ffc485f46700c004ec784"
+        },
+        "reason": "No continuous sweep verified"
+      }
+    ]
+  },
+  "expect": {
+    "keyword": "required",
+    "path": [
+      "metadata"
+    ]
+  }
+}

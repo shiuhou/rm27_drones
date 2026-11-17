@@ -1,0 +1,291 @@
+{
+  "schema": "feasibility.schema.json#/$defs/FeasibilityRequest",
+  "synthetic": true,
+  "record": {
+    "record_type": "FeasibilityRequest",
+    "metadata": {
+      "contract_id": "rm27.feasibility",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-request",
+      "source": "fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {}
+    },
+    "request_id": "synthetic-request",
+    "parent_reference_id": null,
+    "initial_full_state": {
+      "state": {
+        "metadata": {
+          "contract_id": "rm27.state",
+          "contract_version": "0.1.0-draft",
+          "run_id": "synthetic-run",
+          "record_id": "synthetic-initial-state",
+          "source": "fixture",
+          "sequence": 0,
+          "input_kind": "ESTIMATED",
+          "lineage": [
+            {
+              "input_kind": "SYNTHETIC",
+              "source": "fixture-sensor"
+            }
+          ],
+          "clock_id": "synthetic-physics-clock",
+          "frame_id": "synthetic-local-NED",
+          "reset_epoch": 0,
+          "availability": {
+            "uncertainty": {
+              "status": "UNKNOWN",
+              "reason": "Fixture does not supply covariance"
+            }
+          },
+          "model": {
+            "id": "synthetic-physics-model",
+            "version": "fixture",
+            "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+          },
+          "geometry": {
+            "id": "synthetic-geometry",
+            "version": "fixture",
+            "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+          }
+        },
+        "frames": {
+          "world": "NED",
+          "body": "FRD",
+          "quaternion": "HAMILTON_WXYZ"
+        },
+        "state_time_s": 0,
+        "position_W_m": [
+          0,
+          0,
+          -1
+        ],
+        "velocity_W_m_s": [
+          0,
+          0,
+          0
+        ],
+        "q_WB_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "body_rates_B_rad_s": [
+          0,
+          0,
+          0
+        ],
+        "actuator_state": {
+          "rotor_ids": [
+            "synthetic-r0",
+            "synthetic-r1"
+          ],
+          "rotor_thrust_N": [
+            0.25,
+            0.25
+          ]
+        },
+        "validity": {
+          "position_W_m": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "velocity_W_m_s": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "q_WB_wxyz": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "body_rates_B_rad_s": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          },
+          "rotor_thrust_N": {
+            "availability": {
+              "status": "AVAILABLE",
+              "reason": null
+            },
+            "initialized": true,
+            "aligned": true,
+            "finite": true,
+            "current": true
+          }
+        },
+        "uncertainty": null,
+        "epoch_provenance": "RECORDED"
+      },
+      "state_completeness": {
+        "position_W_m": "AVAILABLE",
+        "velocity_W_m_s": "AVAILABLE",
+        "q_WB_wxyz": "AVAILABLE",
+        "body_rates_B_rad_s": "AVAILABLE",
+        "rotor_thrust_N": "AVAILABLE",
+        "uncertainty": "UNKNOWN"
+      }
+    },
+    "candidate": {
+      "candidate_id": "synthetic-candidate",
+      "generation": {
+        "id": "synthetic-planner",
+        "version": "fixture",
+        "sha256": "73b09c6b834d26b8198318b7849d875355a263554b2fd77daa17406641cf620b"
+      },
+      "valid_interval": {
+        "start_s": 10.1,
+        "end_s": 10.6
+      },
+      "interpolation": "ZERO_ORDER_HOLD",
+      "initial_conditions": [
+        "Use fixture estimated state"
+      ],
+      "terminal_conditions": [
+        "Synthetic terminal condition only"
+      ],
+      "commands": [
+        {
+          "record_type": "DirectCTBR",
+          "metadata": {
+            "contract_id": "rm27.control",
+            "contract_version": "0.1.0-draft",
+            "run_id": "synthetic-run",
+            "record_id": "synthetic-DirectCTBR",
+            "source": "synthetic-contract-fixture",
+            "sequence": 0,
+            "input_kind": "SYNTHETIC",
+            "lineage": [],
+            "clock_id": "synthetic-physics-clock",
+            "frame_id": "synthetic-local-NED",
+            "reset_epoch": 0,
+            "availability": {},
+            "model": {
+              "id": "synthetic-physics-model",
+              "version": "fixture",
+              "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+            }
+          },
+          "frames": {
+            "world": "NED",
+            "body": "FRD",
+            "quaternion": "HAMILTON_WXYZ"
+          },
+          "authority": {
+            "vehicle_id": "synthetic-vehicle",
+            "owner_id": "synthetic-adapter",
+            "lease_id": "synthetic-lease",
+            "generation": 2,
+            "allowed_layer": "DIRECT_CTBR",
+            "phase": "synthetic-control-phase",
+            "lease_expires_at_s": 11.0,
+            "handoff_state": "ACTIVE"
+          },
+          "timing": {
+            "generated_time_s": 10.0,
+            "apply_time_s": 10.2,
+            "valid_from_s": 10.1,
+            "expires_at_s": 10.6,
+            "source_state_time_s": 0.0,
+            "measurement_age_s": 0.3,
+            "sample_period_s": 0.4,
+            "hold_policy": {
+              "method": "ZERO_ORDER_HOLD",
+              "late_sample_behavior": "REJECT_IF_EXPIRED",
+              "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+            }
+          },
+          "source_state_id": "synthetic-initial-state",
+          "target_id": "synthetic-target",
+          "collective_thrust_N": 1.2,
+          "body_rate_sp_B_rad_s": [
+            0.0,
+            0.0,
+            0.1
+          ],
+          "adapter": {
+            "id": "synthetic-controller-adapter",
+            "version": "fixture-1",
+            "sha256": "f724e1dd29aa8e3c5030c93716fc35b08362255788fdd45608601b6d15ae5097"
+          },
+          "rate_actuator_profile": {
+            "id": "synthetic-rate-actuator-profile",
+            "version": "fixture-1",
+            "sha256": "4f46b1b6b16218b316b8e94acf6b69a1af82eeb8f7303ce490820a7534bd2028"
+          }
+        }
+      ]
+    },
+    "versions": {
+      "physics_model": {
+        "id": "synthetic-physics-model",
+        "version": "fixture",
+        "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+      },
+      "geometry": {
+        "id": "synthetic-geometry",
+        "version": "fixture",
+        "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+      },
+      "scene": {
+        "id": "synthetic-scene",
+        "version": "fixture",
+        "sha256": "29c0064e991cc530cbd47699cbcc3dd861c2f588394d993c79df4e1d3f5e192b"
+      },
+      "scorer": {
+        "id": "synthetic-scorer",
+        "version": "fixture",
+        "sha256": "7777f885bffcb23c5c870a53704c14a012310e2f95372d39ea991b35afbf5b6b"
+      },
+      "scorer_profile": {
+        "id": "synthetic-scorer-profile",
+        "version": "fixture",
+        "sha256": "bb713b26bd707c8dc4e86238ceeebc2c88a81fc8adb4b86198e9d68b6ff1f94d"
+      },
+      "planner": {
+        "id": "synthetic-planner",
+        "version": "fixture",
+        "sha256": "73b09c6b834d26b8198318b7849d875355a263554b2fd77daa17406641cf620b"
+      },
+      "config_hash": "c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a"
+    },
+    "required_stages": [
+      1,
+      2
+    ],
+    "request_wall_time_s": 5.0,
+    "wall_clock_id": "synthetic-wall-clock",
+    "deadline_s": 5.1,
+    "screening_budget_s": 0.1
+  }
+}

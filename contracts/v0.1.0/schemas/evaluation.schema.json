@@ -1,0 +1,944 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rm27.example/contracts/v0.1.0/evaluation.schema.json",
+  "title": "RM27 Evaluation draft",
+  "x-rm27": {
+    "version": "0.1.0-draft",
+    "status": "PROPOSED",
+    "document": ".agents/docs/contracts/EVALUATION.md"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/EpisodeEvaluationResult"
+    }
+  ],
+  "$defs": {
+    "ContactClassification": {
+      "enum": [
+        "PATCH_REGISTERED_ARMOR",
+        "WRONG_AIRCRAFT_REGION",
+        "WRONG_SURFACE",
+        "GROUND_OR_OBSTACLE",
+        "UNREGISTERED_PAIR",
+        "PROFILE_EXCLUDED"
+      ],
+      "description": "Physical pair/region classification under Geometry and the named evaluation profile; a registered patch may still fail a qualification gate."
+    },
+    "ContactGate": {
+      "type": "object",
+      "properties": {
+        "gate": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "result": {
+          "$ref": "common.schema.json#/$defs/Verdict"
+        },
+        "reason": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "value": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "unit": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "threshold": {
+          "anyOf": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "gate",
+        "result",
+        "reason"
+      ],
+      "additionalProperties": false
+    },
+    "ContactPair": {
+      "type": "object",
+      "properties": {
+        "aircraft_geom_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "other_geom_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "region_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "classification": {
+          "$ref": "#/$defs/ContactClassification"
+        },
+        "point_W_m": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "m",
+          "x-frame": "W"
+        },
+        "pair_normal_W": {
+          "$ref": "common.schema.json#/$defs/Vec3",
+          "x-unit": "1",
+          "x-frame": "W"
+        },
+        "surface_normal_W": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "x-unit": "1",
+              "x-frame": "W"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "signed_distance_m": {
+          "type": "number",
+          "x-unit": "m"
+        },
+        "solver_active": {
+          "type": "boolean"
+        },
+        "force_N": {
+          "type": "number",
+          "x-unit": "N",
+          "minimum": 0
+        },
+        "native_impulse_Ns": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "N*s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "normal_speed_m_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m/s"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tangent_speed_m_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m/s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "contact_checks": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContactGate"
+          }
+        }
+      },
+      "required": [
+        "aircraft_geom_id",
+        "other_geom_id",
+        "region_id",
+        "classification",
+        "point_W_m",
+        "pair_normal_W",
+        "surface_normal_W",
+        "signed_distance_m",
+        "solver_active",
+        "force_N",
+        "contact_checks"
+      ],
+      "additionalProperties": false
+    },
+    "ContactEvent": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "interval": {
+          "$ref": "common.schema.json#/$defs/TimeInterval"
+        },
+        "pairs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContactPair"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "event_id",
+        "interval",
+        "pairs"
+      ],
+      "additionalProperties": false,
+      "description": "Completed physical solver interval with all simultaneous relevant pairs, inheriting run/model/frame/clock from the episode."
+    },
+    "ForbiddenContactEvent": {
+      "type": "object",
+      "properties": {
+        "event_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "interval": {
+          "$ref": "common.schema.json#/$defs/TimeInterval"
+        },
+        "aircraft_geom_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "other_geom_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "region_id": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "classification": {
+          "$ref": "#/$defs/ContactClassification"
+        },
+        "reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "coverage": {
+          "$ref": "common.schema.json#/$defs/Coverage"
+        }
+      },
+      "required": [
+        "event_id",
+        "interval",
+        "aircraft_geom_id",
+        "other_geom_id",
+        "region_id",
+        "classification",
+        "reasons",
+        "coverage"
+      ],
+      "additionalProperties": false,
+      "description": "Persisted independent forbidden-event evidence; can reference an event also listed as a secondary contact."
+    },
+    "ClearanceResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "metric": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "minimum_m": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "margin_threshold_m": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "method": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "window": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/TimeInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "assessment",
+        "metric",
+        "minimum_m",
+        "margin_threshold_m",
+        "method",
+        "window",
+        "limitations"
+      ],
+      "additionalProperties": false,
+      "description": "Clearance evidence for the declared window; incomplete coverage or sampled-only evidence cannot certify continuous clearance."
+    },
+    "SeparationResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "metric": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "threshold_m": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "no_contact_dwell_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "achieved_time_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "window": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/TimeInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "assessment",
+        "metric",
+        "threshold_m",
+        "no_contact_dwell_s",
+        "achieved_time_s",
+        "window"
+      ],
+      "additionalProperties": false
+    },
+    "RecoveryResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "start_basis": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "started_at_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "detection_latency_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "control_phase_trace": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "state_validity_trace": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "uniqueItems": true
+        },
+        "terminal_time_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "assessment",
+        "start_basis",
+        "started_at_s",
+        "detection_latency_s",
+        "control_phase_trace",
+        "state_validity_trace",
+        "terminal_time_s"
+      ],
+      "additionalProperties": false,
+      "description": "Trace entries refer to evidence records. Null timing does not imply an observed detection or successful recovery."
+    },
+    "StabilityResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "tilt_convention": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tilt_limit_rad": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "rad",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "rate_limit_rad_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "rad/s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "speed_limit_m_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m/s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "height_loss_limit_m": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "m",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hold_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "deadline_s": {
+          "anyOf": [
+            {
+              "type": "number",
+              "x-unit": "s",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "hold_interval": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/TimeInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "extrema": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "tilt_rad": {
+                  "type": "number",
+                  "x-unit": "rad",
+                  "minimum": 0
+                },
+                "rate_rad_s": {
+                  "type": "number",
+                  "x-unit": "rad/s",
+                  "minimum": 0
+                },
+                "speed_m_s": {
+                  "type": "number",
+                  "x-unit": "m/s",
+                  "minimum": 0
+                },
+                "height_loss_m": {
+                  "type": "number",
+                  "x-unit": "m",
+                  "minimum": 0
+                }
+              },
+              "required": [
+                "tilt_rad",
+                "rate_rad_s",
+                "speed_m_s",
+                "height_loss_m"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "assessment",
+        "tilt_convention",
+        "tilt_limit_rad",
+        "rate_limit_rad_s",
+        "speed_limit_m_s",
+        "height_loss_limit_m",
+        "hold_s",
+        "deadline_s",
+        "hold_interval",
+        "extrema"
+      ],
+      "additionalProperties": false
+    },
+    "ExperimentProvenance": {
+      "type": "object",
+      "properties": {
+        "execution_provenance": {
+          "enum": [
+            "PLANNER_GENERATED",
+            "FIXED_A_AUTONOMOUS",
+            "RL_AUTONOMOUS"
+          ]
+        },
+        "trial_role": {
+          "enum": [
+            "DEVELOPMENT",
+            "HELD_OUT",
+            "REPLAY"
+          ]
+        },
+        "observation_provenance": {
+          "$ref": "common.schema.json#/$defs/Lineage"
+        },
+        "initial_state_provenance": {
+          "$ref": "common.schema.json#/$defs/Lineage"
+        },
+        "feedback_source": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "event_source": {
+          "type": "object",
+          "properties": {
+            "controller_trigger": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/Id"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "independent_scorer": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "controller_trigger",
+            "independent_scorer"
+          ],
+          "additionalProperties": false
+        },
+        "training_method": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "frozen_config": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "checkpoint": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "normalizer": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "action_adapter": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "decision_attribution": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "execution_provenance",
+        "trial_role",
+        "observation_provenance",
+        "initial_state_provenance",
+        "feedback_source",
+        "event_source"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "execution_provenance": {
+                "const": "RL_AUTONOMOUS"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "checkpoint",
+              "normalizer",
+              "action_adapter",
+              "frozen_config"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "execution_provenance": {
+                "const": "FIXED_A_AUTONOMOUS"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "frozen_config"
+            ]
+          }
+        }
+      ]
+    },
+    "EvaluationProfile": {
+      "type": "object",
+      "properties": {
+        "scene": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "scorer": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "simulator": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "integrator": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "timestep_s": {
+          "type": "number",
+          "x-unit": "s",
+          "exclusiveMinimum": 0
+        },
+        "effective_overrides": {
+          "$ref": "common.schema.json#/$defs/Sha256"
+        },
+        "controller": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "allocator": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "scene",
+        "profile",
+        "scorer",
+        "simulator",
+        "integrator",
+        "timestep_s"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "controller": [
+          "allocator"
+        ],
+        "allocator": [
+          "controller"
+        ]
+      }
+    },
+    "EpisodeEvaluationResult": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "EpisodeEvaluationResult"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.evaluation"
+            },
+            "clock_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "model",
+            "geometry"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "case_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "seed": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "provenance": {
+          "$ref": "#/$defs/ExperimentProvenance"
+        },
+        "identities": {
+          "$ref": "#/$defs/EvaluationProfile"
+        },
+        "episode_start_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "episode_end_s": {
+          "type": "number",
+          "x-unit": "s"
+        },
+        "window_coverage": {
+          "$ref": "common.schema.json#/$defs/Coverage"
+        },
+        "first_contact": {
+          "anyOf": [
+            {
+              "$ref": "#/$defs/ContactEvent"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forbidden_events": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ForbiddenContactEvent"
+          }
+        },
+        "secondary_contacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ContactEvent"
+          }
+        },
+        "clearance": {
+          "$ref": "#/$defs/ClearanceResult"
+        },
+        "separation": {
+          "$ref": "#/$defs/SeparationResult"
+        },
+        "recovery": {
+          "$ref": "#/$defs/RecoveryResult"
+        },
+        "stability": {
+          "$ref": "#/$defs/StabilityResult"
+        },
+        "Q_contact": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "Q_clearance": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "Q_separation": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "Q_stable": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "Q_complete": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "continuation_status": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "safe_exit_status": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "termination_reason": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "numerical_health": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Identity"
+          }
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "frames",
+        "case_id",
+        "seed",
+        "provenance",
+        "identities",
+        "episode_start_s",
+        "episode_end_s",
+        "window_coverage",
+        "first_contact",
+        "forbidden_events",
+        "secondary_contacts",
+        "clearance",
+        "separation",
+        "recovery",
+        "stability",
+        "Q_contact",
+        "Q_clearance",
+        "Q_separation",
+        "Q_stable",
+        "Q_complete",
+        "termination_reason",
+        "numerical_health",
+        "artifacts"
+      ],
+      "additionalProperties": false,
+      "description": "Engineering result only. Four-Q aggregation, observed evidence, temporal coverage and forbidden-event effects require semantic validation."
+    }
+  }
+}

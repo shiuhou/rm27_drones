@@ -1,0 +1,60 @@
+{
+  "schema": "control.schema.json#/$defs/ControlAuthority",
+  "synthetic": true,
+  "record": {
+    "record_type": "ControlAuthority",
+    "metadata": {
+      "contract_id": "rm27.control",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-contract-run",
+      "record_id": "synthetic-ControlAuthority",
+      "source": "synthetic-contract-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-model",
+        "version": "fixture-1",
+        "sha256": "6bd8f29788b203c2c450e1f34c8de0bd01b55eb7f05d55d24672b070251e1d64"
+      }
+    },
+    "authority": {
+      "vehicle_id": "synthetic-vehicle",
+      "owner_id": "synthetic-adapter",
+      "lease_id": "synthetic-lease",
+      "generation": 2,
+      "allowed_layer": "DIRECT_CTBR",
+      "phase": "synthetic-control-phase",
+      "lease_expires_at_s": 11.0,
+      "handoff_state": "ACTIVE"
+    },
+    "handoff": {
+      "predecessor": {
+        "vehicle_id": "synthetic-vehicle",
+        "owner_id": "synthetic-adapter",
+        "lease_id": "synthetic-lease",
+        "generation": 2,
+        "allowed_layer": "DIRECT_CTBR",
+        "phase": "synthetic-control-phase",
+        "lease_expires_at_s": 11.0,
+        "handoff_state": "ACTIVE"
+      },
+      "successor": {
+        "vehicle_id": "synthetic-vehicle",
+        "owner_id": "synthetic-next-controller",
+        "lease_id": "synthetic-next-lease",
+        "generation": 3,
+        "allowed_layer": "DIRECT_CTBR",
+        "phase": "synthetic-control-phase",
+        "lease_expires_at_s": 12.0,
+        "handoff_state": "ACTIVE"
+      },
+      "effective_apply_time_s": 10.8,
+      "acknowledged_successor": true
+    }
+  }
+}

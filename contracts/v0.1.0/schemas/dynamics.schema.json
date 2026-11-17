@@ -1,0 +1,1345 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rm27.example/contracts/v0.1.0/dynamics.schema.json",
+  "title": "RM27 Dynamics contract draft",
+  "x-rm27": {
+    "version": "0.1.0-draft",
+    "status": "PROPOSED",
+    "document": ".agents/docs/contracts/DYNAMICS.md"
+  },
+  "$ref": "#/$defs/VehicleModelManifest",
+  "$defs": {
+    "ParameterProvenance": {
+      "type": "object",
+      "properties": {
+        "provenance": {
+          "enum": [
+            "MEASURED",
+            "CAD_DERIVED",
+            "SYSTEM_IDENTIFIED",
+            "ESTIMATED",
+            "ASSUMED",
+            "UNVERIFIED"
+          ]
+        },
+        "source_ref": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "source_sha256": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "configuration": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "identification_conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        },
+        "uncertainty": {
+          "anyOf": [
+            {
+              "$ref": "state.schema.json#/$defs/Uncertainty"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "verification_status": {
+          "enum": [
+            "VERIFIED",
+            "UNVERIFIED",
+            "UNKNOWN"
+          ]
+        },
+        "reason": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "provenance",
+        "source_ref",
+        "source_sha256",
+        "configuration",
+        "identification_conditions",
+        "uncertainty",
+        "verification_status",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "source_ref": {
+                    "type": "null"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "source_sha256": {
+                    "type": "null"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "uncertainty": {
+                    "type": "null"
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "properties": {
+              "reason": {
+                "$ref": "common.schema.json#/$defs/Id"
+              }
+            }
+          }
+        }
+      ],
+      "description": "Missing source/uncertainty stays null with reason. Reported measurement does not imply inspected raw evidence."
+    },
+    "Mass": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "units": {
+          "const": "kg"
+        },
+        "evidence": {
+          "$ref": "#/$defs/ParameterProvenance"
+        }
+      },
+      "required": [
+        "value",
+        "units",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "description": "Total configured vehicle mass including payload and battery.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "reason": {
+                    "$ref": "common.schema.json#/$defs/Id"
+                  },
+                  "verification_status": {
+                    "enum": [
+                      "UNVERIFIED",
+                      "UNKNOWN"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "CenterOfMass": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "description": "COM relative to the B origin."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "units": {
+          "const": "m"
+        },
+        "evidence": {
+          "$ref": "#/$defs/ParameterProvenance"
+        },
+        "frame_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "value",
+        "units",
+        "evidence",
+        "frame_id"
+      ],
+      "additionalProperties": false,
+      "description": "COM offset in registered B.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "reason": {
+                    "$ref": "common.schema.json#/$defs/Id"
+                  },
+                  "verification_status": {
+                    "enum": [
+                      "UNVERIFIED",
+                      "UNKNOWN"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "InertiaTensor": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "anyOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Matrix3"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "units": {
+          "const": "kg*m^2"
+        },
+        "evidence": {
+          "$ref": "#/$defs/ParameterProvenance"
+        },
+        "frame_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "value",
+        "units",
+        "evidence",
+        "frame_id"
+      ],
+      "additionalProperties": false,
+      "description": "Full symmetric positive-definite 3×3 inertia about COM, resolved in B; no diagonal-only encoding.",
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "value": {
+                "type": "null"
+              }
+            }
+          },
+          "then": {
+            "properties": {
+              "evidence": {
+                "properties": {
+                  "reason": {
+                    "$ref": "common.schema.json#/$defs/Id"
+                  },
+                  "verification_status": {
+                    "enum": [
+                      "UNVERIFIED",
+                      "UNKNOWN"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "ModelEquation": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "equation_ref": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "input_units": {
+          "type": "object",
+          "additionalProperties": {
+            "$ref": "common.schema.json#/$defs/Id"
+          },
+          "propertyNames": {
+            "minLength": 1
+          }
+        },
+        "output_units": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "units": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "evidence": {
+                "$ref": "#/$defs/ParameterProvenance"
+              }
+            },
+            "required": [
+              "value",
+              "units",
+              "evidence"
+            ],
+            "additionalProperties": false,
+            "description": "Named model coefficient.",
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "evidence": {
+                      "properties": {
+                        "reason": {
+                          "$ref": "common.schema.json#/$defs/Id"
+                        },
+                        "verification_status": {
+                          "enum": [
+                            "UNVERIFIED",
+                            "UNKNOWN"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "propertyNames": {
+            "minLength": 1
+          }
+        },
+        "evidence": {
+          "$ref": "#/$defs/ParameterProvenance"
+        }
+      },
+      "required": [
+        "identity",
+        "equation_ref",
+        "input_units",
+        "output_units",
+        "parameters",
+        "evidence"
+      ],
+      "additionalProperties": false,
+      "description": "Model description and coefficient provenance; no executable code is interpreted."
+    },
+    "MotorDynamics": {
+      "type": "object",
+      "properties": {
+        "model": {
+          "$ref": "#/$defs/ModelEquation"
+        },
+        "state_variable": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "time_constants_s": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "value": {
+                "anyOf": [
+                  {
+                    "type": "number",
+                    "exclusiveMinimum": 0
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              },
+              "units": {
+                "const": "s"
+              },
+              "evidence": {
+                "$ref": "#/$defs/ParameterProvenance"
+              }
+            },
+            "required": [
+              "value",
+              "units",
+              "evidence"
+            ],
+            "additionalProperties": false,
+            "description": "Motor response time constant.",
+            "allOf": [
+              {
+                "if": {
+                  "properties": {
+                    "value": {
+                      "type": "null"
+                    }
+                  }
+                },
+                "then": {
+                  "properties": {
+                    "evidence": {
+                      "properties": {
+                        "reason": {
+                          "$ref": "common.schema.json#/$defs/Id"
+                        },
+                        "verification_status": {
+                          "enum": [
+                            "UNVERIFIED",
+                            "UNKNOWN"
+                          ]
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "minItems": 1
+        },
+        "initial_activation": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "units": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "evidence": {
+              "$ref": "#/$defs/ParameterProvenance"
+            }
+          },
+          "required": [
+            "value",
+            "units",
+            "evidence"
+          ],
+          "additionalProperties": false,
+          "description": "Initial actuator state; units follow model state variable.",
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "value": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence": {
+                    "properties": {
+                      "reason": {
+                        "$ref": "common.schema.json#/$defs/Id"
+                      },
+                      "verification_status": {
+                        "enum": [
+                          "UNVERIFIED",
+                          "UNKNOWN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "sample_time_s": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "units": {
+              "const": "s"
+            },
+            "evidence": {
+              "$ref": "#/$defs/ParameterProvenance"
+            }
+          },
+          "required": [
+            "value",
+            "units",
+            "evidence"
+          ],
+          "additionalProperties": false,
+          "description": "Motor-model sample time.",
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "value": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence": {
+                    "properties": {
+                      "reason": {
+                        "$ref": "common.schema.json#/$defs/Id"
+                      },
+                      "verification_status": {
+                        "enum": [
+                          "UNVERIFIED",
+                          "UNKNOWN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "discretization": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "model",
+        "state_variable",
+        "initial_activation",
+        "sample_time_s",
+        "discretization"
+      ],
+      "additionalProperties": false,
+      "description": "Explicit update law and assumptions; time constants are conditional on the selected equation."
+    },
+    "ThrustModel": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "DIRECT_FORCE_PROXY",
+            "SHAFT_SPEED_MODEL",
+            "OTHER_REGISTERED_MODEL"
+          ]
+        },
+        "model": {
+          "$ref": "#/$defs/ModelEquation"
+        },
+        "output_units": {
+          "const": "N"
+        }
+      },
+      "required": [
+        "kind",
+        "model",
+        "output_units"
+      ],
+      "additionalProperties": false
+    },
+    "TorqueModel": {
+      "type": "object",
+      "properties": {
+        "reaction": {
+          "$ref": "#/$defs/ModelEquation"
+        },
+        "output_units": {
+          "const": "N*m"
+        },
+        "geometric_moment": {
+          "const": "R_CROSS_F"
+        }
+      },
+      "required": [
+        "reaction",
+        "output_units",
+        "geometric_moment"
+      ],
+      "additionalProperties": false,
+      "description": "Reaction torque and geometric r×f are distinct."
+    },
+    "RotorConfiguration": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "order": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "position_B_m": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/Vec3",
+                  "description": "Point of thrust application from B origin."
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "units": {
+              "const": "m"
+            },
+            "evidence": {
+              "$ref": "#/$defs/ParameterProvenance"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "value",
+            "units",
+            "evidence",
+            "frame_id"
+          ],
+          "additionalProperties": false,
+          "description": "Rotor lever origin is B; subtract COM for the moment arm.",
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "value": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence": {
+                    "properties": {
+                      "reason": {
+                        "$ref": "common.schema.json#/$defs/Id"
+                      },
+                      "verification_status": {
+                        "enum": [
+                          "UNVERIFIED",
+                          "UNKNOWN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "thrust_axis_B": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/Vec3",
+                  "description": "Unit direction; Rotor force direction resolved in B."
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "units": {
+              "const": "1"
+            },
+            "evidence": {
+              "$ref": "#/$defs/ParameterProvenance"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "value",
+            "units",
+            "evidence",
+            "frame_id"
+          ],
+          "additionalProperties": false,
+          "description": "Positive magnitude acts along this axis.",
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "value": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence": {
+                    "properties": {
+                      "reason": {
+                        "$ref": "common.schema.json#/$defs/Id"
+                      },
+                      "verification_status": {
+                        "enum": [
+                          "UNVERIFIED",
+                          "UNKNOWN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "spin_sign": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "enum": [
+                    -1,
+                    1
+                  ]
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "units": {
+              "const": "1"
+            },
+            "evidence": {
+              "$ref": "#/$defs/ParameterProvenance"
+            }
+          },
+          "required": [
+            "value",
+            "units",
+            "evidence"
+          ],
+          "additionalProperties": false,
+          "description": "Physical rotation sign about the declared positive shaft axis; null if unknown.",
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "value": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence": {
+                    "properties": {
+                      "reason": {
+                        "$ref": "common.schema.json#/$defs/Id"
+                      },
+                      "verification_status": {
+                        "enum": [
+                          "UNVERIFIED",
+                          "UNKNOWN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "spin_view": {
+          "type": "object",
+          "properties": {
+            "positive_axis_B": {
+              "$ref": "common.schema.json#/$defs/Vec3",
+              "description": "Unit direction; Positive shaft direction, in B."
+            },
+            "view": {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            "right_hand_positive": {
+              "const": true
+            }
+          },
+          "required": [
+            "positive_axis_B",
+            "view",
+            "right_hand_positive"
+          ],
+          "additionalProperties": false
+        },
+        "reaction_torque_model": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ModelEquation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        }
+      },
+      "required": [
+        "id",
+        "order",
+        "position_B_m",
+        "thrust_axis_B",
+        "spin_sign",
+        "reaction_torque_model"
+      ],
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "spin_sign": {
+                "properties": {
+                  "value": {
+                    "enum": [
+                      -1,
+                      1
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "spin_view"
+            ]
+          }
+        }
+      ]
+    },
+    "IntegrationProfile": {
+      "type": "object",
+      "properties": {
+        "identity": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "simulator": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "integrator": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "physical_timestep_s": {
+          "type": "number",
+          "description": "Physical timestep in seconds.",
+          "exclusiveMinimum": 0
+        },
+        "substeps": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "contact_solver_profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "identity",
+        "simulator",
+        "integrator",
+        "physical_timestep_s",
+        "substeps",
+        "contact_solver_profile"
+      ],
+      "additionalProperties": false
+    },
+    "VehicleModelManifest": {
+      "type": "object",
+      "properties": {
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.dynamics"
+            }
+          },
+          "required": [
+            "model"
+          ]
+        },
+        "frames": {
+          "$ref": "common.schema.json#/$defs/FrameConvention"
+        },
+        "mass_kg": {
+          "$ref": "#/$defs/Mass"
+        },
+        "com_B_m": {
+          "$ref": "#/$defs/CenterOfMass"
+        },
+        "inertia_COM_B_kg_m2": {
+          "$ref": "#/$defs/InertiaTensor"
+        },
+        "inertia_source_frame": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "inertia_transform_ref": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "rotors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/RotorConfiguration"
+          },
+          "minItems": 1
+        },
+        "motor_lag": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/MotorDynamics"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "thrust_model": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ThrustModel"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "torque_model": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TorqueModel"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "drag_model": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ModelEquation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "saturation": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ModelEquation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "voltage_model": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/ModelEquation"
+            },
+            {
+              "type": "object",
+              "properties": {
+                "availability": {
+                  "allOf": [
+                    {
+                      "$ref": "common.schema.json#/$defs/Availability"
+                    },
+                    {
+                      "properties": {
+                        "status": {
+                          "enum": [
+                            "MISSING",
+                            "UNKNOWN",
+                            "UNSUPPORTED",
+                            "INVALID"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                },
+                "value": {
+                  "type": "null"
+                }
+              },
+              "required": [
+                "availability",
+                "value"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "gravity_W_m_s2": {
+          "type": "object",
+          "properties": {
+            "value": {
+              "anyOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/Vec3",
+                  "description": "Gravity in W; down is positive z for local NED."
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "units": {
+              "const": "m/s^2"
+            },
+            "evidence": {
+              "$ref": "#/$defs/ParameterProvenance"
+            },
+            "frame_id": {
+              "$ref": "common.schema.json#/$defs/Id"
+            }
+          },
+          "required": [
+            "value",
+            "units",
+            "evidence",
+            "frame_id"
+          ],
+          "additionalProperties": false,
+          "description": "Gravity acceleration vector.",
+          "allOf": [
+            {
+              "if": {
+                "properties": {
+                  "value": {
+                    "type": "null"
+                  }
+                }
+              },
+              "then": {
+                "properties": {
+                  "evidence": {
+                    "properties": {
+                      "reason": {
+                        "$ref": "common.schema.json#/$defs/Id"
+                      },
+                      "verification_status": {
+                        "enum": [
+                          "UNVERIFIED",
+                          "UNKNOWN"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        },
+        "integration_profile": {
+          "$ref": "#/$defs/IntegrationProfile"
+        },
+        "applicability": {
+          "$ref": "common.schema.json#/$defs/TimeInterval"
+        },
+        "effective_overrides": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Identity"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "metadata",
+        "frames",
+        "mass_kg",
+        "com_B_m",
+        "inertia_COM_B_kg_m2",
+        "rotors",
+        "motor_lag",
+        "thrust_model",
+        "torque_model",
+        "drag_model",
+        "saturation",
+        "voltage_model",
+        "gravity_W_m_s2",
+        "integration_profile"
+      ],
+      "additionalProperties": false,
+      "dependentRequired": {
+        "inertia_source_frame": [
+          "inertia_transform_ref"
+        ],
+        "inertia_transform_ref": [
+          "inertia_source_frame"
+        ]
+      },
+      "description": "Model identity covers effective dynamics, integration settings and overrides. Manifest shape is not model completeness or hardware qualification."
+    }
+  }
+}

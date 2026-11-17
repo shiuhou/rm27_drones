@@ -1,0 +1,332 @@
+{
+  "schema": "feasibility.schema.json#/$defs/FeasibilityResult",
+  "synthetic": true,
+  "record": {
+    "record_type": "FeasibilityResult",
+    "metadata": {
+      "contract_id": "rm27.feasibility",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-screening-result",
+      "source": "fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {}
+    },
+    "request_id": "synthetic-request",
+    "candidate_id": "synthetic-candidate",
+    "parent_reference_id": null,
+    "versions": {
+      "physics_model": {
+        "id": "synthetic-physics-model",
+        "version": "fixture",
+        "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+      },
+      "geometry": {
+        "id": "synthetic-geometry",
+        "version": "fixture",
+        "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+      },
+      "scene": {
+        "id": "synthetic-scene",
+        "version": "fixture",
+        "sha256": "29c0064e991cc530cbd47699cbcc3dd861c2f588394d993c79df4e1d3f5e192b"
+      },
+      "scorer": {
+        "id": "synthetic-scorer",
+        "version": "fixture",
+        "sha256": "7777f885bffcb23c5c870a53704c14a012310e2f95372d39ea991b35afbf5b6b"
+      },
+      "scorer_profile": {
+        "id": "synthetic-scorer-profile",
+        "version": "fixture",
+        "sha256": "bb713b26bd707c8dc4e86238ceeebc2c88a81fc8adb4b86198e9d68b6ff1f94d"
+      },
+      "planner": {
+        "id": "synthetic-planner",
+        "version": "fixture",
+        "sha256": "73b09c6b834d26b8198318b7849d875355a263554b2fd77daa17406641cf620b"
+      },
+      "config_hash": "c7375948cc05269ff8643754615d605a6a54c7f5a0ef83c118a8f3adb7245e0a"
+    },
+    "required_stages": [
+      1,
+      2
+    ],
+    "evidence": [
+      {
+        "stage": 1,
+        "verdict": "PASS",
+        "state_source": {
+          "kind": "STATE_REFERENCE",
+          "source_ref": "synthetic-initial-state",
+          "reason": null
+        },
+        "state_lineage": [
+          {
+            "input_kind": "ESTIMATED",
+            "source": "synthetic-estimator",
+            "record_id": "synthetic-initial-state"
+          }
+        ],
+        "feedback_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "contact_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "scorer_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "model": {
+          "id": "synthetic-geometry",
+          "version": "fixture",
+          "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+        },
+        "evaluator": {
+          "id": "synthetic-stage-1-evaluator",
+          "version": "fixture",
+          "sha256": "7da67da8311379dabadcd6eed45de78acfd75d058f373307fbe88f873a1e6476"
+        },
+        "coverage": {
+          "complete": true
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": [
+          "synthetic-stage-1-trace"
+        ]
+      },
+      {
+        "stage": 2,
+        "verdict": "PASS",
+        "state_source": {
+          "kind": "STATE_REFERENCE",
+          "source_ref": "synthetic-initial-state",
+          "reason": null
+        },
+        "state_lineage": [
+          {
+            "input_kind": "ESTIMATED",
+            "source": "synthetic-estimator",
+            "record_id": "synthetic-initial-state"
+          }
+        ],
+        "feedback_source": {
+          "kind": "OPEN_LOOP",
+          "source_ref": "synthetic-command-sequence",
+          "reason": null
+        },
+        "contact_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "scorer_event_source": {
+          "kind": "N_A",
+          "source_ref": null,
+          "reason": "This method does not use this channel"
+        },
+        "model": {
+          "id": "synthetic-physics-model",
+          "version": "fixture",
+          "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+        },
+        "evaluator": {
+          "id": "synthetic-stage-2-evaluator",
+          "version": "fixture",
+          "sha256": "d9439004de4ea8602978cd290a0ca519890b48ae035c7fe394638bcd9394a3ea"
+        },
+        "coverage": {
+          "complete": true
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": [
+          "synthetic-stage-2-trace"
+        ]
+      },
+      {
+        "stage": 3,
+        "verdict": "NOT_RUN",
+        "state_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "state_lineage": [],
+        "feedback_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "contact_event_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "scorer_event_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "model": null,
+        "evaluator": null,
+        "coverage": {
+          "complete": false
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": []
+      },
+      {
+        "stage": 4,
+        "verdict": "NOT_RUN",
+        "state_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "state_lineage": [],
+        "feedback_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "contact_event_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "scorer_event_source": {
+          "kind": "NOT_RUN",
+          "source_ref": null,
+          "reason": "Stage omitted by the declared budget"
+        },
+        "model": null,
+        "evaluator": null,
+        "coverage": {
+          "complete": false
+        },
+        "assumptions": [],
+        "limitations": [],
+        "evidence_refs": []
+      }
+    ],
+    "dynamics_feasible": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Synthetic bounded model screen",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "constraints": [
+        "fixture-constraint"
+      ],
+      "prediction_model": {
+        "id": "synthetic-physics-model",
+        "version": "fixture",
+        "sha256": "da9ec67724a21e9ea1a95c5c7efd207d0a052823ebb3c3686d4e129ea53f0942"
+      },
+      "margins": [],
+      "saturation": false,
+      "limitations": []
+    },
+    "geometry_feasible": {
+      "assessment": {
+        "verdict": "PASS",
+        "reason": "Coarse geometry only",
+        "coverage": {
+          "complete": true
+        }
+      },
+      "method": "COARSE_SCREEN",
+      "geometry": {
+        "id": "synthetic-geometry",
+        "version": "fixture",
+        "sha256": "01e352615db33a67b3b96e03a2587559d2b9d707750fdd47635f16de5df5e7fe"
+      },
+      "forbidden_pair_policy": null,
+      "tolerance_m": null,
+      "conservative_bound_m": null,
+      "obstacle_coverage": {
+        "complete": false,
+        "reason": "No swept path was evaluated"
+      }
+    },
+    "clearance_valid": {
+      "assessment": {
+        "verdict": "NOT_RUN",
+        "reason": "No swept clearance evidence"
+      },
+      "metric": "separation-distance",
+      "minimum_m": null,
+      "margin_threshold_m": null,
+      "method": "NOT_RUN",
+      "window": null,
+      "limitations": [
+        "No swept path was evaluated"
+      ]
+    },
+    "contact_admissible": {
+      "assessment": {
+        "verdict": "NOT_RUN",
+        "reason": "No contact rollout"
+      },
+      "evidence_kind": "NOT_RUN",
+      "expected_first_pair": null,
+      "event_ref": null
+    },
+    "terminal_state": null,
+    "recovery_assessed": {
+      "assessment": {
+        "verdict": "NOT_RUN",
+        "reason": "No recovery rollout"
+      },
+      "predicted_recovery_outcome": null,
+      "horizon_s": null,
+      "required_stability_hold_s": null,
+      "stability_status": "NOT_RUN",
+      "execution_mode": "NOT_RUN",
+      "branch_ref": null,
+      "assumptions": []
+    },
+    "validation_status": "PASS",
+    "validation_level": {
+      "highest_completed_stage": 2,
+      "scope": "SCREENING_ONLY",
+      "coverage": {
+        "complete": true
+      }
+    },
+    "request_state_time_s": 0.0,
+    "acquisition_time_s": {
+      "synthetic-position": 0.0
+    },
+    "request_wall_time_s": 5.0,
+    "solve_wall_s": 0.02,
+    "deadline_s": 5.1,
+    "wall_clock_id": "synthetic-wall-clock",
+    "apply_time_s": null,
+    "expires_at_s": null,
+    "assumptions": [],
+    "limitations": [
+      {
+        "code": "SCOPED_SCREENING",
+        "detail": "Only coarse geometry and bounded dynamics were checked"
+      }
+    ],
+    "failure_reasons": []
+  }
+}

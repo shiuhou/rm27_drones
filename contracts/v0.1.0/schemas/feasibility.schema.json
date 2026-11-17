@@ -1,0 +1,1196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rm27.example/contracts/v0.1.0/feasibility.schema.json",
+  "title": "RM27 Feasibility Contract (proposed)",
+  "description": "Candidate-screening inputs and stage evidence. A screening pass is scoped, and native oracle assistance does not imply sensor autonomy.",
+  "x-rm27": {
+    "version": "0.1.0-draft",
+    "status": "PROPOSED",
+    "document": ".agents/docs/contracts/FEASIBILITY.md"
+  },
+  "oneOf": [
+    {
+      "$ref": "#/$defs/FeasibilityRequest"
+    },
+    {
+      "$ref": "#/$defs/FeasibilityResult"
+    }
+  ],
+  "$defs": {
+    "StageNumber": {
+      "enum": [
+        1,
+        2,
+        3,
+        4
+      ]
+    },
+    "Annotation": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "detail": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "stage": {
+          "$ref": "#/$defs/StageNumber"
+        },
+        "unit": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "range": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "type": "number"
+            },
+            {
+              "type": "number"
+            }
+          ],
+          "minItems": 2,
+          "maxItems": 2
+        },
+        "uncertainty_source": {
+          "$ref": "common.schema.json#/$defs/Id"
+        }
+      },
+      "required": [
+        "code",
+        "detail"
+      ],
+      "additionalProperties": false
+    },
+    "Versions": {
+      "type": "object",
+      "properties": {
+        "physics_model": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "geometry": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "scene": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "scorer": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "scorer_profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "planner": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "config_hash": {
+          "$ref": "common.schema.json#/$defs/Sha256"
+        },
+        "controller": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "allocator": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "simulator": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "integration_profile": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        }
+      },
+      "required": [
+        "physics_model",
+        "geometry",
+        "scene",
+        "scorer",
+        "scorer_profile",
+        "planner",
+        "config_hash"
+      ],
+      "additionalProperties": false
+    },
+    "InitialFullState": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "state.schema.json#/$defs/GroundTruthState"
+            },
+            {
+              "$ref": "state.schema.json#/$defs/EstimatedState"
+            }
+          ]
+        },
+        "state_completeness": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "enum": [
+              "AVAILABLE",
+              "ASSUMED",
+              "MISSING",
+              "UNKNOWN",
+              "INVALID",
+              "UNSUPPORTED"
+            ]
+          }
+        },
+        "replay_snapshot": {
+          "oneOf": [
+            {
+              "type": "object",
+              "properties": {
+                "snapshot": {
+                  "$ref": "common.schema.json#/$defs/Identity"
+                },
+                "layout_sha256": {
+                  "$ref": "common.schema.json#/$defs/Sha256"
+                },
+                "integration_time_s": {
+                  "type": "number",
+                  "description": "Seconds in the declared clock."
+                },
+                "simulator": {
+                  "$ref": "common.schema.json#/$defs/Identity"
+                }
+              },
+              "required": [
+                "snapshot",
+                "layout_sha256",
+                "integration_time_s",
+                "simulator"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "state_completeness"
+      ],
+      "additionalProperties": false,
+      "description": "Immutable State record, including explicit missing channels; a replay claim needs the referenced complete simulator snapshot and layout."
+    },
+    "CandidateTrajectory": {
+      "type": "object",
+      "properties": {
+        "candidate_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "generation": {
+          "$ref": "common.schema.json#/$defs/Identity"
+        },
+        "valid_interval": {
+          "$ref": "common.schema.json#/$defs/TimeInterval"
+        },
+        "interpolation": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "initial_conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        },
+        "terminal_conditions": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        },
+        "reference": {
+          "$ref": "control.schema.json#/$defs/ReferenceTrajectory"
+        },
+        "commands": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "control.schema.json#/$defs/DirectCTBR"
+              },
+              {
+                "$ref": "control.schema.json#/$defs/MotorAllocationRequest"
+              }
+            ]
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "candidate_id",
+        "generation",
+        "valid_interval",
+        "interpolation",
+        "initial_conditions",
+        "terminal_conditions"
+      ],
+      "additionalProperties": false,
+      "oneOf": [
+        {
+          "required": [
+            "reference"
+          ]
+        },
+        {
+          "required": [
+            "commands"
+          ]
+        }
+      ]
+    },
+    "FeasibilityRequest": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "FeasibilityRequest"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.feasibility"
+            }
+          }
+        },
+        "request_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "parent_reference_id": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "initial_full_state": {
+          "$ref": "#/$defs/InitialFullState"
+        },
+        "candidate": {
+          "$ref": "#/$defs/CandidateTrajectory"
+        },
+        "versions": {
+          "$ref": "#/$defs/Versions"
+        },
+        "required_stages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StageNumber"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "request_wall_time_s": {
+          "type": "number",
+          "description": "Seconds in the declared clock."
+        },
+        "wall_clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "deadline_s": {
+          "type": "number",
+          "description": "Seconds in the declared clock."
+        },
+        "screening_budget_s": {
+          "type": "number",
+          "description": "Duration in seconds.",
+          "minimum": 0
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "request_id",
+        "parent_reference_id",
+        "initial_full_state",
+        "candidate",
+        "versions",
+        "required_stages",
+        "request_wall_time_s",
+        "wall_clock_id",
+        "deadline_s",
+        "screening_budget_s"
+      ],
+      "additionalProperties": false
+    },
+    "EvidenceSource": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "enum": [
+            "STATE_REFERENCE",
+            "OPEN_LOOP",
+            "SENSOR",
+            "ESTIMATED",
+            "PREDICTED",
+            "GROUND_TRUTH",
+            "NATIVE_ORACLE",
+            "DETECTOR",
+            "INJECTED",
+            "NATIVE_SCORER",
+            "N_A",
+            "UNKNOWN",
+            "NOT_RUN"
+          ]
+        },
+        "source_ref": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reason": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kind",
+        "source_ref",
+        "reason"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "kind": {
+            "enum": [
+              "N_A",
+              "UNKNOWN",
+              "NOT_RUN"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "source_ref": {
+            "type": "null"
+          },
+          "reason": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "source_ref": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        }
+      }
+    },
+    "StageEvidence": {
+      "type": "object",
+      "properties": {
+        "stage": {
+          "$ref": "#/$defs/StageNumber"
+        },
+        "verdict": {
+          "$ref": "common.schema.json#/$defs/Verdict"
+        },
+        "state_source": {
+          "$ref": "#/$defs/EvidenceSource"
+        },
+        "state_lineage": {
+          "$ref": "common.schema.json#/$defs/Lineage"
+        },
+        "feedback_source": {
+          "$ref": "#/$defs/EvidenceSource"
+        },
+        "contact_event_source": {
+          "$ref": "#/$defs/EvidenceSource"
+        },
+        "scorer_event_source": {
+          "$ref": "#/$defs/EvidenceSource"
+        },
+        "model": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "evaluator": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "coverage": {
+          "$ref": "common.schema.json#/$defs/Coverage"
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        },
+        "evidence_refs": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        }
+      },
+      "required": [
+        "stage",
+        "verdict",
+        "state_source",
+        "state_lineage",
+        "feedback_source",
+        "contact_event_source",
+        "scorer_event_source",
+        "model",
+        "evaluator",
+        "coverage",
+        "assumptions",
+        "limitations",
+        "evidence_refs"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "verdict": {
+            "const": "PASS"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "state_source": {
+            "properties": {
+              "kind": {
+                "not": {
+                  "enum": [
+                    "UNKNOWN",
+                    "NOT_RUN",
+                    "N_A"
+                  ]
+                }
+              }
+            }
+          },
+          "state_lineage": {
+            "minItems": 1
+          },
+          "feedback_source": {
+            "properties": {
+              "kind": {
+                "not": {
+                  "enum": [
+                    "UNKNOWN",
+                    "NOT_RUN"
+                  ]
+                }
+              }
+            }
+          },
+          "contact_event_source": {
+            "properties": {
+              "kind": {
+                "not": {
+                  "enum": [
+                    "UNKNOWN",
+                    "NOT_RUN"
+                  ]
+                }
+              }
+            }
+          },
+          "scorer_event_source": {
+            "properties": {
+              "kind": {
+                "not": {
+                  "enum": [
+                    "UNKNOWN",
+                    "NOT_RUN"
+                  ]
+                }
+              }
+            }
+          },
+          "model": {
+            "$ref": "common.schema.json#/$defs/Identity"
+          },
+          "evaluator": {
+            "$ref": "common.schema.json#/$defs/Identity"
+          },
+          "coverage": {
+            "properties": {
+              "complete": {
+                "const": true
+              }
+            }
+          },
+          "evidence_refs": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    "DynamicsFeasibilityResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "constraints": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        },
+        "prediction_model": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "margins": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "constraint": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "value": {
+                "type": "number"
+              },
+              "unit": {
+                "$ref": "common.schema.json#/$defs/Id"
+              }
+            },
+            "required": [
+              "constraint",
+              "value",
+              "unit"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "saturation": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        }
+      },
+      "required": [
+        "assessment",
+        "constraints",
+        "prediction_model",
+        "margins",
+        "saturation",
+        "limitations"
+      ],
+      "additionalProperties": false
+    },
+    "GeometryFeasibilityResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "method": {
+          "enum": [
+            "COARSE_SCREEN",
+            "SAMPLED_ONLY",
+            "CONSERVATIVE_SWEEP",
+            "NATIVE_CONTACT",
+            "NOT_RUN"
+          ]
+        },
+        "geometry": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "forbidden_pair_policy": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tolerance_m": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "conservative_bound_m": {
+          "oneOf": [
+            {
+              "type": "number",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "obstacle_coverage": {
+          "$ref": "common.schema.json#/$defs/Coverage"
+        }
+      },
+      "required": [
+        "assessment",
+        "method",
+        "geometry",
+        "forbidden_pair_policy",
+        "tolerance_m",
+        "conservative_bound_m",
+        "obstacle_coverage"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "method": {
+            "const": "CONSERVATIVE_SWEEP"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "conservative_bound_m": {
+            "type": "number",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "ClearanceResult": {
+      "$ref": "evaluation.schema.json#/$defs/ClearanceResult"
+    },
+    "ContactAdmissibilityResult": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "evidence_kind": {
+          "enum": [
+            "PREDICTED",
+            "NATIVE_EVENT",
+            "NOT_RUN",
+            "UNKNOWN"
+          ]
+        },
+        "expected_first_pair": {
+          "oneOf": [
+            {
+              "type": "array",
+              "items": {
+                "$ref": "common.schema.json#/$defs/Id"
+              },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "event_ref": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "assessment",
+        "evidence_kind",
+        "expected_first_pair",
+        "event_ref"
+      ],
+      "additionalProperties": false
+    },
+    "TerminalState": {
+      "type": "object",
+      "properties": {
+        "state": {
+          "oneOf": [
+            {
+              "$ref": "state.schema.json#/$defs/GroundTruthState"
+            },
+            {
+              "$ref": "state.schema.json#/$defs/EstimatedState"
+            }
+          ]
+        },
+        "role": {
+          "enum": [
+            "PRE_CONTACT_PREDICTION",
+            "NATIVE_PRE_CONTACT",
+            "NATIVE_POST_CONTACT",
+            "RECOVERY_TERMINAL"
+          ]
+        },
+        "contact_interval": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/TimeInterval"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "snapshot": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Identity"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "actuator_memory_ref": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "state",
+        "role",
+        "contact_interval",
+        "snapshot",
+        "actuator_memory_ref"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "role": {
+            "const": "NATIVE_POST_CONTACT"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "contact_interval": {
+            "$ref": "common.schema.json#/$defs/TimeInterval"
+          },
+          "actuator_memory_ref": {
+            "$ref": "common.schema.json#/$defs/Id"
+          }
+        }
+      }
+    },
+    "RecoveryAssessment": {
+      "type": "object",
+      "properties": {
+        "assessment": {
+          "$ref": "common.schema.json#/$defs/VerdictEvidence"
+        },
+        "predicted_recovery_outcome": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Verdict"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "horizon_s": {
+          "oneOf": [
+            {
+              "type": "number",
+              "description": "Duration in seconds.",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "required_stability_hold_s": {
+          "oneOf": [
+            {
+              "type": "number",
+              "description": "Duration in seconds.",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stability_status": {
+          "$ref": "common.schema.json#/$defs/Verdict"
+        },
+        "execution_mode": {
+          "enum": [
+            "OPTIMISTIC_PREDICTION",
+            "SENSOR_DRIVEN",
+            "OTHER_DECLARED",
+            "UNKNOWN",
+            "NOT_RUN"
+          ]
+        },
+        "branch_ref": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        }
+      },
+      "required": [
+        "assessment",
+        "predicted_recovery_outcome",
+        "horizon_s",
+        "required_stability_hold_s",
+        "stability_status",
+        "execution_mode",
+        "branch_ref",
+        "assumptions"
+      ],
+      "additionalProperties": false,
+      "if": {
+        "properties": {
+          "assessment": {
+            "properties": {
+              "verdict": {
+                "const": "PASS"
+              }
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "predicted_recovery_outcome": {
+            "$ref": "common.schema.json#/$defs/Verdict"
+          },
+          "horizon_s": {
+            "type": "number",
+            "description": "Duration in seconds.",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "ValidationLevel": {
+      "type": "object",
+      "properties": {
+        "highest_completed_stage": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/StageNumber"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "scope": {
+          "enum": [
+            "SCREENING_ONLY",
+            "FULL_PHYSICAL"
+          ]
+        },
+        "coverage": {
+          "$ref": "common.schema.json#/$defs/Coverage"
+        }
+      },
+      "required": [
+        "highest_completed_stage",
+        "scope",
+        "coverage"
+      ],
+      "additionalProperties": false
+    },
+    "FeasibilityResult": {
+      "type": "object",
+      "properties": {
+        "record_type": {
+          "const": "FeasibilityResult"
+        },
+        "metadata": {
+          "$ref": "common.schema.json#/$defs/RecordMetadata",
+          "properties": {
+            "contract_id": {
+              "const": "rm27.feasibility"
+            }
+          }
+        },
+        "request_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "candidate_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "parent_reference_id": {
+          "oneOf": [
+            {
+              "$ref": "common.schema.json#/$defs/Id"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "versions": {
+          "$ref": "#/$defs/Versions"
+        },
+        "required_stages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/StageNumber"
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "evidence": {
+          "type": "array",
+          "prefixItems": [
+            {
+              "$ref": "#/$defs/StageEvidence",
+              "properties": {
+                "stage": {
+                  "const": 1
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/StageEvidence",
+              "properties": {
+                "stage": {
+                  "const": 2
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/StageEvidence",
+              "properties": {
+                "stage": {
+                  "const": 3
+                }
+              }
+            },
+            {
+              "$ref": "#/$defs/StageEvidence",
+              "properties": {
+                "stage": {
+                  "const": 4
+                }
+              }
+            }
+          ],
+          "minItems": 4,
+          "items": false
+        },
+        "dynamics_feasible": {
+          "$ref": "#/$defs/DynamicsFeasibilityResult"
+        },
+        "geometry_feasible": {
+          "$ref": "#/$defs/GeometryFeasibilityResult"
+        },
+        "clearance_valid": {
+          "$ref": "#/$defs/ClearanceResult"
+        },
+        "contact_admissible": {
+          "$ref": "#/$defs/ContactAdmissibilityResult"
+        },
+        "terminal_state": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/TerminalState"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "recovery_assessed": {
+          "$ref": "#/$defs/RecoveryAssessment"
+        },
+        "validation_status": {
+          "$ref": "common.schema.json#/$defs/Verdict"
+        },
+        "validation_level": {
+          "$ref": "#/$defs/ValidationLevel"
+        },
+        "request_state_time_s": {
+          "type": "number",
+          "description": "Seconds in the declared clock."
+        },
+        "acquisition_time_s": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "description": "Seconds in the declared clock."
+          }
+        },
+        "request_wall_time_s": {
+          "type": "number",
+          "description": "Seconds in the declared clock."
+        },
+        "solve_wall_s": {
+          "type": "number",
+          "description": "Duration in seconds.",
+          "minimum": 0
+        },
+        "deadline_s": {
+          "type": "number",
+          "description": "Seconds in the declared clock."
+        },
+        "wall_clock_id": {
+          "$ref": "common.schema.json#/$defs/Id"
+        },
+        "apply_time_s": {
+          "oneOf": [
+            {
+              "type": "number",
+              "description": "Seconds in the declared clock."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expires_at_s": {
+          "oneOf": [
+            {
+              "type": "number",
+              "description": "Seconds in the declared clock."
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "assumptions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        },
+        "limitations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        },
+        "failure_reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Annotation"
+          }
+        }
+      },
+      "required": [
+        "record_type",
+        "metadata",
+        "request_id",
+        "candidate_id",
+        "parent_reference_id",
+        "versions",
+        "required_stages",
+        "evidence",
+        "dynamics_feasible",
+        "geometry_feasible",
+        "clearance_valid",
+        "contact_admissible",
+        "terminal_state",
+        "recovery_assessed",
+        "validation_status",
+        "validation_level",
+        "request_state_time_s",
+        "acquisition_time_s",
+        "request_wall_time_s",
+        "solve_wall_s",
+        "deadline_s",
+        "wall_clock_id",
+        "apply_time_s",
+        "expires_at_s",
+        "assumptions",
+        "limitations",
+        "failure_reasons"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

@@ -1,0 +1,347 @@
+{
+  "schema": "dynamics.schema.json#/$defs/VehicleModelManifest",
+  "synthetic": true,
+  "record": {
+    "metadata": {
+      "contract_id": "rm27.dynamics",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-run",
+      "record_id": "synthetic-vehicle-model",
+      "source": "synthetic-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "synthetic-input"
+        }
+      ],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-vehicle-model",
+        "version": "fixture",
+        "sha256": "b9c24a84bb0ddc68a1db9a4ca22bb0182bbf84761b20a62c3167aeb2b3ac35c7"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "mass_kg": {
+      "value": 0.31,
+      "units": "kg",
+      "evidence": {
+        "provenance": "ASSUMED",
+        "source_ref": "synthetic-model-fixture",
+        "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+        "configuration": "synthetic-fixture-only",
+        "identification_conditions": [
+          "Artificial examples; not ASM2 or Ver2 measurements"
+        ],
+        "uncertainty": null,
+        "verification_status": "UNVERIFIED",
+        "reason": "Synthetic assumption with no measured uncertainty"
+      }
+    },
+    "com_B_m": {
+      "value": [
+        0.01,
+        0,
+        0
+      ],
+      "units": "m",
+      "evidence": {
+        "provenance": "ASSUMED",
+        "source_ref": "synthetic-model-fixture",
+        "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+        "configuration": "synthetic-fixture-only",
+        "identification_conditions": [
+          "Artificial examples; not ASM2 or Ver2 measurements"
+        ],
+        "uncertainty": null,
+        "verification_status": "UNVERIFIED",
+        "reason": "Synthetic assumption with no measured uncertainty"
+      },
+      "frame_id": "synthetic-FRD-body"
+    },
+    "inertia_COM_B_kg_m2": {
+      "value": [
+        [
+          0.004,
+          0.005,
+          0.007
+        ]
+      ],
+      "units": "kg*m^2",
+      "evidence": {
+        "provenance": "ASSUMED",
+        "source_ref": "synthetic-model-fixture",
+        "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+        "configuration": "synthetic-fixture-only",
+        "identification_conditions": [
+          "Artificial examples; not ASM2 or Ver2 measurements"
+        ],
+        "uncertainty": null,
+        "verification_status": "UNVERIFIED",
+        "reason": "Synthetic assumption with no measured uncertainty"
+      },
+      "frame_id": "synthetic-FRD-body"
+    },
+    "rotors": [
+      {
+        "id": "synthetic-rotor-left",
+        "order": 0,
+        "position_B_m": {
+          "value": [
+            0,
+            -0.11,
+            0
+          ],
+          "units": "m",
+          "evidence": {
+            "provenance": "ASSUMED",
+            "source_ref": "synthetic-model-fixture",
+            "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+            "configuration": "synthetic-fixture-only",
+            "identification_conditions": [
+              "Artificial examples; not ASM2 or Ver2 measurements"
+            ],
+            "uncertainty": null,
+            "verification_status": "UNVERIFIED",
+            "reason": "Synthetic assumption with no measured uncertainty"
+          },
+          "frame_id": "synthetic-FRD-body"
+        },
+        "thrust_axis_B": {
+          "value": [
+            0,
+            0,
+            -1
+          ],
+          "units": "1",
+          "evidence": {
+            "provenance": "ASSUMED",
+            "source_ref": "synthetic-model-fixture",
+            "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+            "configuration": "synthetic-fixture-only",
+            "identification_conditions": [
+              "Artificial examples; not ASM2 or Ver2 measurements"
+            ],
+            "uncertainty": null,
+            "verification_status": "UNVERIFIED",
+            "reason": "Synthetic assumption with no measured uncertainty"
+          },
+          "frame_id": "synthetic-FRD-body"
+        },
+        "spin_sign": {
+          "value": null,
+          "units": "1",
+          "evidence": {
+            "provenance": "UNVERIFIED",
+            "source_ref": "synthetic-model-fixture",
+            "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+            "configuration": "synthetic-fixture-only",
+            "identification_conditions": [
+              "Artificial examples; not ASM2 or Ver2 measurements"
+            ],
+            "uncertainty": null,
+            "verification_status": "UNVERIFIED",
+            "reason": "Shaft rotation direction intentionally unavailable"
+          }
+        },
+        "reaction_torque_model": {
+          "availability": {
+            "status": "UNKNOWN",
+            "reason": "No measured reaction model in this synthetic fixture"
+          },
+          "value": null
+        }
+      },
+      {
+        "id": "synthetic-rotor-right",
+        "order": 1,
+        "position_B_m": {
+          "value": [
+            0,
+            0.11,
+            0
+          ],
+          "units": "m",
+          "evidence": {
+            "provenance": "ASSUMED",
+            "source_ref": "synthetic-model-fixture",
+            "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+            "configuration": "synthetic-fixture-only",
+            "identification_conditions": [
+              "Artificial examples; not ASM2 or Ver2 measurements"
+            ],
+            "uncertainty": null,
+            "verification_status": "UNVERIFIED",
+            "reason": "Synthetic assumption with no measured uncertainty"
+          },
+          "frame_id": "synthetic-FRD-body"
+        },
+        "thrust_axis_B": {
+          "value": [
+            0,
+            0,
+            -1
+          ],
+          "units": "1",
+          "evidence": {
+            "provenance": "ASSUMED",
+            "source_ref": "synthetic-model-fixture",
+            "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+            "configuration": "synthetic-fixture-only",
+            "identification_conditions": [
+              "Artificial examples; not ASM2 or Ver2 measurements"
+            ],
+            "uncertainty": null,
+            "verification_status": "UNVERIFIED",
+            "reason": "Synthetic assumption with no measured uncertainty"
+          },
+          "frame_id": "synthetic-FRD-body"
+        },
+        "spin_sign": {
+          "value": null,
+          "units": "1",
+          "evidence": {
+            "provenance": "UNVERIFIED",
+            "source_ref": "synthetic-model-fixture",
+            "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+            "configuration": "synthetic-fixture-only",
+            "identification_conditions": [
+              "Artificial examples; not ASM2 or Ver2 measurements"
+            ],
+            "uncertainty": null,
+            "verification_status": "UNVERIFIED",
+            "reason": "Shaft rotation direction intentionally unavailable"
+          }
+        },
+        "reaction_torque_model": {
+          "availability": {
+            "status": "UNKNOWN",
+            "reason": "No measured reaction model in this synthetic fixture"
+          },
+          "value": null
+        }
+      }
+    ],
+    "motor_lag": {
+      "availability": {
+        "status": "UNKNOWN",
+        "reason": "No identified actuator response"
+      },
+      "value": null
+    },
+    "thrust_model": {
+      "kind": "DIRECT_FORCE_PROXY",
+      "model": {
+        "identity": {
+          "id": "synthetic-direct-force-description",
+          "version": "fixture",
+          "sha256": "cf151a01584aac12a33f90f9130dc245cb306d53341113d3617293065968c4e6"
+        },
+        "equation_ref": "synthetic:toy:force-proxy-meaning",
+        "input_units": {
+          "activation": "N"
+        },
+        "output_units": "N",
+        "parameters": {},
+        "evidence": {
+          "provenance": "ASSUMED",
+          "source_ref": "synthetic-model-fixture",
+          "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+          "configuration": "synthetic-fixture-only",
+          "identification_conditions": [
+            "Artificial examples; not ASM2 or Ver2 measurements"
+          ],
+          "uncertainty": null,
+          "verification_status": "UNVERIFIED",
+          "reason": "Synthetic assumption with no measured uncertainty"
+        }
+      },
+      "output_units": "N"
+    },
+    "torque_model": {
+      "availability": {
+        "status": "UNKNOWN",
+        "reason": "Reaction model unknown"
+      },
+      "value": null
+    },
+    "drag_model": {
+      "availability": {
+        "status": "UNKNOWN",
+        "reason": "Model omission"
+      },
+      "value": null
+    },
+    "saturation": {
+      "availability": {
+        "status": "UNKNOWN",
+        "reason": "No characterized force bounds"
+      },
+      "value": null
+    },
+    "voltage_model": {
+      "availability": {
+        "status": "UNKNOWN",
+        "reason": "No characterized voltage dependence"
+      },
+      "value": null
+    },
+    "gravity_W_m_s2": {
+      "value": [
+        0,
+        0,
+        9.8
+      ],
+      "units": "m/s^2",
+      "evidence": {
+        "provenance": "ASSUMED",
+        "source_ref": "synthetic-model-fixture",
+        "source_sha256": "30e1ea82a0960caa0411bca4d6a0240e263f1bd40e64830634b215253bf1cc8a",
+        "configuration": "synthetic-fixture-only",
+        "identification_conditions": [
+          "Artificial examples; not ASM2 or Ver2 measurements"
+        ],
+        "uncertainty": null,
+        "verification_status": "UNVERIFIED",
+        "reason": "Synthetic assumption with no measured uncertainty"
+      },
+      "frame_id": "synthetic-local-NED"
+    },
+    "integration_profile": {
+      "identity": {
+        "id": "synthetic-toy-integration-settings",
+        "version": "fixture",
+        "sha256": "5a7019a1aa57958ab7dfb6bca0a14f694293151abc70926f3f6294b966c24d42"
+      },
+      "simulator": {
+        "id": "synthetic-toy-sim",
+        "version": "fixture",
+        "sha256": "2a220e6efac5648dcf83c9b295145cdbbee809cf00d723ade328ee2f87ab6a66"
+      },
+      "integrator": "synthetic-integrator-label",
+      "physical_timestep_s": 0.02,
+      "substeps": 1,
+      "contact_solver_profile": {
+        "id": "synthetic-toy-contact-solver",
+        "version": "fixture",
+        "sha256": "956daeb4692db652a09c8c57214cc6ba698dbc63cba28d84c3e28189f0905ee4"
+      }
+    }
+  },
+  "expect": {
+    "keyword": "minItems",
+    "path": [
+      "inertia_COM_B_kg_m2",
+      "value"
+    ]
+  }
+}

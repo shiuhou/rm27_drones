@@ -1,0 +1,131 @@
+{
+  "schema": "control.schema.json#/$defs/ReferenceTrajectory",
+  "synthetic": true,
+  "record": {
+    "record_type": "ReferenceTrajectory",
+    "metadata": {
+      "contract_id": "rm27.control",
+      "contract_version": "0.1.0-draft",
+      "run_id": "synthetic-contract-run",
+      "record_id": "synthetic-ReferenceTrajectory",
+      "source": "synthetic-contract-fixture",
+      "sequence": 0,
+      "input_kind": "SYNTHETIC",
+      "lineage": [],
+      "clock_id": "synthetic-physics-clock",
+      "frame_id": "synthetic-local-NED",
+      "reset_epoch": 0,
+      "availability": {},
+      "model": {
+        "id": "synthetic-model",
+        "version": "fixture-1",
+        "sha256": "6bd8f29788b203c2c450e1f34c8de0bd01b55eb7f05d55d24672b070251e1d64"
+      }
+    },
+    "frames": {
+      "world": "NED",
+      "body": "FRD",
+      "quaternion": "HAMILTON_WXYZ"
+    },
+    "authority": {
+      "vehicle_id": "synthetic-vehicle",
+      "owner_id": "synthetic-adapter",
+      "lease_id": "synthetic-lease",
+      "generation": 2,
+      "allowed_layer": "REFERENCE_TRAJECTORY",
+      "phase": "synthetic-control-phase",
+      "lease_expires_at_s": 11.0,
+      "handoff_state": "ACTIVE"
+    },
+    "timing": {
+      "generated_time_s": 10.0,
+      "apply_time_s": 10.2,
+      "valid_from_s": 10.1,
+      "expires_at_s": 10.6,
+      "source_state_time_s": 9.9,
+      "measurement_age_s": 0.3,
+      "sample_period_s": 0.4,
+      "hold_policy": {
+        "method": "ZERO_ORDER_HOLD",
+        "late_sample_behavior": "REJECT_IF_EXPIRED",
+        "missing_sample_behavior": "FOLLOW_DECLARED_FALLBACK_PROFILE"
+      }
+    },
+    "source_state_id": "synthetic-state-record",
+    "target_id": "synthetic-target",
+    "reference_id": "synthetic-reference",
+    "parent_id": null,
+    "tracker": {
+      "id": "synthetic-tracker",
+      "version": "fixture-1",
+      "sha256": "44c63ae409112535db4720568afc8e2e24af3c3038b77939ce8d1c1ab7597634"
+    },
+    "knots": [
+      {
+        "time_s": 10.2,
+        "position_ref_W_m": [
+          1,
+          0,
+          -1
+        ],
+        "velocity_ref_W_m_s": [
+          0,
+          0,
+          0
+        ],
+        "acceleration_ref_W_m_s2": [
+          0,
+          0,
+          0
+        ],
+        "q_ref_WB_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "body_rate_ref_B_rad_s": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "time_s": 10.5,
+        "position_ref_W_m": [
+          1,
+          0,
+          -1
+        ],
+        "velocity_ref_W_m_s": [
+          0,
+          0,
+          0
+        ],
+        "acceleration_ref_W_m_s2": [
+          0,
+          0,
+          0
+        ],
+        "q_ref_WB_wxyz": [
+          1,
+          0,
+          0,
+          0
+        ],
+        "body_rate_ref_B_rad_s": [
+          0,
+          0,
+          0
+        ]
+      }
+    ],
+    "interpolation": {
+      "method": "CONSTANT",
+      "authoritative_fields": [
+        "position_ref_W_m",
+        "q_ref_WB_wxyz"
+      ]
+    }
+  }
+}
