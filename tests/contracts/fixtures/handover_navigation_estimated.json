@@ -1,0 +1,1738 @@
+{
+  "version": "1",
+  "purpose": "RECORDED_SIM_ESTIMATED_NAVIGATION",
+  "source": {
+    "source_run_id": "asm2-moving-handover-02",
+    "source_family_id": "asm2-moving-handover-01-02-common-prefix",
+    "source_path": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+    "source_sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2",
+    "summary_path": ".agents/runs/g0_handover/navigation/moving_handover_02/summary.json",
+    "summary_sha256": "3f62630066d6deca2c7a638646a09608e343b481bcba4d26cd1f1610631aea4d"
+  },
+  "registration": {
+    "identity": {
+      "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+      "model": {
+        "id": "ASM2",
+        "version": "1.0.0",
+        "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+      },
+      "geometry": {
+        "id": "ASM2-local-native-3522",
+        "version": "0.1.0",
+        "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+      },
+      "plant_profile": {
+        "id": "ASM2-plant-metadata",
+        "version": "1.0.0",
+        "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+      },
+      "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17"
+    },
+    "frame": {
+      "registration_id": "g0-moving02-scene-to-local-ned",
+      "source_id": "asm2-moving02-local-navigation-Zup-COM",
+      "destination_id": "g0-moving02-SIMULATION_LOCAL_NED",
+      "source_clock_id": "asm2-moving02-native-nearest-ns",
+      "epoch": 0,
+      "source_valid_s": [
+        0.0,
+        2.6
+      ],
+      "rotation_ned_native": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          -1,
+          0
+        ],
+        [
+          0,
+          0,
+          -1
+        ]
+      ],
+      "translation_ned_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "source_body": "FLU",
+      "body_origin": "COM"
+    },
+    "clock": {
+      "registration_id": "g0-moving02-native-clock-identity",
+      "source_id": "asm2-moving02-native-nearest-ns",
+      "destination_id": "g0-moving02-offline-nearest-ns",
+      "epoch": 0,
+      "source_valid_s": [
+        0.0,
+        2.6
+      ],
+      "scale": 1.0,
+      "offset_s": 0.0,
+      "uncertainty_s": 0.0
+    },
+    "epoch": 0,
+    "max_age_s": 0.1,
+    "mode": "RECORDED_SIM_ESTIMATED",
+    "targets": {},
+    "recorded_simulation": {
+      "registration": {
+        "id": "g0-moving-handover-02-recorded-simulation",
+        "version": "1",
+        "sha256": "3f62630066d6deca2c7a638646a09608e343b481bcba4d26cd1f1610631aea4d"
+      },
+      "source_run_id": "asm2-moving-handover-02",
+      "source_artifact": {
+        "id": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+        "version": "original-recording",
+        "sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2"
+      },
+      "roles": {
+        "estimator": {
+          "source": "rm27_non_rl.SensorOnlyEstimator",
+          "identity": {
+            "id": "rm27_non_rl.asm2_sensor_estimator",
+            "version": "original-recording",
+            "sha256": "1e6b497513226791476db35382dc2825f06d21d853ec83801e596235d231a1d8"
+          }
+        },
+        "sensor_generation": {
+          "source": "TRUTH_GENERATED_SYNTHETIC",
+          "identity": {
+            "id": "rm27_sim.SensorRecorder",
+            "version": "original-recording",
+            "sha256": "e2a730cc08821ceb1c99edc4e6f0ed9f133f9c2264012f25859fd20e1e66c5c8"
+          }
+        },
+        "truth": {
+          "source": "rm27_sim.native_plant_truth",
+          "identity": {
+            "id": "asm2-moving-handover-02-scene",
+            "version": "original-recording",
+            "sha256": "b3793d6fbbf7f38c7c905c63abecbfed06060a79b8f4b29086ae1e9b9434ff8f"
+          }
+        }
+      },
+      "runtime_inputs": [
+        {
+          "role": "sensor_generation",
+          "artifact": {
+            "id": ".agents/runs/g0_handover/navigation/moving_handover_02/sensors.jsonl.gz",
+            "version": "original-recording",
+            "sha256": "f1c73b74f523f4746127c99924b86df68be33d58a63f8222d680b5f9f70a6d78"
+          }
+        }
+      ],
+      "snapshot_sha256": {
+        "asm2-moving-handover-02:165": "c103043bbe28cb130775f89e43c589d1da20cae4c9df0d4e1e03b5448c4f1f18",
+        "asm2-moving-handover-02:166": "22bd5b6935a77940cd4ce33e04e835566f55e1ee012b621cb961a972cee319ed",
+        "asm2-moving-handover-02:167": "ba7f0625ddbd2d7984bd39160ad7d0a6d0ecad5b7f0262b5321121112bb6bf3a"
+      }
+    }
+  },
+  "evidence": {
+    "files": [
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/alignment.py",
+        "sha256": "53dd483ecffe5c306e77abab2e783fe12511aebc28e35126928ce1a20f5808c9",
+        "original_path": "components/rm27_non_rl/rm27_non_rl/asm2_flight_alignment.py"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/config.json",
+        "sha256": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17",
+        "original_path": "components/rm27_non_rl/artifacts/asm2_handover/dev04_enclosure/config.json"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/estimator.py",
+        "sha256": "1e6b497513226791476db35382dc2825f06d21d853ec83801e596235d231a1d8",
+        "original_path": "components/rm27_non_rl/rm27_non_rl/asm2_sensor_estimator.py"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/navigation.py",
+        "sha256": "c6897c869d9a98246d00ee3600463d744027b2c71e087a5108c6fc97c2fe28fd",
+        "original_path": "components/rm27_non_rl/.agents/runs/asm2_handover/moving_handover.py"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/plant.py",
+        "sha256": "b332be4323939e189abeac53227a3aba559e3d81ca91c50e7f8d5f4c09a1387d",
+        "original_path": "components/rm27_sim/rm27_sim/simulation/asm2.py"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/recording.py",
+        "sha256": "e2a730cc08821ceb1c99edc4e6f0ed9f133f9c2264012f25859fd20e1e66c5c8",
+        "original_path": "components/rm27_sim/rm27_sim/experiments/asm2_sensor_recording.py"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/scene_provenance.json",
+        "sha256": "0aa5165e762728f2d817e05d3ace6c0f3db6b7bc0953aefdbfb1b796d59d698f",
+        "original_path": "components/rm27_non_rl/artifacts/asm2_handover/moving_handover_02/scene_provenance.json"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/sensors.jsonl.gz",
+        "sha256": "f1c73b74f523f4746127c99924b86df68be33d58a63f8222d680b5f9f70a6d78",
+        "original_path": "components/rm27_non_rl/artifacts/asm2_handover/moving_handover_02/sensors.jsonl.gz"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/summary.json",
+        "sha256": "3f62630066d6deca2c7a638646a09608e343b481bcba4d26cd1f1610631aea4d",
+        "original_path": "components/rm27_non_rl/artifacts/asm2_handover/moving_handover_02/summary.json"
+      },
+      {
+        "path": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+        "sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2",
+        "original_path": "components/rm27_non_rl/artifacts/asm2_handover/moving_handover_02/trace.jsonl.gz"
+      }
+    ],
+    "original_experiment_checks": {
+      "no_contact_safety": "PASS",
+      "moving_transfer": "PASS",
+      "heading_at_transfer": "FAIL",
+      "command_at_transfer": "PASS"
+    },
+    "frame_definition": "Explicit offline local frame: scene +X chosen local N, +Y chosen -E, +Z chosen -D; scene origin retained. Not surveyed North/East or real calibration. Body COM and FLU from source model. Sensor alignment retains historical heading FAIL.",
+    "clock_definition": "Same native sim clock start=0, integer ticks dt=0.0001s; source time_ns rounds seconds to nearest ns. Identity mapping on that representation; raw floats retained. No inferred wall/boot mapping.",
+    "quality_scope": "Estimator validity is availability only; trusted=false and covariance unavailable, not calibrated confidence.",
+    "replay_scope": "Data replay only. Archived original sources preserved; no current runtime/physics rerun equivalence claimed."
+  },
+  "rows": [
+    {
+      "scenario_id": "asm2-moving-handover-02:165",
+      "source_line": 165,
+      "input_kind": "RECORDED",
+      "payload": {
+        "time_s": 0.82,
+        "estimate": {
+          "timestamp_s": 0.82,
+          "position_m": [
+            11.010889160510734,
+            -0.0034390664440088763,
+            1.1892692229169486
+          ],
+          "velocity_m_s": [
+            0.4839530826473332,
+            0.03043247539172866,
+            -0.041858644268771665
+          ],
+          "rotation_body_to_local": [
+            [
+              0.9979137845954505,
+              -0.06406590690472579,
+              0.007977348360197764
+            ],
+            [
+              0.06406111487487375,
+              0.9979456109695509,
+              0.0008550483014888636
+            ],
+            [
+              -0.008015739228116733,
+              -0.0003422266568511488,
+              0.9999678148848304
+            ]
+          ],
+          "angular_velocity_body_rad_s": [
+            -0.0001701457528679516,
+            -0.6863320735678028,
+            0.00013032486000844786
+          ],
+          "epoch_id": 0,
+          "channels": {
+            "attitude": {
+              "acquisition_s": 0.8200000000000001,
+              "delivery_s": 0.8200000000000001,
+              "represented_s": 0.82,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "body_FLU_to_local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "body_rate": {
+              "acquisition_s": 0.8200000000000001,
+              "delivery_s": 0.8200000000000001,
+              "represented_s": 0.8200000000000001,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "body_FLU",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "position": {
+              "acquisition_s": 0.8,
+              "delivery_s": 0.8150000000000001,
+              "represented_s": 0.82,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "velocity": {
+              "acquisition_s": 0.8,
+              "delivery_s": 0.8150000000000001,
+              "represented_s": 0.82,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            }
+          },
+          "alignment": "IMU_EXTERNAL_VELOCITY_FLIGHT_ALIGNMENT",
+          "frame_registration": "SENSOR_FLIGHT_ALIGNMENT_REQUIRED",
+          "faults": [],
+          "covariance": null,
+          "covariance_reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE",
+          "source": "TRUTH_GENERATED_SYNTHETIC",
+          "world_attitude_trusted": false,
+          "propagation_method": "PREVIOUS_SAMPLE_ZERO_ORDER_HOLD_M3_PREDICT",
+          "time_s": 0.82,
+          "state_time_s": 0.82,
+          "generation": 0,
+          "world_alignment_observed": true,
+          "alignment_evidence_id": "MEASURED_INERTIAL_VELOCITY_CONSISTENCY",
+          "history_start_s": 0.72,
+          "accepted_packets": 2995,
+          "rejected_packets": 0
+        },
+        "attitude_error_offline": {
+          "yaw_deg": 3.4703386586216918,
+          "rotation_deg": 3.495325914744663
+        },
+        "position_offline": [
+          11.011797524706985,
+          -0.001460474896827575,
+          1.1881829136851798
+        ],
+        "velocity_offline": [
+          0.4724220803893483,
+          -0.005658454512045634,
+          -0.03691762518158328
+        ],
+        "yaw_offline_deg": 0.20272613591186625,
+        "motor_activation_N": [
+          0.3351208000699162,
+          0.33511119463787703,
+          0.3614239569912947,
+          0.36136404830091173
+        ],
+        "phase": "TRANSFER",
+        "blend_fraction": 0.0,
+        "blended_ctbr_target": [
+          0.0,
+          -3.654490681744072e-30,
+          0.0,
+          1.39302
+        ],
+        "applied_motor_command_N": [
+          0.337160837351526,
+          0.3371685309137025,
+          0.35933762596217983,
+          0.35935300577259155
+        ],
+        "limited": false
+      },
+      "snapshot": {
+        "format": "rm27.handover/1",
+        "snapshot_id": "asm2-moving-handover-02:165",
+        "source": {
+          "run_id": "asm2-moving-handover-02",
+          "trajectory_family_id": "asm2-moving-handover-01-02-common-prefix",
+          "input_kind": "RECORDED",
+          "artifact": {
+            "id": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+            "version": "original-recording",
+            "sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2"
+          },
+          "record_locator": "line:165"
+        },
+        "state": {
+          "schema": "state.schema.json#/$defs/EstimatedState",
+          "record": {
+            "metadata": {
+              "contract_id": "rm27.state",
+              "contract_version": "0.1.0-draft",
+              "run_id": "asm2-moving-handover-02",
+              "record_id": "asm2-moving-handover-02:165",
+              "source": "rm27_non_rl.SensorOnlyEstimator",
+              "sequence": 165,
+              "input_kind": "ESTIMATED",
+              "lineage": [
+                {
+                  "input_kind": "RECORDED",
+                  "source": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+                  "record_id": "line:165"
+                },
+                {
+                  "input_kind": "GROUND_TRUTH",
+                  "source": "rm27_sim.native_plant_truth",
+                  "transform": "rm27_sim.SensorRecorder"
+                },
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "TRUTH_GENERATED_SYNTHETIC"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator",
+                  "transform": "g0-moving02-scene-to-local-ned"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator",
+                  "transform": "g0-moving02-native-clock-identity"
+                }
+              ],
+              "clock_id": "g0-moving02-offline-nearest-ns",
+              "frame_id": "g0-moving02-SIMULATION_LOCAL_NED",
+              "reset_epoch": 0,
+              "availability": {
+                "actuator_state": {
+                  "status": "UNKNOWN",
+                  "reason": "No qualified value was supplied to this offline adapter"
+                },
+                "uncertainty": {
+                  "status": "UNKNOWN",
+                  "reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE"
+                }
+              },
+              "model": {
+                "id": "ASM2",
+                "version": "1.0.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "geometry": {
+                "id": "ASM2-local-native-3522",
+                "version": "0.1.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17",
+              "extensions": {
+                "rm27.g0.recorded_navigation": {
+                  "version": "1",
+                  "data": {
+                    "scope": "RECORDED_SIMULATION_INTERFACE_ONLY",
+                    "original_estimate": {
+                      "timestamp_s": 0.82,
+                      "position_m": [
+                        11.010889160510734,
+                        -0.0034390664440088763,
+                        1.1892692229169486
+                      ],
+                      "velocity_m_s": [
+                        0.4839530826473332,
+                        0.03043247539172866,
+                        -0.041858644268771665
+                      ],
+                      "rotation_body_to_local": [
+                        [
+                          0.9979137845954505,
+                          -0.06406590690472579,
+                          0.007977348360197764
+                        ],
+                        [
+                          0.06406111487487375,
+                          0.9979456109695509,
+                          0.0008550483014888636
+                        ],
+                        [
+                          -0.008015739228116733,
+                          -0.0003422266568511488,
+                          0.9999678148848304
+                        ]
+                      ],
+                      "angular_velocity_body_rad_s": [
+                        -0.0001701457528679516,
+                        -0.6863320735678028,
+                        0.00013032486000844786
+                      ],
+                      "epoch_id": 0,
+                      "channels": {
+                        "attitude": {
+                          "acquisition_s": 0.8200000000000001,
+                          "delivery_s": 0.8200000000000001,
+                          "represented_s": 0.82,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "body_FLU_to_local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "body_rate": {
+                          "acquisition_s": 0.8200000000000001,
+                          "delivery_s": 0.8200000000000001,
+                          "represented_s": 0.8200000000000001,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "body_FLU",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "position": {
+                          "acquisition_s": 0.8,
+                          "delivery_s": 0.8150000000000001,
+                          "represented_s": 0.82,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "velocity": {
+                          "acquisition_s": 0.8,
+                          "delivery_s": 0.8150000000000001,
+                          "represented_s": 0.82,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        }
+                      },
+                      "alignment": "IMU_EXTERNAL_VELOCITY_FLIGHT_ALIGNMENT",
+                      "frame_registration": "SENSOR_FLIGHT_ALIGNMENT_REQUIRED",
+                      "faults": [],
+                      "covariance": null,
+                      "covariance_reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE",
+                      "source": "TRUTH_GENERATED_SYNTHETIC",
+                      "world_attitude_trusted": false,
+                      "propagation_method": "PREVIOUS_SAMPLE_ZERO_ORDER_HOLD_M3_PREDICT",
+                      "time_s": 0.82,
+                      "state_time_s": 0.82,
+                      "generation": 0,
+                      "world_alignment_observed": true,
+                      "alignment_evidence_id": "MEASURED_INERTIAL_VELOCITY_CONSISTENCY",
+                      "history_start_s": 0.72,
+                      "accepted_packets": 2995,
+                      "rejected_packets": 0
+                    },
+                    "source_time_s": 0.82,
+                    "time_representation": "ROUND_SECONDS_TO_NEAREST_NS_FROM_RECORDED_ESTIMATOR",
+                    "raw_control_history": {
+                      "input_kind": "RECORDED",
+                      "records": [
+                        {
+                          "time_s": 0.82,
+                          "phase": "TRANSFER",
+                          "blend_fraction": 0.0,
+                          "blended_ctbr_target": [
+                            0.0,
+                            -3.654490681744072e-30,
+                            0.0,
+                            1.39302
+                          ],
+                          "applied_motor_command_N": [
+                            0.337160837351526,
+                            0.3371685309137025,
+                            0.35933762596217983,
+                            0.35935300577259155
+                          ],
+                          "limited": false
+                        }
+                      ],
+                      "ctbr_order": [
+                        "p_FLU_rad_s",
+                        "q_FLU_rad_s",
+                        "r_FLU_rad_s",
+                        "T_N"
+                      ],
+                      "timing_semantics": "Same-tick issued command; activation sampled before command application. Not a reconstructed last-applied command or authority lease.",
+                      "admission": "DIAGNOSTIC_ONLY_MISSING_ORIGINAL_LEASE_AND_EXPIRY"
+                    },
+                    "diagnostic_actuator_truth": {
+                      "input_kind": "GROUND_TRUTH",
+                      "motor_activation_N": [
+                        0.3351208000699162,
+                        0.33511119463787703,
+                        0.3614239569912947,
+                        0.36136404830091173
+                      ],
+                      "use": "OFFLINE_EVIDENCE_ONLY_NOT_ESTIMATED_ACTUATOR_STATE"
+                    }
+                  }
+                }
+              }
+            },
+            "frames": {
+              "world": "NED",
+              "body": "FRD",
+              "quaternion": "HAMILTON_WXYZ"
+            },
+            "state_time_s": 0.82,
+            "validity": {
+              "position_W_m": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "velocity_W_m_s": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "q_WB_wxyz": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "body_rates_B_rad_s": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              }
+            },
+            "data_age_s": {
+              "state": 0.0,
+              "position_W_m": 0.019999999999999907,
+              "velocity_W_m_s": 0.019999999999999907,
+              "q_WB_wxyz": 0.0,
+              "body_rates_B_rad_s": 0.0
+            },
+            "epoch_provenance": "Recorded estimator generation/epoch_id and per-channel epoch_id; integer-nanosecond source clock, no inferred reboot mapping",
+            "position_W_m": [
+              11.010889160510734,
+              0.0034390664440088763,
+              -1.1892692229169486
+            ],
+            "velocity_W_m_s": [
+              0.4839530826473332,
+              -0.03043247539172866,
+              0.041858644268771665
+            ],
+            "q_WB_wxyz": [
+              0.9994782652026296,
+              -0.0002994749861061967,
+              -0.0040003590235832024,
+              -0.03204847625016229
+            ],
+            "body_rates_B_rad_s": [
+              -0.0001701457528679516,
+              0.6863320735678028,
+              -0.00013032486000844786
+            ],
+            "measurement_times_s": {
+              "position_W_m": {
+                "time_s": 0.8,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "velocity_W_m_s": {
+                "time_s": 0.8,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "q_WB_wxyz": {
+                "time_s": 0.82,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "body_rates_B_rad_s": {
+                "time_s": 0.82,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              }
+            },
+            "uncertainty": null
+          }
+        },
+        "identity": {
+          "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+          "model": {
+            "id": "ASM2",
+            "version": "1.0.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "geometry": {
+            "id": "ASM2-local-native-3522",
+            "version": "0.1.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "plant_profile": {
+            "id": "ASM2-plant-metadata",
+            "version": "1.0.0",
+            "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+          },
+          "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17"
+        },
+        "registration": {
+          "frame": "g0-moving02-scene-to-local-ned",
+          "clock": "g0-moving02-native-clock-identity"
+        },
+        "control_history": {
+          "availability": {
+            "status": "UNKNOWN",
+            "reason": "Raw commands retained in evidence extension; original lease/expiry unavailable"
+          },
+          "records": []
+        },
+        "target_geometry": null,
+        "native_record": null
+      },
+      "replay_now_s": 0.82
+    },
+    {
+      "scenario_id": "asm2-moving-handover-02:166",
+      "source_line": 166,
+      "input_kind": "RECORDED",
+      "payload": {
+        "time_s": 0.825,
+        "estimate": {
+          "timestamp_s": 0.825,
+          "position_m": [
+            11.01331213090204,
+            -0.0032776259841623074,
+            1.1890597357447323
+          ],
+          "velocity_m_s": [
+            0.4846837411747228,
+            0.03438525283785239,
+            -0.041695280698967364
+          ],
+          "rotation_body_to_local": [
+            [
+              0.9979344883116109,
+              -0.06406764883058298,
+              0.0047003629183739355
+            ],
+            [
+              0.06406530996012828,
+              0.9979454984710677,
+              0.0006466382645052361
+            ],
+            [
+              -0.004732134608822339,
+              -0.0003441724183210216,
+              0.9999887441603484
+            ]
+          ],
+          "angular_velocity_body_rad_s": [
+            0.0007952806240358504,
+            -0.6206807266661456,
+            0.0007926788728722098
+          ],
+          "epoch_id": 0,
+          "channels": {
+            "attitude": {
+              "acquisition_s": 0.8250000000000001,
+              "delivery_s": 0.8250000000000001,
+              "represented_s": 0.825,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "body_FLU_to_local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "body_rate": {
+              "acquisition_s": 0.8250000000000001,
+              "delivery_s": 0.8250000000000001,
+              "represented_s": 0.8250000000000001,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "body_FLU",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "position": {
+              "acquisition_s": 0.8,
+              "delivery_s": 0.8150000000000001,
+              "represented_s": 0.825,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "velocity": {
+              "acquisition_s": 0.8,
+              "delivery_s": 0.8150000000000001,
+              "represented_s": 0.825,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            }
+          },
+          "alignment": "IMU_EXTERNAL_VELOCITY_FLIGHT_ALIGNMENT",
+          "frame_registration": "SENSOR_FLIGHT_ALIGNMENT_REQUIRED",
+          "faults": [],
+          "covariance": null,
+          "covariance_reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE",
+          "source": "TRUTH_GENERATED_SYNTHETIC",
+          "world_attitude_trusted": false,
+          "propagation_method": "PREVIOUS_SAMPLE_ZERO_ORDER_HOLD_M3_PREDICT",
+          "time_s": 0.825,
+          "state_time_s": 0.825,
+          "generation": 0,
+          "world_alignment_observed": true,
+          "alignment_evidence_id": "MEASURED_INERTIAL_VELOCITY_CONSISTENCY",
+          "history_start_s": 0.725,
+          "accepted_packets": 3013,
+          "rejected_packets": 0
+        },
+        "attitude_error_offline": {
+          "yaw_deg": 3.4697083096913124,
+          "rotation_deg": 3.4927585469780382
+        },
+        "position_offline": [
+          11.01415966235059,
+          -0.0014890223881168696,
+          1.1879983252624342
+        ],
+        "velocity_offline": [
+          0.47240839328699413,
+          -0.005758681058856536,
+          -0.03691774839865593
+        ],
+        "yaw_offline_deg": 0.20352035960515444,
+        "motor_activation_N": [
+          0.33536051076934814,
+          0.3353529380227116,
+          0.3611788066331399,
+          0.3611277445747998
+        ],
+        "phase": "TRANSFER",
+        "blend_fraction": 0.005063657407407417,
+        "blended_ctbr_target": [
+          0.00018934042925272568,
+          -0.0007339235311328323,
+          -0.002272536774950042,
+          1.3930800007652588
+        ],
+        "applied_motor_command_N": [
+          0.33815411824812996,
+          0.3388208652852109,
+          0.3577384906922711,
+          0.3584983988416976
+        ],
+        "limited": false
+      },
+      "snapshot": {
+        "format": "rm27.handover/1",
+        "snapshot_id": "asm2-moving-handover-02:166",
+        "source": {
+          "run_id": "asm2-moving-handover-02",
+          "trajectory_family_id": "asm2-moving-handover-01-02-common-prefix",
+          "input_kind": "RECORDED",
+          "artifact": {
+            "id": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+            "version": "original-recording",
+            "sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2"
+          },
+          "record_locator": "line:166"
+        },
+        "state": {
+          "schema": "state.schema.json#/$defs/EstimatedState",
+          "record": {
+            "metadata": {
+              "contract_id": "rm27.state",
+              "contract_version": "0.1.0-draft",
+              "run_id": "asm2-moving-handover-02",
+              "record_id": "asm2-moving-handover-02:166",
+              "source": "rm27_non_rl.SensorOnlyEstimator",
+              "sequence": 166,
+              "input_kind": "ESTIMATED",
+              "lineage": [
+                {
+                  "input_kind": "RECORDED",
+                  "source": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+                  "record_id": "line:166"
+                },
+                {
+                  "input_kind": "GROUND_TRUTH",
+                  "source": "rm27_sim.native_plant_truth",
+                  "transform": "rm27_sim.SensorRecorder"
+                },
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "TRUTH_GENERATED_SYNTHETIC"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator",
+                  "transform": "g0-moving02-scene-to-local-ned"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator",
+                  "transform": "g0-moving02-native-clock-identity"
+                }
+              ],
+              "clock_id": "g0-moving02-offline-nearest-ns",
+              "frame_id": "g0-moving02-SIMULATION_LOCAL_NED",
+              "reset_epoch": 0,
+              "availability": {
+                "actuator_state": {
+                  "status": "UNKNOWN",
+                  "reason": "No qualified value was supplied to this offline adapter"
+                },
+                "uncertainty": {
+                  "status": "UNKNOWN",
+                  "reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE"
+                }
+              },
+              "model": {
+                "id": "ASM2",
+                "version": "1.0.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "geometry": {
+                "id": "ASM2-local-native-3522",
+                "version": "0.1.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17",
+              "extensions": {
+                "rm27.g0.recorded_navigation": {
+                  "version": "1",
+                  "data": {
+                    "scope": "RECORDED_SIMULATION_INTERFACE_ONLY",
+                    "original_estimate": {
+                      "timestamp_s": 0.825,
+                      "position_m": [
+                        11.01331213090204,
+                        -0.0032776259841623074,
+                        1.1890597357447323
+                      ],
+                      "velocity_m_s": [
+                        0.4846837411747228,
+                        0.03438525283785239,
+                        -0.041695280698967364
+                      ],
+                      "rotation_body_to_local": [
+                        [
+                          0.9979344883116109,
+                          -0.06406764883058298,
+                          0.0047003629183739355
+                        ],
+                        [
+                          0.06406530996012828,
+                          0.9979454984710677,
+                          0.0006466382645052361
+                        ],
+                        [
+                          -0.004732134608822339,
+                          -0.0003441724183210216,
+                          0.9999887441603484
+                        ]
+                      ],
+                      "angular_velocity_body_rad_s": [
+                        0.0007952806240358504,
+                        -0.6206807266661456,
+                        0.0007926788728722098
+                      ],
+                      "epoch_id": 0,
+                      "channels": {
+                        "attitude": {
+                          "acquisition_s": 0.8250000000000001,
+                          "delivery_s": 0.8250000000000001,
+                          "represented_s": 0.825,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "body_FLU_to_local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "body_rate": {
+                          "acquisition_s": 0.8250000000000001,
+                          "delivery_s": 0.8250000000000001,
+                          "represented_s": 0.8250000000000001,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "body_FLU",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "position": {
+                          "acquisition_s": 0.8,
+                          "delivery_s": 0.8150000000000001,
+                          "represented_s": 0.825,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "velocity": {
+                          "acquisition_s": 0.8,
+                          "delivery_s": 0.8150000000000001,
+                          "represented_s": 0.825,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        }
+                      },
+                      "alignment": "IMU_EXTERNAL_VELOCITY_FLIGHT_ALIGNMENT",
+                      "frame_registration": "SENSOR_FLIGHT_ALIGNMENT_REQUIRED",
+                      "faults": [],
+                      "covariance": null,
+                      "covariance_reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE",
+                      "source": "TRUTH_GENERATED_SYNTHETIC",
+                      "world_attitude_trusted": false,
+                      "propagation_method": "PREVIOUS_SAMPLE_ZERO_ORDER_HOLD_M3_PREDICT",
+                      "time_s": 0.825,
+                      "state_time_s": 0.825,
+                      "generation": 0,
+                      "world_alignment_observed": true,
+                      "alignment_evidence_id": "MEASURED_INERTIAL_VELOCITY_CONSISTENCY",
+                      "history_start_s": 0.725,
+                      "accepted_packets": 3013,
+                      "rejected_packets": 0
+                    },
+                    "source_time_s": 0.825,
+                    "time_representation": "ROUND_SECONDS_TO_NEAREST_NS_FROM_RECORDED_ESTIMATOR",
+                    "raw_control_history": {
+                      "input_kind": "RECORDED",
+                      "records": [
+                        {
+                          "time_s": 0.825,
+                          "phase": "TRANSFER",
+                          "blend_fraction": 0.005063657407407417,
+                          "blended_ctbr_target": [
+                            0.00018934042925272568,
+                            -0.0007339235311328323,
+                            -0.002272536774950042,
+                            1.3930800007652588
+                          ],
+                          "applied_motor_command_N": [
+                            0.33815411824812996,
+                            0.3388208652852109,
+                            0.3577384906922711,
+                            0.3584983988416976
+                          ],
+                          "limited": false
+                        }
+                      ],
+                      "ctbr_order": [
+                        "p_FLU_rad_s",
+                        "q_FLU_rad_s",
+                        "r_FLU_rad_s",
+                        "T_N"
+                      ],
+                      "timing_semantics": "Same-tick issued command; activation sampled before command application. Not a reconstructed last-applied command or authority lease.",
+                      "admission": "DIAGNOSTIC_ONLY_MISSING_ORIGINAL_LEASE_AND_EXPIRY"
+                    },
+                    "diagnostic_actuator_truth": {
+                      "input_kind": "GROUND_TRUTH",
+                      "motor_activation_N": [
+                        0.33536051076934814,
+                        0.3353529380227116,
+                        0.3611788066331399,
+                        0.3611277445747998
+                      ],
+                      "use": "OFFLINE_EVIDENCE_ONLY_NOT_ESTIMATED_ACTUATOR_STATE"
+                    }
+                  }
+                }
+              }
+            },
+            "frames": {
+              "world": "NED",
+              "body": "FRD",
+              "quaternion": "HAMILTON_WXYZ"
+            },
+            "state_time_s": 0.825,
+            "validity": {
+              "position_W_m": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "velocity_W_m_s": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "q_WB_wxyz": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "body_rates_B_rad_s": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              }
+            },
+            "data_age_s": {
+              "state": 0.0,
+              "position_W_m": 0.02499999999999991,
+              "velocity_W_m_s": 0.02499999999999991,
+              "q_WB_wxyz": 0.0,
+              "body_rates_B_rad_s": 0.0
+            },
+            "epoch_provenance": "Recorded estimator generation/epoch_id and per-channel epoch_id; integer-nanosecond source clock, no inferred reboot mapping",
+            "position_W_m": [
+              11.01331213090204,
+              0.0032776259841623074,
+              -1.1890597357447323
+            ],
+            "velocity_W_m_s": [
+              0.4846837411747228,
+              -0.03438525283785239,
+              0.041695280698967364
+            ],
+            "q_WB_wxyz": [
+              0.9994834579600389,
+              -0.0002478306856745077,
+              -0.0023593430816874514,
+              -0.03204979476404557
+            ],
+            "body_rates_B_rad_s": [
+              0.0007952806240358504,
+              0.6206807266661456,
+              -0.0007926788728722098
+            ],
+            "measurement_times_s": {
+              "position_W_m": {
+                "time_s": 0.8,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "velocity_W_m_s": {
+                "time_s": 0.8,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "q_WB_wxyz": {
+                "time_s": 0.825,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "body_rates_B_rad_s": {
+                "time_s": 0.825,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              }
+            },
+            "uncertainty": null
+          }
+        },
+        "identity": {
+          "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+          "model": {
+            "id": "ASM2",
+            "version": "1.0.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "geometry": {
+            "id": "ASM2-local-native-3522",
+            "version": "0.1.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "plant_profile": {
+            "id": "ASM2-plant-metadata",
+            "version": "1.0.0",
+            "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+          },
+          "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17"
+        },
+        "registration": {
+          "frame": "g0-moving02-scene-to-local-ned",
+          "clock": "g0-moving02-native-clock-identity"
+        },
+        "control_history": {
+          "availability": {
+            "status": "UNKNOWN",
+            "reason": "Raw commands retained in evidence extension; original lease/expiry unavailable"
+          },
+          "records": []
+        },
+        "target_geometry": null,
+        "native_record": null
+      },
+      "replay_now_s": 0.825
+    },
+    {
+      "scenario_id": "asm2-moving-handover-02:167",
+      "source_line": 167,
+      "input_kind": "RECORDED",
+      "payload": {
+        "time_s": 0.83,
+        "estimate": {
+          "timestamp_s": 0.83,
+          "position_m": [
+            11.01572979286032,
+            -0.0030926699771163728,
+            1.1888545864369233
+          ],
+          "velocity_m_s": [
+            0.48200545624225744,
+            0.03980920387721094,
+            -0.03977387954748722
+          ],
+          "rotation_body_to_local": [
+            [
+              0.9979440143303998,
+              -0.06406741396831721,
+              0.0017637260386962662
+            ],
+            [
+              0.06406671349200628,
+              0.9979455160084599,
+              0.00045088905768252103
+            ],
+            [
+              -0.0017889897876966325,
+              -0.0003369659054418013,
+              0.9999983429833864
+            ]
+          ],
+          "angular_velocity_body_rad_s": [
+            0.00048369957154522557,
+            -0.5498615981023773,
+            -0.0004172239785347223
+          ],
+          "epoch_id": 0,
+          "channels": {
+            "attitude": {
+              "acquisition_s": 0.8300000000000001,
+              "delivery_s": 0.8300000000000001,
+              "represented_s": 0.83,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "body_FLU_to_local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "body_rate": {
+              "acquisition_s": 0.8300000000000001,
+              "delivery_s": 0.8300000000000001,
+              "represented_s": 0.8300000000000001,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "body_FLU",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "position": {
+              "acquisition_s": 0.8,
+              "delivery_s": 0.8150000000000001,
+              "represented_s": 0.83,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            },
+            "velocity": {
+              "acquisition_s": 0.8,
+              "delivery_s": 0.8150000000000001,
+              "represented_s": 0.83,
+              "epoch_id": 0,
+              "measurement_epoch_id": 0,
+              "valid": true,
+              "reasons": [],
+              "frame": "local_navigation",
+              "source": "TRUTH_GENERATED_SYNTHETIC",
+              "trusted": false
+            }
+          },
+          "alignment": "IMU_EXTERNAL_VELOCITY_FLIGHT_ALIGNMENT",
+          "frame_registration": "SENSOR_FLIGHT_ALIGNMENT_REQUIRED",
+          "faults": [],
+          "covariance": null,
+          "covariance_reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE",
+          "source": "TRUTH_GENERATED_SYNTHETIC",
+          "world_attitude_trusted": false,
+          "propagation_method": "PREVIOUS_SAMPLE_ZERO_ORDER_HOLD_M3_PREDICT",
+          "time_s": 0.83,
+          "state_time_s": 0.83,
+          "generation": 0,
+          "world_alignment_observed": true,
+          "alignment_evidence_id": "MEASURED_INERTIAL_VELOCITY_CONSISTENCY",
+          "history_start_s": 0.73,
+          "accepted_packets": 3031,
+          "rejected_packets": 0
+        },
+        "attitude_error_offline": {
+          "yaw_deg": 3.468929220724833,
+          "rotation_deg": 3.490131210174984
+        },
+        "position_offline": [
+          11.016521365415912,
+          -0.0015180731329310032,
+          1.1878137364521144
+        ],
+        "velocity_offline": [
+          0.47225383426197803,
+          -0.0058597248390269505,
+          -0.03691771366041742
+        ],
+        "yaw_offline_deg": 0.20434473261378486,
+        "motor_activation_N": [
+          0.33568876830106786,
+          0.33576043021766666,
+          0.36077455885400017,
+          0.36081878830698405
+        ],
+        "phase": "TRANSFER",
+        "blend_fraction": 0.01967592592592596,
+        "blended_ctbr_target": [
+          0.0012787182875662092,
+          -0.0032875061544233434,
+          -0.008832826788664493,
+          1.3932401411739832
+        ],
+        "applied_motor_command_N": [
+          0.3393068854064942,
+          0.3415043907841582,
+          0.3550938080171036,
+          0.35781791787261047
+        ],
+        "limited": false
+      },
+      "snapshot": {
+        "format": "rm27.handover/1",
+        "snapshot_id": "asm2-moving-handover-02:167",
+        "source": {
+          "run_id": "asm2-moving-handover-02",
+          "trajectory_family_id": "asm2-moving-handover-01-02-common-prefix",
+          "input_kind": "RECORDED",
+          "artifact": {
+            "id": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+            "version": "original-recording",
+            "sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2"
+          },
+          "record_locator": "line:167"
+        },
+        "state": {
+          "schema": "state.schema.json#/$defs/EstimatedState",
+          "record": {
+            "metadata": {
+              "contract_id": "rm27.state",
+              "contract_version": "0.1.0-draft",
+              "run_id": "asm2-moving-handover-02",
+              "record_id": "asm2-moving-handover-02:167",
+              "source": "rm27_non_rl.SensorOnlyEstimator",
+              "sequence": 167,
+              "input_kind": "ESTIMATED",
+              "lineage": [
+                {
+                  "input_kind": "RECORDED",
+                  "source": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+                  "record_id": "line:167"
+                },
+                {
+                  "input_kind": "GROUND_TRUTH",
+                  "source": "rm27_sim.native_plant_truth",
+                  "transform": "rm27_sim.SensorRecorder"
+                },
+                {
+                  "input_kind": "SYNTHETIC",
+                  "source": "TRUTH_GENERATED_SYNTHETIC"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator",
+                  "transform": "g0-moving02-scene-to-local-ned"
+                },
+                {
+                  "input_kind": "ESTIMATED",
+                  "source": "rm27_non_rl.SensorOnlyEstimator",
+                  "transform": "g0-moving02-native-clock-identity"
+                }
+              ],
+              "clock_id": "g0-moving02-offline-nearest-ns",
+              "frame_id": "g0-moving02-SIMULATION_LOCAL_NED",
+              "reset_epoch": 0,
+              "availability": {
+                "actuator_state": {
+                  "status": "UNKNOWN",
+                  "reason": "No qualified value was supplied to this offline adapter"
+                },
+                "uncertainty": {
+                  "status": "UNKNOWN",
+                  "reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE"
+                }
+              },
+              "model": {
+                "id": "ASM2",
+                "version": "1.0.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "geometry": {
+                "id": "ASM2-local-native-3522",
+                "version": "0.1.0",
+                "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+              },
+              "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17",
+              "extensions": {
+                "rm27.g0.recorded_navigation": {
+                  "version": "1",
+                  "data": {
+                    "scope": "RECORDED_SIMULATION_INTERFACE_ONLY",
+                    "original_estimate": {
+                      "timestamp_s": 0.83,
+                      "position_m": [
+                        11.01572979286032,
+                        -0.0030926699771163728,
+                        1.1888545864369233
+                      ],
+                      "velocity_m_s": [
+                        0.48200545624225744,
+                        0.03980920387721094,
+                        -0.03977387954748722
+                      ],
+                      "rotation_body_to_local": [
+                        [
+                          0.9979440143303998,
+                          -0.06406741396831721,
+                          0.0017637260386962662
+                        ],
+                        [
+                          0.06406671349200628,
+                          0.9979455160084599,
+                          0.00045088905768252103
+                        ],
+                        [
+                          -0.0017889897876966325,
+                          -0.0003369659054418013,
+                          0.9999983429833864
+                        ]
+                      ],
+                      "angular_velocity_body_rad_s": [
+                        0.00048369957154522557,
+                        -0.5498615981023773,
+                        -0.0004172239785347223
+                      ],
+                      "epoch_id": 0,
+                      "channels": {
+                        "attitude": {
+                          "acquisition_s": 0.8300000000000001,
+                          "delivery_s": 0.8300000000000001,
+                          "represented_s": 0.83,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "body_FLU_to_local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "body_rate": {
+                          "acquisition_s": 0.8300000000000001,
+                          "delivery_s": 0.8300000000000001,
+                          "represented_s": 0.8300000000000001,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "body_FLU",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "position": {
+                          "acquisition_s": 0.8,
+                          "delivery_s": 0.8150000000000001,
+                          "represented_s": 0.83,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        },
+                        "velocity": {
+                          "acquisition_s": 0.8,
+                          "delivery_s": 0.8150000000000001,
+                          "represented_s": 0.83,
+                          "epoch_id": 0,
+                          "measurement_epoch_id": 0,
+                          "valid": true,
+                          "reasons": [],
+                          "frame": "local_navigation",
+                          "source": "TRUTH_GENERATED_SYNTHETIC",
+                          "trusted": false
+                        }
+                      },
+                      "alignment": "IMU_EXTERNAL_VELOCITY_FLIGHT_ALIGNMENT",
+                      "frame_registration": "SENSOR_FLIGHT_ALIGNMENT_REQUIRED",
+                      "faults": [],
+                      "covariance": null,
+                      "covariance_reason": "M3_COMPLEMENTARY_FILTER_HAS_NO_COVARIANCE",
+                      "source": "TRUTH_GENERATED_SYNTHETIC",
+                      "world_attitude_trusted": false,
+                      "propagation_method": "PREVIOUS_SAMPLE_ZERO_ORDER_HOLD_M3_PREDICT",
+                      "time_s": 0.83,
+                      "state_time_s": 0.83,
+                      "generation": 0,
+                      "world_alignment_observed": true,
+                      "alignment_evidence_id": "MEASURED_INERTIAL_VELOCITY_CONSISTENCY",
+                      "history_start_s": 0.73,
+                      "accepted_packets": 3031,
+                      "rejected_packets": 0
+                    },
+                    "source_time_s": 0.83,
+                    "time_representation": "ROUND_SECONDS_TO_NEAREST_NS_FROM_RECORDED_ESTIMATOR",
+                    "raw_control_history": {
+                      "input_kind": "RECORDED",
+                      "records": [
+                        {
+                          "time_s": 0.83,
+                          "phase": "TRANSFER",
+                          "blend_fraction": 0.01967592592592596,
+                          "blended_ctbr_target": [
+                            0.0012787182875662092,
+                            -0.0032875061544233434,
+                            -0.008832826788664493,
+                            1.3932401411739832
+                          ],
+                          "applied_motor_command_N": [
+                            0.3393068854064942,
+                            0.3415043907841582,
+                            0.3550938080171036,
+                            0.35781791787261047
+                          ],
+                          "limited": false
+                        }
+                      ],
+                      "ctbr_order": [
+                        "p_FLU_rad_s",
+                        "q_FLU_rad_s",
+                        "r_FLU_rad_s",
+                        "T_N"
+                      ],
+                      "timing_semantics": "Same-tick issued command; activation sampled before command application. Not a reconstructed last-applied command or authority lease.",
+                      "admission": "DIAGNOSTIC_ONLY_MISSING_ORIGINAL_LEASE_AND_EXPIRY"
+                    },
+                    "diagnostic_actuator_truth": {
+                      "input_kind": "GROUND_TRUTH",
+                      "motor_activation_N": [
+                        0.33568876830106786,
+                        0.33576043021766666,
+                        0.36077455885400017,
+                        0.36081878830698405
+                      ],
+                      "use": "OFFLINE_EVIDENCE_ONLY_NOT_ESTIMATED_ACTUATOR_STATE"
+                    }
+                  }
+                }
+              }
+            },
+            "frames": {
+              "world": "NED",
+              "body": "FRD",
+              "quaternion": "HAMILTON_WXYZ"
+            },
+            "state_time_s": 0.83,
+            "validity": {
+              "position_W_m": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "velocity_W_m_s": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "q_WB_wxyz": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              },
+              "body_rates_B_rad_s": {
+                "availability": {
+                  "status": "AVAILABLE",
+                  "reason": null
+                },
+                "initialized": true,
+                "aligned": true,
+                "finite": true,
+                "current": true
+              }
+            },
+            "data_age_s": {
+              "state": 0.0,
+              "position_W_m": 0.029999999999999916,
+              "velocity_W_m_s": 0.029999999999999916,
+              "q_WB_wxyz": 0.0,
+              "body_rates_B_rad_s": 0.0
+            },
+            "epoch_provenance": "Recorded estimator generation/epoch_id and per-channel epoch_id; integer-nanosecond source clock, no inferred reboot mapping",
+            "position_W_m": [
+              11.01572979286032,
+              0.0030926699771163728,
+              -1.1888545864369233
+            ],
+            "velocity_W_m_s": [
+              0.48200545624225744,
+              -0.03980920387721094,
+              0.03977387954748722
+            ],
+            "q_WB_wxyz": [
+              0.9994858519911932,
+              -0.0001970650613899996,
+              -0.0008886358469494879,
+              -0.032050010314066076
+            ],
+            "body_rates_B_rad_s": [
+              0.00048369957154522557,
+              0.5498615981023773,
+              0.0004172239785347223
+            ],
+            "measurement_times_s": {
+              "position_W_m": {
+                "time_s": 0.8,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "velocity_W_m_s": {
+                "time_s": 0.8,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "q_WB_wxyz": {
+                "time_s": 0.83,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              },
+              "body_rates_B_rad_s": {
+                "time_s": 0.83,
+                "clock_id": "g0-moving02-offline-nearest-ns"
+              }
+            },
+            "uncertainty": null
+          }
+        },
+        "identity": {
+          "catalog_sha256": "c818545af9cc3c96af7491366464428c40f5b305cddd7696ed19d5e54b4d0621",
+          "model": {
+            "id": "ASM2",
+            "version": "1.0.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "geometry": {
+            "id": "ASM2-local-native-3522",
+            "version": "0.1.0",
+            "sha256": "2356bc3f8372fe14002521a82d4a9533867c688f8ed3d13cf172c74e17905ae4"
+          },
+          "plant_profile": {
+            "id": "ASM2-plant-metadata",
+            "version": "1.0.0",
+            "sha256": "f4a5c52e8c06de893d3dc99b5544ba4408f03eed812bee52b595ee52db860b08"
+          },
+          "config_hash": "5a90302acd49014ec44f946f088c8918b37d3f29e64d1c66d5e1de3ccda2dc17"
+        },
+        "registration": {
+          "frame": "g0-moving02-scene-to-local-ned",
+          "clock": "g0-moving02-native-clock-identity"
+        },
+        "control_history": {
+          "availability": {
+            "status": "UNKNOWN",
+            "reason": "Raw commands retained in evidence extension; original lease/expiry unavailable"
+          },
+          "records": []
+        },
+        "target_geometry": null,
+        "native_record": null
+      },
+      "replay_now_s": 0.83
+    }
+  ]
+}

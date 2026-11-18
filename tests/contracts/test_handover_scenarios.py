@@ -11,7 +11,7 @@ from tempfile import TemporaryDirectory
 import unittest
 
 from rm27_exchange.handover_scenarios import (
-    DEFAULT_MANIFEST, load_scenario_set, replay_records,
+    DEFAULT_MANIFEST, load_scenario_set, replay_records, replay_snapshots,
 )
 from rm27_exchange.offline_contracts import Blocked
 from rm27_exchange.validation import read_json
@@ -19,12 +19,16 @@ from rm27_exchange.validation import read_json
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = 'tests/contracts/fixtures/handover_navigation_recorded.json'
+ESTIMATED_FIXTURE = 'tests/contracts/fixtures/handover_navigation_estimated.json'
 
 
 class HandoverScenarioTests(unittest.TestCase):
     def setUp(self):
         self.manifest = read_json(ROOT / DEFAULT_MANIFEST)
         self.fixture = read_json(ROOT / FIXTURE)
+        # Legacy rejection cases remain about the original incomplete recording.
+        self.manifest['sources'] = [source for source in self.manifest['sources']
+                                    if source['fixture_path'] == FIXTURE]
 
     def write_set(self, root, *, manifest=None, fixture=None, copy_originals=False):
         manifest = deepcopy(self.manifest if manifest is None else manifest)
@@ -49,9 +53,11 @@ class HandoverScenarioTests(unittest.TestCase):
         dataset = load_scenario_set(ROOT, verify_originals=True)
         self.assertTrue(dataset['originals_verified'])
         self.assertEqual(dataset['dataset_readiness'], 'BLOCKED')
-        self.assertEqual(len(dataset['records']), 3)
-        self.assertEqual([row['source_line'] for row in dataset['records']], [1176, 1177, 1178])
-        for native, record in zip(self.fixture['rows'], dataset['records']):
+        records = [record for record in dataset['records']
+                   if record['source']['source_run_id'] == self.fixture['source']['source_run_id']]
+        self.assertEqual(len(records), 3)
+        self.assertEqual([row['source_line'] for row in records], [1176, 1177, 1178])
+        for native, record in zip(self.fixture['rows'], records):
             self.assertEqual(record['payload'], native['payload'])
             self.assertEqual(record['source'], self.fixture['source'])
             self.assertEqual(record['input_kind'], 'RECORDED')
@@ -63,7 +69,7 @@ class HandoverScenarioTests(unittest.TestCase):
             self.assertIn('controls', record['payload'])
             self.assertNotIn('state', record)
             self.assertNotIn('actuator_state', record)
-        self.assertGreater(abs(dataset['records'][0]['payload']['telemetry']['local_velocity'][0]), .2)
+        self.assertGreater(abs(records[0]['payload']['telemetry']['local_velocity'][0]), .2)
         self.assertTrue(dataset['reasons'])
 
     def test_replay_is_deterministic_and_does_not_mutate_or_reset_native_data(self):
@@ -165,3 +171,97 @@ class HandoverScenarioTests(unittest.TestCase):
             self.write_set(root, manifest=manifest)
             with self.assertRaisesRegex(Blocked, 'does not establish dataset readiness'):
                 load_scenario_set(root)
+
+
+class RecordedEstimatorScenarioTests(unittest.TestCase):
+    def setUp(self):
+        self.manifest = read_json(ROOT / DEFAULT_MANIFEST)
+        self.manifest['sources'] = [source for source in self.manifest['sources']
+                                    if source['fixture_path'] == ESTIMATED_FIXTURE]
+        self.fixture = read_json(ROOT / ESTIMATED_FIXTURE)
+
+    def write_fixture(self, root, fixture):
+        fixture_path = root / ESTIMATED_FIXTURE
+        fixture_path.parent.mkdir(parents=True)
+        fixture_path.write_text(json.dumps(fixture, allow_nan=False), encoding='utf-8')
+        manifest = deepcopy(self.manifest)
+        for source in manifest['sources']:
+            source['fixture_sha256'] = sha256(fixture_path.read_bytes()).hexdigest()
+        manifest_path = root / DEFAULT_MANIFEST
+        manifest_path.parent.mkdir(parents=True)
+        manifest_path.write_text(json.dumps(manifest, allow_nan=False), encoding='utf-8')
+
+    def test_actual_estimator_recording_is_admitted_without_promoting_dataset(self):
+        dataset = load_scenario_set(ROOT, verify_originals=True)
+        records = [record for record in dataset['records'] if 'snapshot' in record]
+        self.assertEqual(len(records), 3)
+        self.assertEqual([record['source_line'] for record in records], [165, 166, 167])
+        self.assertEqual(dataset['dataset_readiness'], 'BLOCKED')
+        snapshots = list(replay_snapshots(ROOT, verify_originals=True))
+        for original, record in zip(self.fixture['rows'], records):
+            self.assertEqual(record['admission'], 'ADMITTED')
+            self.assertEqual(record['payload'], original['payload'])
+            self.assertEqual(record['snapshot'], original['snapshot'])
+            self.assertIn(record['snapshot'], snapshots)
+            self.assertEqual(record['split'], 'dev')
+            self.assertEqual(record['snapshot']['source']['input_kind'], 'RECORDED')
+
+    def test_rehashed_raw_payload_cannot_disagree_with_admitted_snapshot(self):
+        fixture = deepcopy(self.fixture)
+        fixture['rows'][0]['payload']['estimate']['position_m'][0] += .1
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.write_fixture(root, fixture)
+            with self.assertRaisesRegex(Blocked, 'snapshot|projection|binding'):
+                load_scenario_set(root)
+
+    def test_source_locator_and_profile_cannot_be_relabelled(self):
+        cases = []
+        changed = deepcopy(self.fixture)
+        changed['rows'][0]['snapshot']['source']['record_locator'] = 'line:1'
+        cases.append((changed, 'source identity'))
+        changed = deepcopy(self.fixture)
+        changed['registration']['mode'] = 'RUNTIME_ESTIMATED'
+        cases.append((changed, 'explicit offline profile'))
+        changed = deepcopy(self.fixture)
+        changed['rows'][0]['replay_now_s'] += 60
+        cases.append((changed, 'stale|future'))
+        for fixture, error in cases:
+            with self.subTest(error=error), TemporaryDirectory() as tmp:
+                root = Path(tmp)
+                self.write_fixture(root, fixture)
+                with self.assertRaisesRegex(Blocked, error):
+                    load_scenario_set(root)
+
+    def test_same_estimator_source_family_cannot_cross_splits(self):
+        manifest = deepcopy(self.manifest)
+        manifest['sources'].append(manifest['sources'][0] | {'split': 'held-out'})
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.write_fixture(root, self.fixture)
+            path = root / DEFAULT_MANIFEST
+            # Keep the actual fixture digest, then alter only the family split.
+            manifest['sources'][0]['fixture_sha256'] = sha256(
+                (root / ESTIMATED_FIXTURE).read_bytes()).hexdigest()
+            manifest['sources'][1]['fixture_sha256'] = manifest['sources'][0]['fixture_sha256']
+            path.write_text(json.dumps(manifest), encoding='utf-8')
+            with self.assertRaisesRegex(Blocked, 'split leakage'):
+                load_scenario_set(root)
+
+    def test_original_verification_checks_retained_source_evidence_too(self):
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            self.write_fixture(root, self.fixture)
+            for field in ('source_path', 'summary_path'):
+                relative = self.fixture['source'][field]
+                target = root / relative
+                target.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(ROOT / relative, target)
+            evidence = self.fixture['evidence']['files'][0]
+            target = root / evidence['path']
+            target.parent.mkdir(parents=True, exist_ok=True)
+            target.write_bytes((ROOT / evidence['path']).read_bytes() + b'\nchanged\n')
+            # Raw navigation and summary hashes still match. The retained source
+            # bytes must independently match before source-backed replay passes.
+            with self.assertRaisesRegex(Blocked, 'SHA-256 mismatch'):
+                load_scenario_set(root, verify_originals=True)

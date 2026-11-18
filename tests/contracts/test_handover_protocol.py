@@ -97,6 +97,47 @@ class HandoverProtocolTests(unittest.TestCase):
                                          self.request['reference']['record']['reference_id'],
                                          self.successor(), now_s=10.021)
 
+    def test_runtime_cancellation_before_effective_time_keeps_predecessor(self):
+        for stage in ('accepted', 'acked'):
+            with self.subTest(stage=stage):
+                protocol = self.protocol()
+                request_id = self.request['request_id']
+                protocol.request(self.request, now_s=10.01)
+                protocol.decide(request_id, 'ACCEPT', now_s=10.012)
+                if stage == 'acked':
+                    protocol.acknowledge(request_id, self.request['snapshot'],
+                                         self.request['reference']['record']['reference_id'],
+                                         self.successor(), now_s=10.014)
+                sequences = deepcopy(protocol.sequences)
+                result = protocol.cancel_pending(request_id, 'planning deadline exceeded', now_s=10.015)
+                self.assertEqual(result, {'status': 'ABORT', 'request_id': request_id,
+                                         'reason': 'planning deadline exceeded',
+                                         'authority': self.initial})
+                self.assertIsNone(protocol.pending)
+                self.assertIsNone(protocol.boundary)
+                self.assertIsNone(protocol.accepted_reference)
+                self.assertEqual(protocol.sequences, sequences)
+                self.assertEqual(protocol.tick(now_s=10.02)['authority'], self.initial)
+                with self.assertRaisesRegex(Blocked, 'duplicate request'):
+                    protocol.request(self.request, now_s=10.021)
+
+    def test_cancellation_cannot_revert_committed_authority_or_wrong_request(self):
+        protocol = self.protocol()
+        request_id = self.request['request_id']
+        protocol.request(self.request, now_s=10.01)
+        protocol.decide(request_id, 'ACCEPT', now_s=10.012)
+        with self.assertRaisesRegex(Blocked, 'matching uncommitted'):
+            protocol.cancel_pending('wrong-request', 'deadline', now_s=10.013)
+        self.assertIsNotNone(protocol.pending)
+        protocol.acknowledge(request_id, self.request['snapshot'],
+                             self.request['reference']['record']['reference_id'],
+                             self.successor(), now_s=10.015)
+        with self.assertRaisesRegex(Blocked, 'matching uncommitted'):
+            protocol.cancel_pending(request_id, 'too late', now_s=10.02)
+        self.assertEqual(protocol.active, self.successor() | {'handoff_state': 'ACTIVE'})
+        self.assertEqual(protocol.boundary, self.request['snapshot'])
+        self.assertEqual(protocol.parent_reference_id, self.request['reference']['record']['reference_id'])
+
     def test_stale_future_expired_invalid_authority_epoch_and_parent_requests_are_rejected(self):
         cases = []
         cases.append((deepcopy(self.request), 10.201, 'stale'))

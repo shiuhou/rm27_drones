@@ -1,12 +1,14 @@
 """Hash-verified replay of the recorded Navigation → Handover evidence set.
 
-This catalog deliberately returns native records, not admissible Shared State.
-Missing registration and actuator evidence stay missing. Readable recordings do
-not establish a handover distribution, state validity or physical feasibility.
+Legacy native telemetry remains diagnostic and blocked. Registered simulated
+estimator recordings can carry admitted Shared State, under their receiver-owned
+offline profile. Neither case establishes a handover distribution or physical
+feasibility.
 """
 
 import argparse
 from copy import deepcopy
+import gzip
 import json
 import math
 from pathlib import Path
@@ -24,6 +26,8 @@ _REGISTRATION_FIELDS = ('world_to_contract', 'body_origin_to_com', 'clock_mappin
 _PAYLOAD_FIELDS = {'simulation_s', 'phase', 'telemetry', 'physical_state', 'controls'}
 _TELEMETRY_FIELDS = {'local_position', 'local_velocity', 'local_time', 'quaternion',
                      'rates', 'attitude_time', 'estimator_flags', 'source_timing'}
+_LEGACY_PURPOSE = 'RECORDED_NAVIGATION_PROJECTION_NOT_ADMISSIBLE_RUNTIME_STATE'
+_ESTIMATOR_PURPOSE = 'RECORDED_SIM_ESTIMATED_NAVIGATION'
 
 
 def _path(root, relative):
@@ -65,14 +69,15 @@ def _is_projection(projected, native):
     return type(projected) is type(native) and projected == native
 
 
-def _verify_original(root, fixture):
+def _verify_original(root, fixture, fixture_path):
     source = fixture['source']
     trace_path = _path(root, source['source_path'])
     verify_sha256(trace_path, source['source_sha256'])
     verify_sha256(_path(root, source.get('summary_path')), source.get('summary_sha256'))
     wanted = {row['source_line']: row['payload'] for row in fixture['rows']}
     seen = set()
-    with trace_path.open(encoding='utf-8') as stream:
+    opener = gzip.open if trace_path.suffix == '.gz' else open
+    with opener(trace_path, 'rt', encoding='utf-8') as stream:
         for line_number, line in enumerate(stream, 1):
             if line_number in wanted:
                 try:
@@ -86,6 +91,48 @@ def _verify_original(root, fixture):
                 break
     if seen != wanted.keys():
         raise Blocked('original navigation source lines are missing')
+    if fixture['purpose'] == _ESTIMATOR_PURPOSE:
+        from .handover_recording import rebuild_recorded_fixture
+        # Replay the entire source-backed registration, not only the JSONL row.
+        # The recorder verifies all retained source/asset/evidence hashes without
+        # importing historical code or executing the simulator.
+        if rebuild_recorded_fixture(root, fixture_path) != fixture:
+            raise Blocked('recorded fixture differs from source-backed rebuild')
+
+
+def _registered_snapshot(row, source, registration):
+    """Check a recorded row using the existing receiver's admission gate.
+
+    The receiver registration binds the reviewed snapshots and their provenance;
+    a fixture hash alone is never treated as permission to supply a new state.
+    """
+    from .handover import HandoverRegistry, admit_snapshot, validate_snapshot
+
+    try:
+        registry = HandoverRegistry.from_dict(registration)
+        snapshot = validate_snapshot(row['snapshot'])
+        replay_now = row['replay_now_s']
+    except (KeyError, TypeError, ValueError) as exc:
+        raise Blocked('invalid recorded-estimator snapshot or registration') from exc
+    if registry.mode != 'RECORDED_SIM_ESTIMATED':
+        raise Blocked('recorded estimator requires its explicit offline profile')
+    expected = {
+        'run_id': source['source_run_id'],
+        'trajectory_family_id': source['source_family_id'],
+        'input_kind': 'RECORDED',
+        'artifact': {'id': source['source_path'], 'version': 'original-recording',
+                     'sha256': source['source_sha256']},
+        'record_locator': f"line:{row['source_line']}",
+    }
+    if snapshot['source'] != expected or snapshot['snapshot_id'] != row['scenario_id']:
+        raise Blocked('recorded snapshot/source identity mismatch')
+    admit_snapshot(snapshot, registry, now_s=replay_now)
+    from .handover_recording import snapshot_from_row
+    derived = snapshot_from_row(row['payload'], source, registry,
+                                source_line=row['source_line'], snapshot_id=row['scenario_id'])
+    if derived != snapshot:
+        raise Blocked('snapshot differs from recorded-estimator projection')
+    return deepcopy(snapshot)
 
 
 def load_scenario_set(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=False):
@@ -93,8 +140,8 @@ def load_scenario_set(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=
 
     Returns ``manifest``, ``fixtures``, ``records``, ``dataset_readiness``,
     ``reasons`` and ``originals_verified``. ``records`` retain raw payloads,
-    lineage, split, hashes and unresolved registration. No Shared State or model
-    qualification is inferred from the native telemetry.
+    lineage, split and hashes. Registered estimator rows additionally carry the
+    unchanged admitted snapshot; incomplete native telemetry remains diagnostic.
     """
     root = Path(root).resolve()
     manifest = _read(_path(root, manifest_path))
@@ -141,8 +188,8 @@ def load_scenario_set(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=
         fixture_path = _path(root, source.get('fixture_path'))
         verify_sha256(fixture_path, source.get('fixture_sha256'))
         fixture = _read(fixture_path)
-        if fixture.get('version') != '1' or fixture.get('purpose') != \
-                'RECORDED_NAVIGATION_PROJECTION_NOT_ADMISSIBLE_RUNTIME_STATE':
+        purpose = fixture.get('purpose')
+        if fixture.get('version') != '1' or purpose not in (_LEGACY_PURPOSE, _ESTIMATOR_PURPOSE):
             raise Blocked('native fixture purpose or version mismatch')
         identity = fixture.get('source')
         if not isinstance(identity, dict) or any(
@@ -151,8 +198,8 @@ def load_scenario_set(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=
         _path(root, identity.get('summary_path'))
         _digest(identity.get('summary_sha256'))
         registration = fixture.get('registration')
-        if not isinstance(registration, dict) or any(
-                field not in registration for field in _REGISTRATION_FIELDS):
+        if not isinstance(registration, dict) or (purpose == _LEGACY_PURPOSE and any(
+                field not in registration for field in _REGISTRATION_FIELDS)):
             raise Blocked('fixture must explicitly retain missing registration evidence')
         rows = fixture.get('rows')
         if not isinstance(rows, list) or not rows:
@@ -170,23 +217,35 @@ def load_scenario_set(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=
             ids.add(scenario_id)
             source_lines.add((source['source_sha256'], line))
             payload = row.get('payload')
-            if (not isinstance(payload, dict) or set(payload) != _PAYLOAD_FIELDS
-                    or not isinstance(payload.get('telemetry'), dict)
-                    or set(payload['telemetry']) != _TELEMETRY_FIELDS):
-                raise Blocked('incomplete native navigation projection')
-            time = payload['simulation_s']
+            if purpose == _LEGACY_PURPOSE:
+                if (not isinstance(payload, dict) or set(payload) != _PAYLOAD_FIELDS
+                        or not isinstance(payload.get('telemetry'), dict)
+                        or set(payload['telemetry']) != _TELEMETRY_FIELDS):
+                    raise Blocked('incomplete native navigation projection')
+                time = payload['simulation_s']
+                admitted = None
+            else:
+                if (not isinstance(payload, dict) or not isinstance(payload.get('estimate'), dict)
+                        or 'time_s' not in payload):
+                    raise Blocked('incomplete recorded-estimator navigation projection')
+                time = payload['time_s']
+                admitted = _registered_snapshot(row, identity, registration)
             if type(time) not in (int, float) or not math.isfinite(time) or time <= last_time:
                 raise Blocked('simulation timestamps must be finite and strictly ordered')
             last_line, last_time = line, time
-            records.append({
+            record = {
                 'scenario_id': scenario_id, 'source_line': line,
                 'input_kind': 'RECORDED', 'split': split,
                 'source': deepcopy(identity), 'lineage': deepcopy(lineage),
                 'registration': deepcopy(registration), 'payload': deepcopy(payload),
                 'dataset_readiness': 'BLOCKED',
-            })
+            }
+            if admitted is not None:
+                record.update(snapshot=admitted, admission='ADMITTED',
+                              replay_now_s=row['replay_now_s'])
+            records.append(record)
         if verify_originals:
-            _verify_original(root, fixture)
+            _verify_original(root, fixture, source['fixture_path'])
         fixtures.append(deepcopy(fixture))
 
     return {'manifest': deepcopy(manifest), 'fixtures': fixtures, 'records': records,
@@ -200,13 +259,16 @@ def replay_records(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=Fal
 
 
 def replay_snapshots(root, manifest_path=DEFAULT_MANIFEST, *, verify_originals=False):
-    """Archive each unresolved native row in the common diagnostic Snapshot.
+    """Replay registered snapshots and archive unresolved diagnostic rows.
 
-    ``state=None`` is deliberate: registrations are unavailable, so native
-    telemetry and separate truth cannot be promoted to Shared EstimatedState.
+    For unresolved telemetry ``state=None`` is deliberate: native telemetry and
+    separate truth cannot be promoted to Shared EstimatedState without evidence.
     """
     from .handover import build_snapshot
     for record in replay_records(root, manifest_path, verify_originals=verify_originals):
+        if 'snapshot' in record:
+            yield deepcopy(record['snapshot'])
+            continue
         source = record['source']
         yield build_snapshot(snapshot_id=record['scenario_id'], source={
             'run_id': source['source_run_id'], 'trajectory_family_id': source['source_family_id'],
@@ -221,7 +283,7 @@ def main():
     parser.add_argument('--root', type=Path, default=Path(__file__).resolve().parents[1])
     parser.add_argument('--manifest', default=DEFAULT_MANIFEST)
     parser.add_argument('--verify-originals', action='store_true')
-    parser.add_argument('--snapshots', action='store_true', help='emit common diagnostic Snapshots')
+    parser.add_argument('--snapshots', action='store_true', help='emit admitted or diagnostic Snapshots')
     args = parser.parse_args()
     try:
         dataset = load_scenario_set(args.root, args.manifest, verify_originals=args.verify_originals)

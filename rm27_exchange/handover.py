@@ -6,6 +6,7 @@ is an interface check, never a claim of navigation or physical feasibility.
 """
 from copy import deepcopy
 from dataclasses import dataclass, field
+from functools import lru_cache
 from hashlib import sha256
 import json
 import math
@@ -18,6 +19,8 @@ from .offline_contracts import (
 from .validation import loads_json, require_json_value, validate_record as _schema_validate
 
 FORMAT = 'rm27.handover/1'
+LIVE_SIM_EXTENSION = 'rm27.n1.live_simulation'
+LIVE_SIM_SCOPE = 'NONCONTACT_DEVELOPMENT_ONLY'
 STATE_REFS = {f'state.schema.json#/$defs/{name}'
               for name in ('GroundTruthState', 'EstimatedState')}
 CONTROL_REFS = {f'control.schema.json#/$defs/{name}' for name in (
@@ -26,9 +29,22 @@ CONTROL_REFS = {f'control.schema.json#/$defs/{name}' for name in (
 CHANNELS = ('position_W_m', 'velocity_W_m_s', 'q_WB_wxyz', 'body_rates_B_rad_s')
 
 
+@lru_cache(maxsize=128)
+def _validated_structure(reference, canonical_record):
+    """Cache only successful structure checks against the frozen schema bundle.
+
+    The exact JSON content and schema reference are the key, never object
+    identity. Failures are not cached. Admission, freshness, provenance and
+    protocol decisions remain uncached and execute on every delivery.
+    """
+    _schema_validate(reference, loads_json(canonical_record))
+
+
 def validate_record(reference, record):
     try:
-        _schema_validate(reference, record)
+        if not isinstance(reference, str):
+            raise ValueError(f'Invalid bundle schema reference: {reference!r}')
+        _validated_structure(reference, encode(record))
     except (ValueError, ValidationError) as exc:
         raise Blocked(f'invalid contract record: {exc}') from exc
 
@@ -156,6 +172,8 @@ class HandoverRegistry:
 
     SYNTHETIC_TEST is an explicitly separate test profile. It cannot admit a
     truth snapshot either, and its PASS has no autonomous-flight meaning.
+    LIVE_SIM_ESTIMATED registers a sensor-only noncontact development producer;
+    it permits bounded execution without promoting synthetic estimates to trust.
     """
     identity: dict
     frame: FrameRegistration
@@ -164,13 +182,17 @@ class HandoverRegistry:
     max_age_s: float
     mode: str = 'RUNTIME_ESTIMATED'
     targets: dict = field(default_factory=dict)
+    recorded_simulation: dict | None = None
+    live_simulation: dict | None = None
 
     @classmethod
     def from_dict(cls, value):
         return cls(identity=deepcopy(value['identity']), frame=FrameRegistration(**value['frame']),
                    clock=ClockRegistration(**value['clock']), epoch=value['epoch'],
                    max_age_s=value['max_age_s'], mode=value.get('mode', 'RUNTIME_ESTIMATED'),
-                   targets=deepcopy(value.get('targets', {})))
+                   targets=deepcopy(value.get('targets', {})),
+                   recorded_simulation=deepcopy(value.get('recorded_simulation')),
+                   live_simulation=deepcopy(value.get('live_simulation')))
 
 
 def _fresh(time, now, registry):
@@ -193,17 +215,190 @@ def _lineage_kinds(metadata):
     return {metadata['input_kind']} | {item['input_kind'] for item in metadata['lineage']}
 
 
+def _recorded_profile(registry):
+    """Check a receiver-owned, hash-bound sensor/estimator source registration.
+
+    The producer cannot register itself through a snapshot. The registry owner
+    verifies the original source bytes and estimator-only input path before
+    publishing this registration; this gate enforces their exact identities.
+    """
+    profile = registry.recorded_simulation
+    _keys(profile, ('registration', 'source_run_id', 'source_artifact', 'roles',
+                    'runtime_inputs', 'snapshot_sha256'))
+    validate_record('common.schema.json#/$defs/Identity', profile['registration'])
+    validate_record('common.schema.json#/$defs/Identity', profile['source_artifact'])
+    _id(profile['source_run_id'])
+    roles = profile['roles']
+    _keys(roles, ('estimator', 'sensor_generation', 'truth'))
+    for role in roles.values():
+        _keys(role, ('source', 'identity'))
+        _id(role['source'])
+        validate_record('common.schema.json#/$defs/Identity', role['identity'])
+    _require(len({role['source'] for role in roles.values()}) == len(roles),
+             'recorded simulation source roles must be distinct')
+    inputs = profile['runtime_inputs']
+    _require(isinstance(inputs, list) and bool(inputs), 'missing recorded estimator runtime inputs')
+    seen = set()
+    for entry in inputs:
+        _keys(entry, ('role', 'artifact'))
+        _require(entry['role'] == 'sensor_generation',
+                 'truth or unregistered estimator runtime input')
+        validate_record('common.schema.json#/$defs/Identity', entry['artifact'])
+        _require(entry['artifact']['sha256'] != roles['truth']['identity']['sha256'],
+                 'truth artifact cannot be a runtime sensor input')
+        key = digest(entry['artifact'])
+        _require(key not in seen, 'duplicate recorded estimator input')
+        seen.add(key)
+    snapshots = profile['snapshot_sha256']
+    _require(isinstance(snapshots, dict) and bool(snapshots), 'missing immutable snapshot registration')
+    for key, value in snapshots.items():
+        _id(key)
+        validate_record('common.schema.json#/$defs/Sha256', value)
+    return profile
+
+
+def _recorded_lineage(metadata, registry):
+    profile = _recorded_profile(registry)
+    roles = profile['roles']
+    permitted = {
+        'ESTIMATED': roles['estimator']['source'],
+        'PREDICTED': roles['estimator']['source'],
+        'SYNTHETIC': roles['sensor_generation']['source'],
+        'RECORDED': profile['source_artifact']['id'],
+        'GROUND_TRUTH': roles['truth']['source'],
+    }
+    _require(metadata['input_kind'] != 'GROUND_TRUTH',
+             'direct ground truth is not an estimated runtime record')
+    for link in metadata['lineage']:
+        _require(link['input_kind'] in permitted
+                 and link['source'] == permitted[link['input_kind']],
+                 'unregistered recorded simulation lineage source')
+        if link['input_kind'] == 'GROUND_TRUTH':
+            _require(link.get('transform') == roles['sensor_generation']['identity']['id'],
+                     'ground truth ancestry must be sensor-generation-only')
+    return profile
+
+
+def _admit_recorded_simulation(snapshot, registry):
+    profile = _recorded_lineage(snapshot['state']['record']['metadata'], registry)
+    metadata = snapshot['state']['record']['metadata']
+    _require(snapshot['source']['input_kind'] == 'RECORDED',
+             'recorded simulation profile requires recorded acquisition')
+    _require(snapshot['source']['run_id'] == profile['source_run_id'],
+             'unregistered recorded simulation run')
+    require_same_identity(profile['source_artifact'], snapshot['source']['artifact'])
+    _require(metadata['source'] == profile['roles']['estimator']['source'],
+             'state must come from the registered estimator')
+    _require({'ESTIMATED', 'SYNTHETIC', 'RECORDED'} <=
+             {link['input_kind'] for link in metadata['lineage']},
+             'recorded simulation requires estimator, sensor and storage ancestry')
+    _require(profile['snapshot_sha256'].get(snapshot['snapshot_id']) == digest(snapshot),
+             'recorded simulation snapshot hash is not registered')
+
+
+def _live_profile(registry):
+    """Receiver registration for a bounded sensor-driven simulation execution.
+
+    This is deliberately separate from immutable recorded-data admission and
+    from real runtime estimation. Code identities and the configuration bind the
+    receiver's inspected sensor-only producer; no calibrated trust is granted.
+    The receiver must verify source bytes before registering this profile.
+    """
+    profile = registry.live_simulation
+    _keys(profile, ('registration', 'source_run_id', 'trajectory_family_id',
+                    'source_artifact', 'roles', 'runtime_inputs', 'scope', 'trusted'))
+    _require(profile['scope'] == LIVE_SIM_SCOPE and profile['trusted'] is False,
+             'live simulation is untrusted noncontact development only')
+    for key in ('registration', 'source_artifact'):
+        validate_record('common.schema.json#/$defs/Identity', profile[key])
+    for key in ('source_run_id', 'trajectory_family_id'):
+        _id(profile[key])
+    roles = profile['roles']
+    _keys(roles, ('estimator', 'sensor_generation', 'truth'))
+    for role in roles.values():
+        _keys(role, ('source', 'identity'))
+        _id(role['source'])
+        validate_record('common.schema.json#/$defs/Identity', role['identity'])
+    _require(len({role['source'] for role in roles.values()}) == len(roles),
+             'live simulation source roles must be distinct')
+    _require(len({role['identity']['sha256'] for role in roles.values()}) == len(roles),
+             'live simulation implementation roles must be distinct')
+    inputs = profile['runtime_inputs']
+    _require(isinstance(inputs, list) and bool(inputs), 'missing live estimator runtime inputs')
+    seen = set()
+    for entry in inputs:
+        _keys(entry, ('role', 'artifact'))
+        _require(entry['role'] == 'sensor_generation',
+                 'truth or unregistered live estimator runtime input')
+        validate_record('common.schema.json#/$defs/Identity', entry['artifact'])
+        _require(entry['artifact']['sha256'] != roles['truth']['identity']['sha256'],
+                 'truth artifact cannot be a live runtime sensor input')
+        key = digest(entry['artifact'])
+        _require(key not in seen, 'duplicate live estimator runtime input')
+        seen.add(key)
+    return profile
+
+
+def _live_lineage(metadata, registry):
+    profile = _live_profile(registry)
+    roles = profile['roles']
+    permitted = {
+        'ESTIMATED': roles['estimator']['source'],
+        'PREDICTED': roles['estimator']['source'],
+        'SYNTHETIC': roles['sensor_generation']['source'],
+        'GROUND_TRUTH': roles['truth']['source'],
+    }
+    _require(metadata['input_kind'] != 'GROUND_TRUTH',
+             'direct ground truth is not a live estimated runtime record')
+    for link in metadata['lineage']:
+        _require(link['input_kind'] in permitted
+                 and link['source'] == permitted[link['input_kind']],
+                 'unregistered live simulation lineage source')
+        if link['input_kind'] == 'GROUND_TRUTH':
+            _require(link.get('transform') == roles['sensor_generation']['identity']['id'],
+                     'ground truth ancestry must be sensor-generation-only')
+    _require({'ESTIMATED', 'SYNTHETIC'} <= _lineage_kinds(metadata),
+             'live simulation requires estimator and sensor ancestry')
+    return profile
+
+
+def _admit_live_simulation(snapshot, registry):
+    metadata = snapshot['state']['record']['metadata']
+    profile = _live_lineage(metadata, registry)
+    source = snapshot['source']
+    _require(source['input_kind'] == 'SYNTHETIC',
+             'live simulation requires explicit synthetic acquisition')
+    _require(source['run_id'] == profile['source_run_id']
+             and source['trajectory_family_id'] == profile['trajectory_family_id'],
+             'unregistered live simulation run/family')
+    require_same_identity(profile['source_artifact'], source['artifact'])
+    _require(metadata['source'] == profile['roles']['estimator']['source'],
+             'live state must come from the registered estimator')
+    extension = metadata.get('extensions', {}).get(LIVE_SIM_EXTENSION)
+    _keys(extension, ('version', 'data'))
+    _require(extension['version'] == '1' and isinstance(extension['data'], dict)
+             and extension['data'].get('scope') == LIVE_SIM_SCOPE
+             and extension['data'].get('trusted') is False,
+             'live simulation must preserve explicit untrusted development scope')
+
+
 def _consumer_lineage(metadata, registry):
     _require(bool(metadata['lineage']), 'missing source lineage')
     if registry.mode == 'RUNTIME_ESTIMATED':
         _require(not (_lineage_kinds(metadata) & {'GROUND_TRUTH', 'SYNTHETIC'}),
                  'runtime record has oracle or synthetic ancestry')
+    elif registry.mode == 'RECORDED_SIM_ESTIMATED':
+        _recorded_lineage(metadata, registry)
+    elif registry.mode == 'LIVE_SIM_ESTIMATED':
+        _live_lineage(metadata, registry)
 
 
 def admit_snapshot(snapshot, registry, *, now_s):
     """Admit only fully qualified interface channels under a registered profile."""
     validate_snapshot(snapshot)
-    _require(registry.mode in {'RUNTIME_ESTIMATED', 'SYNTHETIC_TEST'}, 'unknown admission mode')
+    _require(registry.mode in {'RUNTIME_ESTIMATED', 'SYNTHETIC_TEST',
+                               'RECORDED_SIM_ESTIMATED', 'LIVE_SIM_ESTIMATED'},
+             'unknown admission mode')
     _require(type(registry.epoch) is int and registry.epoch >= 0, 'unknown receiver epoch')
     _require(registry.max_age_s > 0, 'invalid freshness policy')
     _require(snapshot['state'] is not None and snapshot['native_record'] is None,
@@ -212,11 +407,17 @@ def admit_snapshot(snapshot, registry, *, now_s):
     metadata = state['metadata']
     kinds = _lineage_kinds(metadata)
     _require(snapshot['state']['schema'].endswith('/EstimatedState')
-             and metadata['input_kind'] in {'ESTIMATED', 'PREDICTED'}
-             and 'GROUND_TRUTH' not in kinds, 'ground truth is isolated from runtime handover')
+             and metadata['input_kind'] in {'ESTIMATED', 'PREDICTED'},
+             'ground truth is isolated from runtime handover')
+    if registry.mode not in {'RECORDED_SIM_ESTIMATED', 'LIVE_SIM_ESTIMATED'}:
+        _require('GROUND_TRUTH' not in kinds, 'ground truth is isolated from runtime handover')
     _require(bool(metadata['lineage']), 'missing source lineage')
     acquisition = snapshot['source']['input_kind']
-    if registry.mode == 'RUNTIME_ESTIMATED':
+    if registry.mode == 'RECORDED_SIM_ESTIMATED':
+        _admit_recorded_simulation(snapshot, registry)
+    elif registry.mode == 'LIVE_SIM_ESTIMATED':
+        _admit_live_simulation(snapshot, registry)
+    elif registry.mode == 'RUNTIME_ESTIMATED':
         _require('SYNTHETIC' not in kinds and acquisition != 'SYNTHETIC',
                  'synthetic fixture is not runtime estimated evidence')
     else:
@@ -489,6 +690,22 @@ class HandoverProtocol:
         return {'status': 'ACK', 'request_id': request_id, 'effective_time_s': p['effective'],
                 'authority': deepcopy(self.active)}
 
+    def cancel_pending(self, request_id, reason, *, now_s):
+        """Cancel a prepared transfer while its predecessor still owns control.
+
+        A runtime deadline or final preflight failure may occur after ACCEPT or
+        ACK but before the registered effective time. Cancellation never rolls
+        back an already committed transfer or reuses an admitted sequence.
+        """
+        self._advance(now_s)
+        p = self.pending
+        _require(p is not None and p['request']['request_id'] == request_id
+                 and now_s < p['effective'], 'no matching uncommitted transfer to cancel')
+        _id(reason)
+        self.pending = None
+        return {'status': 'ABORT', 'request_id': request_id, 'reason': reason,
+                'authority': deepcopy(self.active)}
+
     def validate_command(self, wrapper, *, now_s):
         self._advance(now_s)
         _require(self.active is not None and self.boundary is not None and not self.invalidated,
@@ -565,6 +782,8 @@ def main():
             elif operation == 'ack':
                 result = protocol.acknowledge(message['request_id'], message['snapshot'],
                                               message['reference_id'], message['successor'], now_s=now)
+            elif operation == 'cancel':
+                result = protocol.cancel_pending(message['request_id'], message['reason'], now_s=now)
             elif operation == 'tick':
                 result = protocol.tick(now_s=now)
             elif operation == 'command':

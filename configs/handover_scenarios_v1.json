@@ -2,11 +2,9 @@
   "version": "1",
   "dataset_readiness": "BLOCKED",
   "reasons": [
-    "Only one recorded source trajectory family is registered; no independent train/dev/held-out families are established.",
-    "Recorded telemetry lacks a registered world/body-origin-to-COM transform and unified estimator reset epoch.",
-    "PX4 boot and simulator sample/receipt clocks are distinct; a validated mapping is not recorded.",
-    "Normalized sampled controls are retained unchanged, but complete command timing/history, actuator activation and profile identity are unavailable.",
-    "This historical navigation scene is not the accepted ASM2 canonical baseline; no model/profile equivalence or physical feasibility is established."
+    "Only one admitted simulated navigation source family; neighboring frames are all dev, not independent Train/Held-out evidence.",
+    "Legacy PX4 navigation remains missing registered frame/clock/epoch/model evidence.",
+    "No real-sensor/runtime, distribution coverage or physical feasibility qualification."
   ],
   "sources": [
     {
@@ -28,6 +26,38 @@
         }
       ],
       "split": "dev"
+    },
+    {
+      "source_run_id": "asm2-moving-handover-02",
+      "source_family_id": "asm2-moving-handover-01-02-common-prefix",
+      "source_path": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz",
+      "source_sha256": "ca460f09c0c3b57b14048e7f838c32aef9d38d6bd91825cefbc180c1cd4345c2",
+      "summary_path": ".agents/runs/g0_handover/navigation/moving_handover_02/summary.json",
+      "summary_sha256": "3f62630066d6deca2c7a638646a09608e343b481bcba4d26cd1f1610631aea4d",
+      "input_kind": "RECORDED",
+      "split": "dev",
+      "lineage": [
+        {
+          "input_kind": "RECORDED",
+          "source": ".agents/runs/g0_handover/navigation/moving_handover_02/trace.jsonl.gz"
+        },
+        {
+          "input_kind": "ESTIMATED",
+          "source": "rm27_non_rl.SensorOnlyEstimator"
+        },
+        {
+          "input_kind": "SYNTHETIC",
+          "source": "TRUTH_GENERATED_SYNTHETIC"
+        },
+        {
+          "input_kind": "GROUND_TRUTH",
+          "source": "rm27_sim.native_plant_truth",
+          "transform": "rm27_sim.SensorRecorder"
+        }
+      ],
+      "fixture_path": "tests/contracts/fixtures/handover_navigation_estimated.json",
+      "fixture_sha256": "daf98e51b89d13f533f64775a2e8ea02c1d03dec776c614dcf5bd4a3f50d2937",
+      "admission_profile": "RECORDED_SIM_ESTIMATED"
     }
   ],
   "synthetic_fixture": {

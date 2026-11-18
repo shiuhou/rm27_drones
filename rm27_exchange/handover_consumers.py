@@ -50,7 +50,8 @@ def _construct_native(payload, consumer):
         from rm27_contact_physics.model import VehicleEstimate
         native = VehicleEstimate(
             **{key: np.asarray(value, dtype=float) for key, value in payload['values'].items()},
-            timestamp=payload['stamp'], source='G0_OFFLINE_SYNTHETIC_RECONSTRUCTION')
+            timestamp=payload['stamp'],
+            source=payload.get('source_label', 'G0_OFFLINE_SYNTHETIC_RECONSTRUCTION'))
         native_type = _type_identity(VehicleEstimate)
         native_values = _json_values(asdict(native))
         native_status = {
@@ -89,27 +90,21 @@ def _construct_native(payload, consumer):
     }
 
 
-def project_native(snapshot, registry, consumer, now_s):
-    """Admit, invert reviewed registrations, then construct installed data types.
+def project_estimated_values(snapshot, registry, *, now_s):
+    """Invert the existing registered G0 adapter without granting sensor trust.
 
-    The authoritative shared snapshot stays with the caller; its digest and
-    original metadata bind this lossy native view to the unchanged evidence.
-    Native worlds use the registered source world, native consumer bodies FLU.
-    Runtime/predicted estimates remain blocked because these native projections
-    cannot fully express their provenance. This is synthetic conformance only.
+    LIVE_SIM_ESTIMATED is receiver-owned NONCONTACT_DEVELOPMENT_ONLY; the caller
+    must retain the authoritative Snapshot and its untrusted provenance. This
+    pure projection cannot reset an estimator, controller or plant.
     """
     import numpy as np
     from scipy.spatial.transform import Rotation
-    from .handover import admit_snapshot, digest, encode
+    from .handover import admit_snapshot, digest
     from .offline_contracts import Blocked
-    from .validation import loads_json
-
-    if consumer not in INTERPRETERS:
-        raise Blocked('unknown native consumer')
     state = admit_snapshot(snapshot, registry, now_s=now_s)
-    if registry.mode != 'SYNTHETIC_TEST' or state['metadata']['input_kind'] != 'ESTIMATED':
-        raise Blocked('native type conformance supports synthetic estimates only; '
-                      'runtime/predicted provenance is not representable by these native views')
+    if registry.mode not in {'SYNTHETIC_TEST', 'RECORDED_SIM_ESTIMATED', 'LIVE_SIM_ESTIMATED'} \
+            or state['metadata']['input_kind'] != 'ESTIMATED':
+        raise Blocked('registered simulated estimates required; runtime trust is not granted')
     clock, frame = registry.clock, registry.frame
     unmap = lambda value: (value - clock.offset_s) / clock.scale
     stamp = unmap(state['state_time_s'])
@@ -140,7 +135,40 @@ def project_native(snapshot, registry, consumer, now_s):
             frame=native_frame, max_age_s=registry.max_age_s / clock.scale,
             valid=True, propagated=acquisition != stamp,
         ))
-    payload = _json_values({'values': values, 'stamp': stamp, 'samples': samples})
+    return _json_values({'values': values, 'stamp': stamp, 'samples': samples,
+                         'snapshot_sha256': digest(snapshot),
+                         'source_metadata': deepcopy(state['metadata'])})
+
+
+def project_native(snapshot, registry, consumer, now_s):
+    """Admit, invert reviewed registrations, then construct installed data types.
+
+    The authoritative shared snapshot stays with the caller; its digest and
+    original metadata bind this lossy native view to the unchanged evidence.
+    Native worlds use the registered source world, native consumer bodies FLU.
+    Runtime/predicted estimates remain blocked because these native projections
+    cannot fully express their provenance. Registered recorded simulated
+    estimates may construct an offline view; their immutable shared snapshot
+    remains authoritative, and no native controller/policy execution is implied.
+    """
+    import numpy as np
+    from scipy.spatial.transform import Rotation
+    from .handover import admit_snapshot, digest, encode
+    from .offline_contracts import Blocked
+    from .validation import loads_json
+
+    if consumer not in INTERPRETERS:
+        raise Blocked('unknown native consumer')
+    state = admit_snapshot(snapshot, registry, now_s=now_s)
+    if registry.mode not in {'SYNTHETIC_TEST', 'RECORDED_SIM_ESTIMATED'} \
+            or state['metadata']['input_kind'] != 'ESTIMATED':
+        raise Blocked('native type conformance supports offline simulated estimates only; '
+                      'runtime/predicted provenance is not representable by these native views')
+    payload = project_estimated_values(snapshot, registry, now_s=now_s)
+    payload['source_label'] = ('G0_OFFLINE_RECORDED_SIMULATION_ESTIMATE:' + state['metadata']['source']
+                               if registry.mode == 'RECORDED_SIM_ESTIMATED'
+                               else 'G0_OFFLINE_SYNTHETIC_RECONSTRUCTION')
+    clock, frame = registry.clock, registry.frame
     python = INTERPRETERS[consumer]
     if not python.is_file():
         raise Blocked(f'{consumer} native interpreter unavailable: {python}')
@@ -164,13 +192,20 @@ def project_native(snapshot, registry, consumer, now_s):
             or result.get('consumer') != consumer or 'native_type' not in result):
         raise Blocked(f'native constructor did not construct expected type: {result}')
     result.update(
-        status='PASS', scope='SYNTHETIC_OFFLINE_NATIVE_TYPE_CONSTRUCTION_ONLY',
+        status='PASS', scope=('RECORDED_SIMULATION_OFFLINE_NATIVE_TYPE_CONSTRUCTION_ONLY'
+                              if registry.mode == 'RECORDED_SIM_ESTIMATED'
+                              else 'SYNTHETIC_OFFLINE_NATIVE_TYPE_CONSTRUCTION_ONLY'),
         native_frame={'world_id': frame.source_id, 'body': 'FLU', 'origin': 'COM',
                       'clock_id': clock.source_id},
         snapshot_sha256=digest(snapshot), source_metadata=deepcopy(state['metadata']),
         unrepresented_fields={key: 'PRESERVED_IN_SHARED_SNAPSHOT' for key in
                               ('actuator_state', 'control_history', 'uncertainty', 'target_geometry')},
     )
+    result['native_capability']['runtime_control'] = {
+        'status': 'BLOCKED', 'reason': 'Offline native data view only; no policy/controller was executed',
+    }
+    if registry.mode == 'RECORDED_SIM_ESTIMATED':
+        result['provenance_registration'] = deepcopy(registry.recorded_simulation['registration'])
     return result
 
 

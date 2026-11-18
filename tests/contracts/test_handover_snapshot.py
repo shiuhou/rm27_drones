@@ -6,18 +6,79 @@ from pathlib import Path
 import subprocess
 import sys
 import unittest
+from unittest.mock import patch
 
 from rm27_exchange.handover import (
-    Blocked, CHANNELS, HandoverRegistry, admit_snapshot, assert_continuity,
+    Blocked, CHANNELS, LIVE_SIM_EXTENSION, LIVE_SIM_SCOPE, HandoverRegistry,
+    admit_snapshot, assert_continuity,
     build_snapshot, decode_snapshot, digest, encode, validate_snapshot,
 )
 from rm27_exchange.handover_scenarios import replay_records, replay_snapshots
 from rm27_exchange.offline_contracts import verify_local_asm2, verify_sha256
 from rm27_exchange.recorded_attitude import RECORDING, RECORDING_SHA256, RUN_ID, replay_attitude
 from rm27_exchange.validation import read_json
+import rm27_exchange.handover as handover_module
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURE = ROOT / 'tests/contracts/fixtures/handover_synthetic.json'
+
+
+def recorded_unit_fixture():
+    """Hand-authored gate unit input, not actual recorded navigation evidence."""
+    fixture = deepcopy(read_json(FIXTURE))
+    snapshot = fixture['snapshot']
+    source = snapshot['source']
+    artifact = {'id': 'unit-only-estimator-trace', 'version': 'test', 'sha256': 'a' * 64}
+    roles = {name: {'source': f'unit-only-{name}', 'identity': {
+        'id': f'unit-only-{name}-implementation', 'version': 'test', 'sha256': digit * 64}}
+        for name, digit in (('estimator', 'b'), ('sensor_generation', 'c'), ('truth', 'd'))}
+    source.update(input_kind='RECORDED', artifact=artifact)
+    state = snapshot['state']['record']
+    state['metadata']['source'] = roles['estimator']['source']
+    state['metadata']['lineage'] = [
+        {'input_kind': 'ESTIMATED', 'source': roles['estimator']['source'],
+         'transform': fixture['registry'][name]['registration_id']}
+        for name in ('frame', 'clock')
+    ] + [
+        {'input_kind': 'SYNTHETIC', 'source': roles['sensor_generation']['source']},
+        {'input_kind': 'RECORDED', 'source': artifact['id']},
+        {'input_kind': 'GROUND_TRUTH', 'source': roles['truth']['source'],
+         'transform': roles['sensor_generation']['identity']['id']},
+    ]
+    del state['actuator_state']
+    snapshot['control_history'] = {
+        'availability': {'status': 'UNKNOWN', 'reason': 'Gate unit fixture has no command evidence'},
+        'records': [],
+    }
+    fixture['registry'].update(mode='RECORDED_SIM_ESTIMATED', recorded_simulation={
+        'registration': {'id': 'unit-only-recorded-simulation-registration',
+                         'version': 'test', 'sha256': 'e' * 64},
+        'source_run_id': source['run_id'], 'source_artifact': deepcopy(artifact), 'roles': roles,
+        'runtime_inputs': [{'role': 'sensor_generation', 'artifact': {
+            'id': 'unit-only-sensor-packets', 'version': 'test', 'sha256': 'f' * 64}}],
+        'snapshot_sha256': {snapshot['snapshot_id']: digest(snapshot)},
+    })
+    return fixture
+
+
+def live_unit_fixture():
+    """Unit-only live-sensor registration, never physical-flight evidence."""
+    fixture = recorded_unit_fixture()
+    profile = fixture['registry'].pop('recorded_simulation')
+    snapshot = fixture['snapshot']
+    profile.pop('snapshot_sha256')
+    profile.update(trajectory_family_id=snapshot['source']['trajectory_family_id'],
+                   scope=LIVE_SIM_SCOPE, trusted=False)
+    fixture['registry'].update(mode='LIVE_SIM_ESTIMATED', live_simulation=profile)
+    snapshot['source']['input_kind'] = 'SYNTHETIC'
+    metadata = snapshot['state']['record']['metadata']
+    metadata['lineage'] = [link for link in metadata['lineage']
+                           if link['input_kind'] != 'RECORDED']
+    metadata['extensions'] = {LIVE_SIM_EXTENSION: {'version': '1', 'data': {
+        'scope': LIVE_SIM_SCOPE, 'trusted': False,
+        'reason': 'Synthetic development registration is not calibrated sensor trust',
+    }}}
+    return fixture
 
 
 class SnapshotTests(unittest.TestCase):
@@ -36,6 +97,42 @@ class SnapshotTests(unittest.TestCase):
             self.assertEqual(self.snapshot['identity'][key], value)
         manifest = read_json(ROOT / 'configs/handover_scenarios_v1.json')
         verify_sha256(FIXTURE, manifest['synthetic_fixture']['sha256'])
+
+    def test_structural_cache_is_content_bound_and_does_not_cache_failures(self):
+        state = deepcopy(self.snapshot['state']['record'])
+        schema = self.snapshot['state']['schema']
+        handover_module._validated_structure.cache_clear()
+        original_validate = handover_module._schema_validate
+        with patch.object(handover_module, '_schema_validate', wraps=original_validate) as checked:
+            handover_module.validate_record(schema, state)
+            handover_module.validate_record(schema, deepcopy(state))
+            self.assertEqual(checked.call_count, 1)
+            # A mutation of the same Python object must be validated again.
+            state['metadata']['contract_version'] = 'unknown-version'
+            for _ in range(2):
+                with self.assertRaisesRegex(Blocked, 'invalid contract record'):
+                    handover_module.validate_record(schema, state)
+            self.assertEqual(checked.call_count, 3)
+            with self.assertRaises(Blocked):
+                handover_module.validate_record('unknown.schema.json', self.snapshot['state']['record'])
+            self.assertEqual(checked.call_count, 4)
+        handover_module._validated_structure.cache_clear()
+
+    def test_cached_structure_never_bypasses_semantic_admission(self):
+        self.admit()  # Prime successful structural checks.
+        with self.assertRaisesRegex(Blocked, 'stale'):
+            self.admit(now=10.3)
+        fixture = live_unit_fixture()
+        registry = HandoverRegistry.from_dict(fixture['registry'])
+        changed = fixture['snapshot']
+        self.admit(changed, registry)
+        changed['state']['record']['metadata']['source'] = 'different-source'
+        # Source remains structurally valid, but its live registration is not.
+        with self.assertRaisesRegex(Blocked, 'registered estimator'):
+            self.admit(changed, registry)
+        for invalid in (float('nan'), {1: 'coerced-key'}, (1, 2)):
+            with self.subTest(value=invalid), self.assertRaises(Blocked):
+                handover_module.validate_record('common.schema.json#/$defs/Identity', invalid)
 
     def test_lossless_schema_semantic_roundtrip_and_no_zero_fill(self):
         snapshot = decode_snapshot(encode(self.snapshot))
@@ -168,6 +265,188 @@ class SnapshotTests(unittest.TestCase):
         with self.assertRaisesRegex(Blocked, 'lineage'):
             self.admit(snapshot)
 
+    def test_registered_recorded_simulation_preserves_all_source_kinds(self):
+        fixture = recorded_unit_fixture()
+        snapshot = fixture['snapshot']
+        registry = HandoverRegistry.from_dict(fixture['registry'])
+        state = self.admit(snapshot, registry)
+        self.assertEqual(state, snapshot['state']['record'])
+        self.assertEqual(snapshot['source']['input_kind'], 'RECORDED')
+        self.assertEqual(state['metadata']['input_kind'], 'ESTIMATED')
+        self.assertEqual({link['input_kind'] for link in state['metadata']['lineage']},
+                         {'ESTIMATED', 'SYNTHETIC', 'RECORDED', 'GROUND_TRUTH'})
+        self.assertNotIn('actuator_state', state)
+        self.assertIsNone(state['uncertainty'])
+        self.assertEqual(decode_snapshot(encode(snapshot)), snapshot)
+        for other_mode in ('RUNTIME_ESTIMATED', 'SYNTHETIC_TEST'):
+            with self.subTest(mode=other_mode), self.assertRaisesRegex(Blocked, 'ground truth'):
+                self.admit(snapshot, replace(registry, mode=other_mode))
+
+    def test_recorded_simulation_rejects_missing_or_unregistered_source_evidence(self):
+        original = recorded_unit_fixture()
+        for case in ('missing_registry', 'artifact', 'run', 'source', 'snapshot_hash',
+                     'estimator_identity', 'missing_sensor', 'truth_input', 'truth_artifact',
+                     'ground_truth_transform', 'unknown_lineage'):
+            fixture = deepcopy(original)
+            profile = fixture['registry']['recorded_simulation']
+            snapshot = fixture['snapshot']
+            if case == 'missing_registry':
+                fixture['registry'].pop('recorded_simulation')
+            elif case == 'artifact':
+                snapshot['source']['artifact']['sha256'] = '0' * 64
+            elif case == 'run':
+                profile['source_run_id'] = 'unregistered-run'
+            elif case == 'source':
+                snapshot['state']['record']['metadata']['source'] = profile['roles']['truth']['source']
+            elif case == 'snapshot_hash':
+                snapshot['state']['record']['position_W_m'][0] = 999
+            elif case == 'estimator_identity':
+                profile['roles']['estimator']['identity'].pop('sha256')
+            elif case == 'missing_sensor':
+                snapshot['state']['record']['metadata']['lineage'] = [
+                    link for link in snapshot['state']['record']['metadata']['lineage']
+                    if link['input_kind'] != 'SYNTHETIC']
+            elif case == 'truth_input':
+                profile['runtime_inputs'][0]['role'] = 'truth'
+            elif case == 'truth_artifact':
+                profile['runtime_inputs'][0]['artifact'] = deepcopy(profile['roles']['truth']['identity'])
+            elif case == 'ground_truth_transform':
+                snapshot['state']['record']['metadata']['lineage'][-1]['transform'] = 'DIRECT_TRUTH_STATE'
+            else:
+                snapshot['state']['record']['metadata']['lineage'][0]['source'] = 'unknown-estimator'
+            with self.subTest(case=case), self.assertRaises(Blocked):
+                self.admit(snapshot, HandoverRegistry.from_dict(fixture['registry']))
+
+    def test_recorded_simulation_does_not_relabel_ground_truth_state(self):
+        fixture = recorded_unit_fixture()
+        snapshot = fixture['snapshot']
+        snapshot['state']['schema'] = 'state.schema.json#/$defs/GroundTruthState'
+        snapshot['state']['record']['metadata']['input_kind'] = 'GROUND_TRUTH'
+        profile = fixture['registry']['recorded_simulation']
+        profile['snapshot_sha256'][snapshot['snapshot_id']] = digest(snapshot)
+        with self.assertRaisesRegex(Blocked, 'ground truth'):
+            self.admit(snapshot, HandoverRegistry.from_dict(fixture['registry']))
+
+    def test_live_simulation_is_a_distinct_untrusted_sensor_profile(self):
+        fixture = live_unit_fixture()
+        registry = HandoverRegistry.from_dict(fixture['registry'])
+        snapshot = fixture['snapshot']
+        state = self.admit(snapshot, registry)
+        self.assertEqual(state, snapshot['state']['record'])
+        self.assertIsNone(state['uncertainty'])
+        self.assertIs(state['metadata']['extensions'][LIVE_SIM_EXTENSION]['data']['trusted'], False)
+        self.assertEqual(snapshot['source']['input_kind'], 'SYNTHETIC')
+        self.assertEqual(decode_snapshot(encode(snapshot)), snapshot)
+        for mode in ('RUNTIME_ESTIMATED', 'SYNTHETIC_TEST', 'RECORDED_SIM_ESTIMATED'):
+            with self.subTest(mode=mode), self.assertRaises(Blocked):
+                self.admit(snapshot, replace(registry, mode=mode))
+        # Live estimates evolve, unlike exact immutable recorded Snapshots.
+        newer = deepcopy(snapshot)
+        newer['snapshot_id'] += ':next'
+        newer['state']['record']['metadata']['sequence'] += 1
+        newer['state']['record']['position_W_m'][0] += .001
+        self.admit(newer, registry)
+
+    def test_live_simulation_source_mutation_and_privilege_promotion_are_rejected(self):
+        original = live_unit_fixture()
+        cases = ('missing_registry', 'artifact', 'run', 'family', 'source',
+                 'estimator_identity', 'truth_input', 'truth_artifact', 'duplicate_input',
+                 'ground_truth_transform', 'unknown_lineage', 'recorded_ancestry',
+                 'missing_sensor', 'missing_estimator', 'same_source_roles',
+                 'same_code_roles', 'scope', 'trusted_profile', 'trusted_state',
+                 'missing_state_scope', 'direct_truth', 'configuration')
+        for case in cases:
+            fixture = deepcopy(original)
+            snapshot = fixture['snapshot']
+            metadata = snapshot['state']['record']['metadata']
+            profile = fixture['registry']['live_simulation']
+            if case == 'missing_registry':
+                fixture['registry'].pop('live_simulation')
+            elif case == 'artifact':
+                snapshot['source']['artifact']['sha256'] = '0' * 64
+            elif case == 'run':
+                snapshot['source']['run_id'] = 'unknown-run'
+            elif case == 'family':
+                snapshot['source']['trajectory_family_id'] = 'unknown-family'
+            elif case == 'source':
+                metadata['source'] = profile['roles']['truth']['source']
+            elif case == 'estimator_identity':
+                profile['roles']['estimator']['identity'].pop('sha256')
+            elif case == 'truth_input':
+                profile['runtime_inputs'][0]['role'] = 'truth'
+            elif case == 'truth_artifact':
+                profile['runtime_inputs'][0]['artifact'] = deepcopy(profile['roles']['truth']['identity'])
+            elif case == 'duplicate_input':
+                profile['runtime_inputs'].append(deepcopy(profile['runtime_inputs'][0]))
+            elif case == 'ground_truth_transform':
+                metadata['lineage'][-1]['transform'] = 'DIRECT_TRUTH_STATE'
+            elif case == 'unknown_lineage':
+                metadata['lineage'][0]['source'] = 'unregistered-estimator'
+            elif case == 'recorded_ancestry':
+                metadata['lineage'].append({'input_kind': 'RECORDED', 'source': 'old-recording'})
+            elif case in ('missing_sensor', 'missing_estimator'):
+                kind = 'SYNTHETIC' if case == 'missing_sensor' else 'ESTIMATED'
+                metadata['lineage'] = [link for link in metadata['lineage']
+                                       if link['input_kind'] != kind]
+            elif case == 'same_source_roles':
+                profile['roles']['truth']['source'] = profile['roles']['estimator']['source']
+            elif case == 'same_code_roles':
+                profile['roles']['truth']['identity'] = deepcopy(profile['roles']['estimator']['identity'])
+            elif case == 'scope':
+                profile['scope'] = 'REAL_FLIGHT_APPROVED'
+            elif case == 'trusted_profile':
+                profile['trusted'] = True
+            elif case == 'trusted_state':
+                metadata['extensions'][LIVE_SIM_EXTENSION]['data']['trusted'] = True
+            elif case == 'missing_state_scope':
+                metadata.pop('extensions')
+            elif case == 'configuration':
+                snapshot['identity']['config_hash'] = '0' * 64
+            else:
+                snapshot['state']['schema'] = 'state.schema.json#/$defs/GroundTruthState'
+                metadata['input_kind'] = 'GROUND_TRUTH'
+            with self.subTest(case=case), self.assertRaises(Blocked):
+                self.admit(snapshot, HandoverRegistry.from_dict(fixture['registry']))
+
+    def test_live_simulation_preserves_frame_clock_freshness_epoch_and_validity_gates(self):
+        fixture = live_unit_fixture()
+        registry = HandoverRegistry.from_dict(fixture['registry'])
+        snapshot = fixture['snapshot']
+        alternatives = [
+            replace(registry, epoch=3),
+            replace(registry, frame=replace(registry.frame, source_body='UNKNOWN')),
+            replace(registry, clock=replace(registry.clock, destination_id='unknown')),
+            replace(registry, frame=replace(registry.frame, source_valid_s=(0, 5))),
+        ]
+        for value in alternatives:
+            with self.subTest(registry=value), self.assertRaises(Blocked):
+                self.admit(snapshot, value)
+        for now in (9.999, 10.3):
+            with self.subTest(now=now), self.assertRaises(Blocked):
+                self.admit(snapshot, registry, now=now)
+        changed = deepcopy(snapshot)
+        changed['state']['record']['validity'][CHANNELS[0]]['initialized'] = False
+        with self.assertRaisesRegex(Blocked, 'validity'):
+            self.admit(changed, registry)
+
+    def test_live_control_history_allows_control_owner_but_not_truth_lineage(self):
+        fixture = live_unit_fixture()
+        snapshot = fixture['snapshot']
+        metadata = snapshot['state']['record']['metadata']
+        history = deepcopy(self.snapshot['control_history'])
+        for wrapper in history['records']:
+            wrapper['record']['metadata']['lineage'] = deepcopy(metadata['lineage'])
+        snapshot['control_history'] = history
+        registry = HandoverRegistry.from_dict(fixture['registry'])
+        self.admit(snapshot, registry)
+        history['records'][0]['record']['metadata']['lineage'].append({
+            'input_kind': 'GROUND_TRUTH',
+            'source': fixture['registry']['live_simulation']['roles']['truth']['source'],
+            'transform': 'UNREVIEWED_DIRECT_TRUTH_CONTROL',
+        })
+        with self.assertRaisesRegex(Blocked, 'sensor-generation-only'):
+            self.admit(snapshot, registry)
+
     def test_runtime_history_cannot_smuggle_oracle_or_synthetic_evidence(self):
         snapshot = deepcopy(self.snapshot)
         snapshot['source']['input_kind'] = 'RECORDED'
@@ -251,7 +530,7 @@ class SnapshotTests(unittest.TestCase):
             self.admit(snapshot, registry)
 
     def test_recorded_native_navigation_is_lossless_but_not_admitted(self):
-        rows = list(replay_records(ROOT, verify_originals=True))
+        rows = [row for row in replay_records(ROOT, verify_originals=True) if 'snapshot' not in row]
         self.assertEqual(len(rows), 3)
         for row in rows:
             source = row['source']
@@ -274,7 +553,11 @@ class SnapshotTests(unittest.TestCase):
                                   '--snapshots', '--verify-originals'], cwd=ROOT,
                                  text=True, capture_output=True, timeout=20, check=True)
         self.assertEqual([decode_snapshot(line) for line in process.stdout.splitlines()], snapshots)
-        self.assertTrue(all(snapshot['state'] is None for snapshot in snapshots))
+        diagnostics = [snapshot for snapshot in snapshots if snapshot['native_record'] is not None]
+        self.assertEqual(len(diagnostics), 3)
+        self.assertTrue(all(snapshot['state'] is None for snapshot in diagnostics))
+        self.assertTrue(all(snapshot['state'] is not None for snapshot in snapshots
+                            if snapshot['native_record'] is None))
         self.assertEqual(snapshots, list(replay_snapshots(ROOT)))
 
     def test_actual_ulog_state_keeps_measurement_time_and_missing_channels(self):
@@ -294,7 +577,7 @@ class SnapshotTests(unittest.TestCase):
                 self.admit(snapshot, registry=replace(self.registry, mode='RUNTIME_ESTIMATED'), now=79.16)
 
     def test_two_consumers_inspect_same_recorded_snapshot_and_reject_runtime_use(self):
-        row = next(replay_records(ROOT))
+        row = next(row for row in replay_records(ROOT) if 'snapshot' not in row)
         source = row['source']
         snapshot = build_snapshot(snapshot_id=row['scenario_id'], source={
             'run_id': source['source_run_id'], 'trajectory_family_id': source['source_family_id'],
